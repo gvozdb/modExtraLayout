@@ -1,0 +1,37 @@
+<?php
+
+class melObjectDisableProcessor extends modObjectProcessor
+{
+    public $objectType = 'melObject';
+    public $classKey = 'melObject';
+    public $languageTopics = array('modextralayout:default');
+    public $permission = 'save';
+
+    /**
+     * @return array|string
+     */
+    public function process()
+    {
+        if (!$this->checkPermissions()) {
+            return $this->failure($this->modx->lexicon('access_denied'));
+        }
+
+        $ids = $this->modx->fromJSON($this->getProperty('ids'));
+        if (empty($ids)) {
+            return $this->failure($this->modx->lexicon('mel_err_ns'));
+        }
+
+        foreach ($ids as $id) {
+            /** @var melObject $object */
+            if (!$object = $this->modx->getObject($this->classKey, $id)) {
+                return $this->failure($this->modx->lexicon('mel_err_nf'));
+            }
+            $object->set('active', false);
+            $object->save();
+        }
+
+        return $this->success();
+    }
+}
+
+return 'melObjectDisableProcessor';
