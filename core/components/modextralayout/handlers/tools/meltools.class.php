@@ -213,7 +213,7 @@ class melTools
      * @param string $chunk
      * @param array  $params
      *
-     * @return string The processed output of the Chunk.
+     * @return string
      */
     public function getChunk($chunk, array $params = array())
     {
