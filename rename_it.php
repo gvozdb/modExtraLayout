@@ -52,7 +52,7 @@ function rename_extra($start_path, $find = array(), $replace = array())
 
         $old_path = str_replace('//', '/', $start_path . '/' . $item);
 
-        if (strpos($old_path, $find[1]) !== false) {
+        if (strpos($old_path, $find[1]) !== false || strpos($old_path, $find[2]) !== false) {
             $new_path = str_replace('//', '/', $start_path . '/' . str_replace($find, $replace, $item));
             if (!rename($old_path, $new_path)) {
                 exit("\nCould not rename $old_path to $new_path");
