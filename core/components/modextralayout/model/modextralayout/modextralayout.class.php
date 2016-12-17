@@ -70,7 +70,7 @@ class modExtraLayout
                     break;
                 default:
                     if (!defined('MODX_API_MODE') || !MODX_API_MODE) {
-                        // $this->loadCustomScripts();
+                        // $this->loadFrontendScripts();
                     }
                     break;
             }
@@ -85,7 +85,7 @@ class modExtraLayout
      *
      * @return bool
      */
-    public function loadCustomScripts($objectName = '', array $sp = array())
+    public function loadFrontendScripts($objectName = '', array $sp = array())
     {
         if (empty($objectName)) {
             $objectName = 'modExtraLayout';
