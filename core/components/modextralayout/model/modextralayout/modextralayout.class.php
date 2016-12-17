@@ -137,8 +137,8 @@ class modExtraLayout
      */
     public function getPdoTools()
     {
-        if (!is_object($this->pdoTools) || !($this->pdoTools instanceof pdoTools)) {
-            $this->pdoTools = $this->modx->getService('pdoFetch');
+        if (class_exists('pdoTools') && !is_object($this->pdoTools)) {
+            $this->pdoTools = $this->modx->getService('pdoTools');
         }
 
         return $this->pdoTools;

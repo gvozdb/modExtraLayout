@@ -210,21 +210,18 @@ class melTools
     /**
      * Process and return the output from a Chunk by name.
      *
-     * @param string $name       The name of the chunk.
-     * @param array  $properties An associative array of properties to process the Chunk with, treated as placeholders
-     *                           within the scope of the Element.
-     * @param bool   $fastMode   If false, all MODX tags in chunk will be processed.
+     * @param string $chunk
+     * @param array  $params
      *
      * @return string The processed output of the Chunk.
      */
-    public function getChunk($name, array $properties = array(), $fastMode = false)
+    public function getChunk($chunk, array $params = array())
     {
-        if (!$this->modx->parser) {
-            $this->modx->getParser();
+        if ($pdoTools = $this->mel->getPdoTools()) {
+            return $pdoTools->getChunk($chunk, $params);
         }
-        $pdoTools = $this->mel->getPdoTools();
 
-        return $pdoTools->getChunk($name, $properties, $fastMode);
+        return $this->modx->getChunk($chunk, $params);
     }
 
     /**
