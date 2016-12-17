@@ -33,6 +33,7 @@ modExtraLayout.grid.Default = function (config) {
     });
     modExtraLayout.grid.Default.superclass.constructor.call(this, config);
 
+    //
     if (config.enableDragDrop && config.ddAction) {
         this.on('render', function (grid) {
             grid._initDD(config);
@@ -47,13 +48,13 @@ modExtraLayout.grid.Default = function (config) {
     }, this);
 };
 Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
-    getFields: function () {
+    getFields: function (config) {
         return [
             'id', 'actions',
         ];
     },
 
-    getColumns: function () {
+    getColumns: function (config) {
         return [{
             header: _('mel_grid_id'),
             dataIndex: 'id',
@@ -71,13 +72,14 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
         }];
     },
 
-    getTopBar: function () {
-        return ['->', this.getSearchField()];
+    getTopBar: function (config) {
+        return ['->', this.getSearchField(config)];
     },
 
-    getSearchField: function (width) {
+    getSearchField: function (config, width) {
         return {
             xtype: 'mel-field-search',
+            id: config.id + '__tbar-search',
             width: width || 250,
             listeners: {
                 search: {

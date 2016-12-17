@@ -15,7 +15,7 @@ modExtraLayout.grid.Objects = function (config) {
     modExtraLayout.grid.Objects.superclass.constructor.call(this, config);
 };
 Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
-    getFields: function () {
+    getFields: function (config) {
         return [
             'id',
             'parent_formatted',
@@ -27,7 +27,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         ];
     },
 
-    getColumns: function () {
+    getColumns: function (config) {
         return [{
             header: _('mel_grid_id'),
             dataIndex: 'id',
@@ -75,78 +75,22 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         }];
     },
 
-    getTopBar: function () {
+    getTopBar: function (config) {
         return [{
             text: '<i class="icon icon-plus"></i>&nbsp;' + _('mel_button_create'),
             cls: 'primary-button',
             handler: this.createObject,
             scope: this,
-        }, '->', this.getSearchField()];
+        }, '->', this.getSearchField(config)];
     },
 
-    getListeners: function () {
+    getListeners: function (config) {
         return {
             rowDblClick: function (grid, rowIndex, e) {
                 var row = grid.store.getAt(rowIndex);
                 this.updateObject(grid, e, row);
             },
         };
-    },
-
-    createItem: function (btn, e) {
-        var w = MODx.load({
-            xtype: 'modextralayout-item-window-create',
-            id: Ext.id(),
-            listeners: {
-                success: {
-                    fn: function () {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        });
-        w.reset();
-        w.setValues({active: true});
-        w.show(e.target);
-    },
-
-    updateItem: function (btn, e, row) {
-        if (typeof(row) != 'undefined') {
-            this.menu.record = row.data;
-        }
-        else if (!this.menu.record) {
-            return false;
-        }
-        var id = this.menu.record.id;
-
-        MODx.Ajax.request({
-            url: this.config.url,
-            params: {
-                action: 'mgr/item/get',
-                id: id
-            },
-            listeners: {
-                success: {
-                    fn: function (r) {
-                        var w = MODx.load({
-                            xtype: 'modextralayout-item-window-update',
-                            id: Ext.id(),
-                            record: r,
-                            listeners: {
-                                success: {
-                                    fn: function () {
-                                        this.refresh();
-                                    }, scope: this
-                                }
-                            }
-                        });
-                        w.reset();
-                        w.setValues(r.object);
-                        w.show(e.target);
-                    }, scope: this
-                }
-            }
-        });
     },
 
     createObject: function (btn, e) {
