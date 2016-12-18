@@ -81,7 +81,19 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             cls: 'primary-button',
             handler: this.createObject,
             scope: this,
-        }, '->', this.getSearchField(config)];
+        }, '->', {
+            xtype: 'mel-combo-group',
+            id: config.id + '-group',
+            emptyText: _('mel_grid_group') + '...',
+            width: 150,
+            listeners: {
+                select: {
+                    fn: function (combo) {
+                        this._doFilter(combo);
+                    }, scope: this
+                },
+            },
+        }, this.getSearchField(config)];
     },
 
     getListeners: function (config) {

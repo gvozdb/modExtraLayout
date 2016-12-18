@@ -61,8 +61,9 @@ class modExtraLayout
         $this->config = array_merge($this->config, $sp, array('ctx' => $ctx));
 
         $this->getTools();
-        $this->getPdoTools();
-        $this->pdoTools->setConfig($this->config);
+        if ($pdoTools = $this->getPdoTools()) {
+            $pdoTools->setConfig($this->config);
+        }
 
         if (empty($this->initialized[$ctx])) {
             switch ($ctx) {

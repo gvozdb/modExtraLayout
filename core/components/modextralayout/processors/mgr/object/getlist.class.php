@@ -32,8 +32,15 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
         $c->select(array($this->modx->getSelectColumns('melObject', 'melObject')));
         $c->select(array('modResource.pagetitle as parent_formatted'));
 
-        $query = trim($this->getProperty('query'));
-        if ($query) {
+        // Фильтр
+        if ($group = $this->getProperty('group')) {
+            $c->where(array(
+                'melObject.group' => $group,
+            ));
+        }
+
+        // Поиск
+        if ($query = trim($this->getProperty('query'))) {
             $c->where(array(
                 'melObject.name:LIKE' => "%{$query}%",
                 'OR:melObject.description:LIKE' => "%{$query}%",

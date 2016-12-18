@@ -142,6 +142,11 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
             this.getSelectionModel().clearSelections(true);
         }
     },
+    
+    _doFilter: function (field) {
+        this.getStore().baseParams[field.name] = field.getValue();
+        this.getBottomToolbar().changePage(1);
+    },
 
     _doSearch: function (tf) {
         this.getStore().baseParams.query = tf.getValue();
