@@ -1,3 +1,8 @@
+/**
+ *
+ * @param config
+ * @constructor
+ */
 modExtraLayout.combo.Search = function (config) {
     config = config || {};
     Ext.applyIf(config, {
@@ -45,7 +50,11 @@ Ext.reg('mel-combo-search', modExtraLayout.combo.Search);
 Ext.reg('mel-field-search', modExtraLayout.combo.Search);
 
 
-//
+/**
+ *
+ * @param config
+ * @constructor
+ */
 modExtraLayout.combo.Parent = function (config) {
     config = config || {};
     Ext.applyIf(config, {
@@ -90,7 +99,11 @@ Ext.extend(modExtraLayout.combo.Parent, MODx.combo.ComboBox);
 Ext.reg('mel-combo-parent', modExtraLayout.combo.Parent);
 
 
-//
+/**
+ *
+ * @param config
+ * @constructor
+ */
 modExtraLayout.combo.Group = function (config) {
     config = config || {};
     Ext.applyIf(config, {

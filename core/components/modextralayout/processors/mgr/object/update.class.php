@@ -32,7 +32,7 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
             return $this->modx->lexicon('access_denied');
         }
 
-        return true;
+        return parent::beforeSave();
     }
 
     /**

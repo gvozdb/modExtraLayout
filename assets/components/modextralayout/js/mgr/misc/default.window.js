@@ -1,6 +1,5 @@
 modExtraLayout.window.Default = function (config) {
     config = config || {};
-
     Ext.applyIf(config, {
         title: '',
         url: modExtraLayout.config['connector_url'],
@@ -10,7 +9,8 @@ modExtraLayout.window.Default = function (config) {
         keys: this.getKeys(config),
         buttons: this.getButtons(config),
         listeners: this.getListeners(config),
-        cls: config['cls'] || 'modx-window mel-window',
+        cls: (config['cls'] || 'modx-window') + ' mel-window',
+        bodyCssClass: 'mel-window-tabs',
         width: 600,
         autoHeight: true,
         allowDrop: false,
@@ -31,7 +31,7 @@ Ext.extend(modExtraLayout.window.Default, MODx.Window, {
 
     getButtons: function (config) {
         return [{
-            text: config.cancelBtnText || _('cancel'),
+            text: config['cancelBtnText'] || _('cancel'),
             scope: this,
             handler: function () {
                 config.closeAction !== 'close'

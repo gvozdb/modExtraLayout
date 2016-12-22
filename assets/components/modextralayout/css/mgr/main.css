@@ -29,6 +29,16 @@
     color: dimgray !important;
 }
 
+/* Window */
+.mel-window .x-window-body.mel-window-tabs {
+    padding: 5px 10px 5px 10px;
+}
+
+.mel-window .x-window-body.mel-window-tabs .modx-tabs > .x-tab-panel-bwrap {
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
 /* Grid */
 .mel-grid {
 

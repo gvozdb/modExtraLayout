@@ -16,7 +16,7 @@ modExtraLayout.utils.getMenu = function (actions, grid, selected) {
 
         var a = actions[i];
         if (!a['menu']) {
-            if (a == '-') {
+            if (a == '-' && menu.length && menu[menu.length - 1] != '-') {
                 menu.push('-');
             }
             continue;

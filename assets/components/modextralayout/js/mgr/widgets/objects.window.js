@@ -7,11 +7,12 @@
  */
 modExtraLayout.fields.Object = function (config) {
     var data = config['record'] ? config.record['object'] : null;
+
     var r = {
         xtype: 'modx-tabs',
         border: true,
         autoHeight: true,
-        style: {marginTop: '10px'},
+        // style: {marginTop: '10px'},
         anchor: '100% 100%',
         items: [{
             title: _('mel_tab_main'),
