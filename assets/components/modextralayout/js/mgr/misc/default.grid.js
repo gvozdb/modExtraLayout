@@ -2,8 +2,9 @@ modExtraLayout.grid.Default = function (config) {
     config = config || {};
 
     if (typeof(config['multi_select']) != 'undefined' && config['multi_select'] == true) {
-        config.sm = new Ext.grid.CheckboxSelectionModel();
+        config['sm'] = new Ext.grid.CheckboxSelectionModel();
     }
+    config['cls'] = (config['cls'] || 'main-wrapper') + ' mel-grid';
 
     Ext.applyIf(config, {
         url: modExtraLayout.config['connector_url'],
@@ -26,7 +27,6 @@ modExtraLayout.grid.Default = function (config) {
                 return cls.join(' ');
             },
         },
-        cls: config['cls'] || 'main-wrapper mel-grid',
         paging: true,
         remoteSort: true,
         autoHeight: true,
@@ -34,7 +34,7 @@ modExtraLayout.grid.Default = function (config) {
     modExtraLayout.grid.Default.superclass.constructor.call(this, config);
 
     //
-    if (config.enableDragDrop && config.ddAction) {
+    if (config['enableDragDrop'] && config['ddAction']) {
         this.on('render', function (grid) {
             grid._initDD(config);
         });
@@ -80,17 +80,14 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
         return {
             xtype: 'mel-field-search',
             id: config.id + '__tbar-search',
+            filterName: 'query',
             width: width || 250,
             listeners: {
-                search: {
-                    fn: function (field) {
-                        this._doSearch(field);
-                    }, scope: this
-                },
+                search: {fn: this._doFilter, scope: this},
                 clear: {
                     fn: function (field) {
                         field.setValue('');
-                        this._clearSearch();
+                        this._doFilter(field);
                     }, scope: this
                 },
             }
@@ -142,19 +139,10 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
             this.getSelectionModel().clearSelections(true);
         }
     },
-    
+
     _doFilter: function (field) {
-        this.getStore().baseParams[field.name] = field.getValue();
-        this.getBottomToolbar().changePage(1);
-    },
-
-    _doSearch: function (tf) {
-        this.getStore().baseParams.query = tf.getValue();
-        this.getBottomToolbar().changePage(1);
-    },
-
-    _clearSearch: function () {
-        this.getStore().baseParams.query = '';
+        var name = field['filterName'] || field['name'];
+        this.getStore().baseParams[name] = field.getValue();
         this.getBottomToolbar().changePage(1);
     },
 
@@ -250,15 +238,18 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
             callback(resp);
         }
 
+        var success = false;
         var message = '';
         if (typeof(resp['message']) != 'undefined') {
+            success = resp['success'];
             message = resp['message'];
         } else if (typeof(resp.a.result['message']) != 'undefined') {
+            success = resp.a.result['success'];
             message = resp.a.result['message'];
         }
 
         if (message) {
-            MODx.msg.alert(_('failure'), message);
+            MODx.msg.alert(_(success ? 'success' : 'failure'), message);
         }
     },
 });

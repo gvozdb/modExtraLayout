@@ -19,11 +19,7 @@ class melTools
         $this->config = &$config;
 
         $path = MODX_CORE_PATH . 'components/modextralayout/model/modextralayout/';
-        if (!is_object($this->modx->modextralayout)) {
-            $this->mel = $this->modx->getService('modextralayout', 'modextralayout', $path);
-        } else {
-            $this->mel = &$this->modx->modextralayout;
-        }
+        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout', $path);
     }
 
     /**

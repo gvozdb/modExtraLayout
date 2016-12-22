@@ -22,18 +22,44 @@ class melComboGroupGetListProcessor extends modProcessor
      */
     public function process()
     {
-        $output = array();
-        $groups = array(
+        $filter = $this->getProperty('filter', false);
+        $notempty = $this->getProperty('notempty', true);
+        if ($filter) {
+            $output = array(
+                array(
+                    'display' => '(Все)',
+                    'value' => '',
+                ),
+            );
+        } else {
+            $output = array();
+        }
+
+        $rows = array(
+            '',
             'Group 1',
             'Group 2',
             'Group 3',
             'Group 4',
         );
-        foreach ($groups as $group) {
-            $output[] = array(
-                'value' => preg_replace('/\s+/', '_', strtolower($group)),
-                'display' => $group,
-            );
+        foreach ($rows as $v) {
+            $tmp = null;
+            if (empty($v)) {
+                if ($filter || !$notempty) {
+                    $tmp = array(
+                        'display' => '(Не указано)',
+                        'value' => '_',
+                    );
+                }
+            } else {
+                $tmp = array(
+                    'display' => $v,
+                    'value' => preg_replace('/\s+/', '_', strtolower($v)),
+                );
+            }
+            if (!empty($tmp)) {
+                $output[] = $tmp;
+            }
         }
 
         return $this->outputArray($output);

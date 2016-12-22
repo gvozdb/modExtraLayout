@@ -84,14 +84,12 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         }, '->', {
             xtype: 'mel-combo-group',
             id: config.id + '-group',
+            filterName: 'group',
             emptyText: _('mel_grid_group') + '...',
             width: 150,
+            filter: true,
             listeners: {
-                select: {
-                    fn: function (combo) {
-                        this._doFilter(combo);
-                    }, scope: this
-                },
+                select: {fn: this._doFilter, scope: this},
             },
         }, this.getSearchField(config)];
     },

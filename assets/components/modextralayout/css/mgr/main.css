@@ -1,29 +1,39 @@
-/* Actions */
-.action-red {
+/* Action colors */
+.action-red,
+.mel-grid .action-red {
     color: #ec1049 !important;
 }
 
-.action-green {
+.action-green,
+.mel-grid .action-green {
     color: #3a960d !important;
 }
 
-.action-blue {
+.action-blue,
+.mel-grid .action-blue {
     color: cadetblue !important;
 }
 
-.action-yellow {
+.action-yellow,
+.mel-grid .action-yellow {
     color: goldenrod !important;
 }
 
-.action-orange {
+.action-orange,
+.mel-grid .action-orange {
     color: #ff751f !important;
 }
 
-.action-gray {
+.action-gray,
+.mel-grid .action-gray {
     color: dimgray !important;
 }
 
 /* Grid */
+.mel-grid {
+
+}
+
 .mel-grid__row_disabled {
     font-style: italic;
     opacity: .6;
@@ -31,10 +41,12 @@
 }
 
 .x-grid3-col-actions {
-    padding: 3px 0 3px 5px;
+    padding: 4px 0;
+    text-align: center;
 }
 
 ul.mel-row-actions {
+    display: inline-block;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -45,10 +57,9 @@ ul.mel-row-actions li {
 }
 
 ul.mel-row-actions .btn {
-    padding: 5px 5px 4px;
+    padding: 2px;
     margin-right: 2px;
     min-width: 26px;
-    font-size: inherit;
 }
 
 ul.mel-row-actions .actions-menu {

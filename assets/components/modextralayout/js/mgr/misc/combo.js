@@ -103,7 +103,8 @@ modExtraLayout.combo.Group = function (config) {
         url: modExtraLayout.config['connector_url'],
         baseParams: {
             action: 'mgr/combo/getgroups',
-            template: config['template'] || 0,
+            filter: config['filter'] || 0,
+            notempty: config['notempty'] || 1,
         },
         pageSize: 20,
         typeAhead: false,

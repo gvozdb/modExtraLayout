@@ -11,6 +11,16 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
     /**
      * @return boolean|string
      */
+    public function initialize()
+    {
+        $this->setProperty('sort', str_replace('_formatted', '', $this->getProperty('sort')));
+
+        return parent::initialize();
+    }
+
+    /**
+     * @return boolean|string
+     */
     public function beforeQuery()
     {
         if (!$this->checkPermissions()) {
@@ -32,18 +42,26 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
         $c->select(array($this->modx->getSelectColumns('melObject', 'melObject')));
         $c->select(array('modResource.pagetitle as parent_formatted'));
 
-        // Фильтр
-        if ($group = $this->getProperty('group')) {
-            $c->where(array(
-                'melObject.group' => $group,
-            ));
+        // Фильтр по свойствам основного объекта
+        foreach (array('group') as $v) {
+            if (${$v} = $this->getProperty($v)) {
+                if (${$v} == '_') {
+                    $c->where(array(
+                        '(' . $this->classKey . '.' . $v . ' = "" OR ' . $this->classKey . '.' . $v . ' IS NULL)',
+                    ));
+                } else {
+                    $c->where(array(
+                        $this->classKey . '.' . $v => ${$v},
+                    ));
+                }
+            }
         }
 
         // Поиск
         if ($query = trim($this->getProperty('query'))) {
             $c->where(array(
-                'melObject.name:LIKE' => "%{$query}%",
-                'OR:melObject.description:LIKE' => "%{$query}%",
+                $this->classKey . '.name:LIKE' => "%{$query}%",
+                'OR:' . $this->classKey . '.description:LIKE' => "%{$query}%",
             ));
         }
 
