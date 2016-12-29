@@ -2,14 +2,14 @@
 
 class modExtraLayout
 {
+    public $config = array();
+    public $initialized = array();
     /** @var modX $modx */
     public $modx;
     /** @var melTools $tools */
     public $tools;
     /** @var pdoTools $pdoTools */
     public $pdoTools;
-    /** @var array $initialized */
-    public $initialized = array();
 
     /**
      * @param modX  $modx

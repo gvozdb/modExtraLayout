@@ -25,7 +25,7 @@ modExtraLayout.window.Default = function (config) {
     });
 };
 Ext.extend(modExtraLayout.window.Default, MODx.Window, {
-    getFields: function () {
+    getFields: function (config) {
         return [];
     },
 
@@ -34,19 +34,19 @@ Ext.extend(modExtraLayout.window.Default, MODx.Window, {
             text: config['cancelBtnText'] || _('cancel'),
             scope: this,
             handler: function () {
-                config.closeAction !== 'close'
+                (config['closeAction'] !== 'close')
                     ? this.hide()
                     : this.close();
             }
         }, {
-            text: config.saveBtnText || _('save'),
+            text: config['saveBtnText'] || _('save'),
             cls: 'primary-button',
             scope: this,
             handler: this.submit,
         }];
     },
 
-    getKeys: function () {
+    getKeys: function (config) {
         return [{
             key: Ext.EventObject.ENTER,
             shift: true,
@@ -56,7 +56,7 @@ Ext.extend(modExtraLayout.window.Default, MODx.Window, {
         }];
     },
 
-    getListeners: function () {
+    getListeners: function (config) {
         return {};
     },
 });

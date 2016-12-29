@@ -42,7 +42,7 @@ $_lang['mel_button_remove_multiple'] = 'Удалить выбранное';
 $_lang['mel_window_object_create'] = 'Добавить объект';
 $_lang['mel_window_object_update'] = 'Редактировать объект';
 
-// Ошибки по конкретным полям
+// Ошибки конкретизированные
 $_lang['mel_err_required_name'] = 'Необходимо указать название.';
 $_lang['mel_err_unique_name'] = 'Название должно быть уникальным.';
 

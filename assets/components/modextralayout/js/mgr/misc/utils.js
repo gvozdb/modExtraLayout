@@ -47,7 +47,7 @@ modExtraLayout.utils.getMenu = function (actions, grid, selected) {
         menu.push({
             handler: action,
             text: String.format(
-                '<span class="{0}"><i class="x-menu-item-icon {1}"></i>{2}</span>',
+                '<span class="{0}"><i class="x-menu-item-icon mel-menu-item-icon {1}"></i>{2}</span>',
                 cls, icon, title
             ),
             scope: grid

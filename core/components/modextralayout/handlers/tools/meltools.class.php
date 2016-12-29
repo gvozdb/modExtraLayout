@@ -2,12 +2,11 @@
 
 class melTools
 {
+    public $config = array();
     /** @var modX $modx */
     protected $modx;
     /** @var modExtraLayout $mel */
     protected $mel;
-    /** @var array $config */
-    public $config = array();
 
     /**
      * @param $modx
@@ -62,8 +61,14 @@ class melTools
      *
      * @return bool
      */
-    public function checkProcessorUnique($class_key = '', $id = 0, modProcessor &$processor, array $data, $default_lexicon = '', array $condition_add = array())
-    {
+    public function checkProcessorUnique(
+        $class_key = '',
+        $id = 0,
+        modProcessor &$processor,
+        array $data,
+        $default_lexicon = '',
+        array $condition_add = array()
+    ) {
         $has_error = false;
         if (is_array($data) && !empty($data)) {
             $classKey = empty($class_key) ? $processor->classKey : $class_key;
@@ -303,5 +308,15 @@ class melTools
         ';
 
         return preg_match($pcre_regex, $json);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public function sanitizePath($path)
+    {
+        return preg_replace(array("/\.*[\/|\\\]/i", "/[\/|\\\]+/i"), array('/', '/'), $path);
     }
 }

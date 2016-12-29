@@ -35,6 +35,6 @@ foreach ($tmp as $area => $rows) {
         $settings[] = $setting;
     }
 }
-unset($tmp);
+unset($tmp, $area, $rows, $k, $v);
 
 return $settings;

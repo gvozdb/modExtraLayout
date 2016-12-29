@@ -25,6 +25,10 @@ if ($transport->xpdo) {
                 unset($schema);
             }
             foreach ($objects as $tmp) {
+                // Выгружаем новую карту исходных мета-данных для текущего обрабатываемого класса
+                unset($modx->map[$tmp]);
+                $modx->loadClass($tmp, $modelPath . 'modextralayout/');
+
                 $table = $modx->getTableName($tmp);
                 $sql = "SHOW TABLES LIKE '" . trim($table, '`') . "'";
                 $stmt = $modx->prepare($sql);

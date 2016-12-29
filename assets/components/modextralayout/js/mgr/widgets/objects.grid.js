@@ -3,9 +3,10 @@ modExtraLayout.grid.Objects = function (config) {
     if (!config.id) {
         config.id = 'mel-grid-objects';
     }
+    config['actionPrefix'] = 'mgr/object/';
     Ext.applyIf(config, {
         baseParams: {
-            action: 'mgr/object/getlist',
+            action: config['actionPrefix'] + 'getlist',
             sort: 'id',
             dir: 'DESC',
         },
@@ -58,11 +59,11 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         }, {
             header: _('mel_grid_active'),
             dataIndex: 'active',
-            renderer: modExtraLayout.utils.renderBoolean,
+            width: 70,
             sortable: true,
             fixed: true,
             resizable: false,
-            width: 70,
+            renderer: modExtraLayout.utils.renderBoolean,
         }, {
             header: _('mel_grid_actions'),
             dataIndex: 'actions',
@@ -114,7 +115,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
                     },
                     scope: this
                 },
-                failure: {fn: this._failureHandler, scope: this},
+                failure: {fn: this._listenerHandler, scope: this},
             },
         });
         w.reset();
@@ -139,7 +140,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         MODx.Ajax.request({
             url: this.config['url'],
             params: {
-                action: 'mgr/object/get',
+                action: this['actionPrefix'] + 'get',
                 id: id,
             },
             listeners: {
@@ -157,7 +158,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
                                     },
                                     scope: this
                                 },
-                                failure: {fn: this._failureHandler, scope: this},
+                                failure: {fn: this._listenerHandler, scope: this},
                             },
                         });
                         w.reset();
@@ -165,79 +166,23 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
                         w.show(e.target);
                     }, scope: this
                 },
-                failure: {fn: this._failureHandler, scope: this},
+                failure: {fn: this._listenerHandler, scope: this},
             }
         });
     },
 
-    actionObject: function (action, confirm, checkIds) {
-        if (typeof(action) == 'undefined') {
-            return false;
-        }
-        if (typeof(confirm) == 'undefined') {
-            confirm = false;
-        }
-        if (typeof(checkIds) == 'undefined') {
-            checkIds = true;
-        }
-        var ids = this._getSelectedIds();
-        if (checkIds && !ids.length) {
-            this.refresh();
-            return false;
-        }
-
-        var params = {
-            url: this.config['url'],
-            params: {
-                action: 'mgr/object/' + action,
-                ids: Ext.util.JSON.encode(ids),
-            },
-            listeners: {
-                success: {
-                    fn: function (r) {
-                        var grid = this;
-                        this._failureHandler(r, function () {
-                            grid.refresh();
-                        });
-                    }, scope: this
-                },
-                failure: {
-                    fn: function (r) {
-                        var grid = this;
-                        this._failureHandler(r, function () {
-                            grid.refresh();
-                        });
-                    }, scope: this
-                },
-            },
-        };
-
-        if (confirm) {
-            MODx.msg.confirm(Ext.apply({}, params, {
-                title: ids.length > 1
-                    ? _('mel_button_' + action + '_multiple')
-                    : _('mel_button_' + action),
-                text: _('mel_confirm_' + action),
-            }));
-        } else {
-            MODx.Ajax.request(params);
-        }
-
-        return true;
-    },
-
     enableObject: function () {
         this.loadMask.show();
-        return this.actionObject('enable');
+        return this._doAction('enable');
     },
 
     disableObject: function () {
         this.loadMask.show();
-        return this.actionObject('disable');
+        return this._doAction('disable');
     },
 
     removeObject: function () {
-        return this.actionObject('remove', true);
+        return this._doAction('remove', null, true);
     },
 });
 Ext.reg('mel-grid-objects', modExtraLayout.grid.Objects);

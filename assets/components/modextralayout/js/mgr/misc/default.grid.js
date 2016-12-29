@@ -58,7 +58,7 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
         return [{
             header: _('mel_grid_id'),
             dataIndex: 'id',
-            width: 50,
+            width: 70,
             sortable: true,
             fixed: true,
             resizable: false,
@@ -68,6 +68,8 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
             id: 'actions',
             width: 100,
             sortable: false,
+            fixed: true,
+            resizable: false,
             renderer: modExtraLayout.utils.renderActions,
         }];
     },
@@ -144,6 +146,65 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
         var name = field['filterName'] || field['name'];
         this.getStore().baseParams[name] = field.getValue();
         this.getBottomToolbar().changePage(1);
+    },
+
+    _doAction: function (action, action_prefix, confirm, check_id) {
+        if (typeof(action) == 'undefined') {
+            return false;
+        }
+        if (typeof(action_prefix) == 'undefined' || !action_prefix) {
+            action_prefix = this['actionPrefix'];
+        }
+        if (typeof(confirm) == 'undefined') {
+            confirm = false;
+        }
+        if (typeof(check_id) == 'undefined') {
+            check_id = true;
+        }
+        var ids = this._getSelectedIds();
+        if (check_id && !ids.length) {
+            this.refresh();
+            return false;
+        }
+
+        var params = {
+            url: this.config['url'],
+            params: {
+                action: action_prefix + action,
+                ids: Ext.util.JSON.encode(ids),
+            },
+            listeners: {
+                success: {
+                    fn: function (r) {
+                        var grid = this;
+                        this._listenerHandler(r, function () {
+                            grid.refresh();
+                        });
+                    }, scope: this
+                },
+                failure: {
+                    fn: function (r) {
+                        var grid = this;
+                        this._listenerHandler(r, function () {
+                            grid.refresh();
+                        });
+                    }, scope: this
+                },
+            },
+        };
+
+        if (confirm) {
+            MODx.msg.confirm(Ext.apply({}, params, {
+                title: ids.length > 1
+                    ? _('mel_button_' + action + '_multiple')
+                    : _('mel_button_' + action),
+                text: _('mel_confirm_' + action),
+            }));
+        } else {
+            MODx.Ajax.request(params);
+        }
+
+        return true;
     },
 
     _getSelectedIds: function () {
@@ -233,7 +294,7 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
         });
     },
 
-    _failureHandler: function (resp, callback) {
+    _listenerHandler: function (resp, callback) {
         if (typeof(callback) == 'function') {
             callback(resp);
         }

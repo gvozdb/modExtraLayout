@@ -1,31 +1,37 @@
 /* Action colors */
 .action-red,
-.mel-grid .action-red {
+.mel-grid .action-red,
+.mel-menu-item-icon.action-red {
     color: #ec1049 !important;
 }
 
 .action-green,
-.mel-grid .action-green {
+.mel-grid .action-green,
+.mel-menu-item-icon.action-green {
     color: #3a960d !important;
 }
 
 .action-blue,
-.mel-grid .action-blue {
+.mel-grid .action-blue,
+.mel-menu-item-icon.action-blue {
     color: cadetblue !important;
 }
 
 .action-yellow,
-.mel-grid .action-yellow {
+.mel-grid .action-yellow,
+.mel-menu-item-icon.action-yellow {
     color: goldenrod !important;
 }
 
 .action-orange,
-.mel-grid .action-orange {
+.mel-grid .action-orange,
+.mel-menu-item-icon.action-orange {
     color: #ff751f !important;
 }
 
 .action-gray,
-.mel-grid .action-gray {
+.mel-grid .action-gray,
+.mel-menu-item-icon.action-gray {
     color: dimgray !important;
 }
 

@@ -59,7 +59,6 @@ modExtraLayout.fields.Object = function (config) {
         }, {
             columnWidth: .5,
             layout: 'form',
-            labelWidth: 100,
             style: {marginLeft: '5px'},
             items: [{
                 xtype: 'textarea',

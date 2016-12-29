@@ -13,8 +13,6 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
      */
     public function initialize()
     {
-        $this->setProperty('sort', str_replace('_formatted', '', $this->getProperty('sort')));
-
         return parent::initialize();
     }
 
@@ -26,6 +24,8 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
         if (!$this->checkPermissions()) {
             return $this->modx->lexicon('access_denied');
         }
+
+        $this->setProperty('sort', str_replace('_formatted', '', $this->getProperty('sort')));
 
         return parent::beforeQuery();
     }
