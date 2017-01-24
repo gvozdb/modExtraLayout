@@ -14,6 +14,7 @@ modExtraLayout.window.Default = function (config) {
         width: 600,
         autoHeight: true,
         allowDrop: false,
+        firstFieldFocus: false,
     });
     modExtraLayout.window.Default.superclass.constructor.call(this, config);
 
@@ -58,6 +59,15 @@ Ext.extend(modExtraLayout.window.Default, MODx.Window, {
 
     getListeners: function (config) {
         return {};
+    },
+
+    focusFirstField: function () {
+        if (this.firstFieldFocus && this.fp && this.fp.getForm() && this.fp.getForm().items.getCount() > 0) {
+            var fld = this.findFirstTextField();
+            if (fld) {
+                fld.focus(false, 200);
+            }
+        }
     },
 });
 Ext.reg('mel-window-default', modExtraLayout.window.Default);

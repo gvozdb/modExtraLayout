@@ -35,16 +35,6 @@
     color: dimgray !important;
 }
 
-/* Window */
-.mel-window .x-window-body.mel-window-tabs {
-    padding: 5px 10px 5px 10px;
-}
-
-.mel-window .x-window-body.mel-window-tabs .modx-tabs > .x-tab-panel-bwrap {
-    margin-top: -5px;
-    margin-bottom: -5px;
-}
-
 /* Grid */
 .mel-grid {
 
@@ -136,4 +126,81 @@ a.x-menu-item .x-menu-item-text .icon {
 
 .x-combo-list .x-combo-list-item.x-combo-selected.mel-combo__list-item.x-combo-selected {
     border-bottom: 1px dotted #dedede !important;
+}
+
+/* Window */
+.mel-window .x-window-body.mel-window-tabs {
+    padding: 5px 10px 5px 10px;
+}
+
+.mel-window .x-window-body.mel-window-tabs .modx-tabs > .x-tab-panel-bwrap {
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+/* Табы */
+.x-tab-panel .x-tab-panel {
+    padding-top: 0;
+}
+
+.modx-panel-subtabs {
+    margin-top: 0;
+    padding: 5px 2px;
+    overflow: hidden;
+}
+
+.modx-panel-subtabs .x-tab-panel-header {
+    padding: 0 10px;
+}
+
+.modx-panel-subtabs .x-tab-strip-wrap ul.x-tab-strip.x-tab-strip-top {
+    background-color: transparent !important;
+}
+
+.modx-panel-subtabs ul.x-tab-strip li:first-child {
+    margin-left: 2px;
+}
+
+.modx-panel-subtabs .x-tab-panel-header > .x-tab-strip-wrap > ul.x-tab-strip > .x-tab-strip-active {
+    box-shadow: 0 -3px 0 #aaa, -1px 0 0 transparent;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+}
+
+.modx-panel-subtabs .x-tab-strip li.x-tab-strip-active:before {
+    top: 100%;
+}
+
+.modx-panel-subtabs .x-tab-strip li {
+    color: #222;
+}
+
+.modx-panel-subtabs .x-tab-strip .x-tab-strip-text {
+    line-height: 2;
+    font-size: 90%;
+}
+
+.modx-panel-subtabs .x-tab-panel-bwrap {
+    border: 1px solid #f0f0f0;
+    margin-top: -1px;
+}
+
+/*  */
+.mel-window .x-superboxselect ul li.x-superboxselect-item,
+.mel-panel .x-superboxselect ul li.x-superboxselect-item {
+    background-color: #ffffff;
+    border: 1px solid #b7b7b7;
+    box-shadow: none;
+    padding: 6px 18px 6px 5px !important;
+    font-size: 1.02em;
+    line-height: 1em;
+}
+
+.mel-window .x-superboxselect ul li.x-superboxselect-item:hover,
+.mel-window .x-superboxselect ul li.x-superboxselect-item:focus,
+.mel-panel .x-superboxselect ul li.x-superboxselect-item:hover,
+.mel-panel .x-superboxselect ul li.x-superboxselect-item:focus {
+    background-color: #3697cd;
+    border-color: #3697cd;
+    color: #fff;
 }
