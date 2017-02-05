@@ -29,7 +29,7 @@ $items = $modx->getIterator('melObject', $c);
 $list = array();
 /** @var melObject $item */
 foreach ($items as $item) {
-    $list[] = $mel->Tools->getChunk($tpl, $item->toArray());
+    $list[] = $mel->tools->getChunk($tpl, $item->toArray());
 }
 
 // Output
