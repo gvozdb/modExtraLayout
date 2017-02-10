@@ -41,7 +41,7 @@ class melTools
                     $lexicon = $default_lexicon;
                 }
 
-                if (empty($processor->getProperty($key))) {
+                if (!$processor->getProperty($key)) {
                     $has_error = true;
                     $processor->addFieldError($key, $this->modx->lexicon($lexicon));
                 }
@@ -146,8 +146,7 @@ class melTools
     public function runProcessor($action = '', $data = array())
     {
         $this->modx->error->reset();
-        $processorsPath = !empty($this->mel->config['processorsPath']) ? $this->mel->config['processorsPath']
-            : MODX_CORE_PATH;
+        $processorsPath = !empty($this->mel->config['processorsPath']) ? $this->mel->config['processorsPath'] : MODX_CORE_PATH;
 
         /* @var modProcessorResponse $response */
         $response = $this->modx->runProcessor($action, $data, array('processors_path' => $processorsPath));
