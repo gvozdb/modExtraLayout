@@ -23,12 +23,12 @@ modExtraLayout.fields.Object = function (config) {
         }],
         listeners: {
             afterrender: function (tabs) {
+                // Рендерим вторую вкладку, иначе данные с неё не передаются в процессор
+                tabs.setActiveTab(1);
+                tabs.setActiveTab(0);
+                
                 if (config['activeTab']) {
                     tabs.setActiveTab(config['activeTab']);
-                } else {
-                    // Рендерим вторую вкладку, иначе данные с неё не передаются в процессор
-                    tabs.setActiveTab(1);
-                    tabs.setActiveTab(0);
                 }
             },
         },
