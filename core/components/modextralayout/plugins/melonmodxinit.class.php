@@ -7,7 +7,7 @@ class melOnMODXInit extends melPlugin
 {
     public function run()
     {
-        $map = array(
+        $this->mel->tools->systemMapExtend(array(
             'modResource' => array(
                 'composites' => array(
                     'melObjects' => array(
@@ -24,7 +24,6 @@ class melOnMODXInit extends melPlugin
                     ),
                 ),
             ),
-        );
-        $this->mel->tools->systemMapExtends($map);
+        ));
     }
 }
