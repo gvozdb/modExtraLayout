@@ -7,7 +7,7 @@ class melOnMODXInit extends melPlugin
 {
     public function run()
     {
-        $this->mel->tools->systemMapExtens(array(
+        $this->mel->tools->systemMapExtend(array(
             'modResource' => array(
                 'composites' => array(
                     'melObjects' => array(
