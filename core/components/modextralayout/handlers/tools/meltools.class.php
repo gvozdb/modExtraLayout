@@ -108,7 +108,7 @@ class melTools
      *
      * @return bool
      */
-    public function systemMapExtend(array $map = array())
+    public function systemMapExten(array $map = array())
     {
         foreach ($map as $class => $data) {
             $this->modx->loadClass($class);
