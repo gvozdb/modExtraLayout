@@ -19,9 +19,9 @@ class modExtraLayout
     {
         $this->modx = &$modx;
 
-        $corePath = MODX_CORE_PATH . 'components/modextralayout/';
-        $assetsUrl = MODX_ASSETS_URL . 'components/modextralayout/';
-        $assetsPath = MODX_ASSETS_PATH . 'components/modextralayout/';
+        $corePath = $this->modx->getOption('mel_core_path', $config, MODX_CORE_PATH . 'components/modextralayout/');
+        $assetsUrl = $this->modx->getOption('mel_assets_url', $config, MODX_ASSETS_URL . 'components/modextralayout/');
+        $assetsPath = $this->modx->getOption('mel_assets_path', $config, MODX_ASSETS_PATH . 'components/modextralayout/');
 
         $this->config = array_merge(array(
             'assetsUrl' => $assetsUrl,

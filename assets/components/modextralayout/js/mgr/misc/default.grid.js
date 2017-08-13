@@ -46,6 +46,14 @@ modExtraLayout.grid.Default = function (config) {
             this.getSelectionModel().clearSelections();
         }
     }, this);
+
+    //
+    this.on('afterrender', function () {
+        // Скрываем topToolbar, если он пустой
+        if (!this.topToolbar.items['length']) {
+            this.topToolbar.hide();
+        }
+    }, this);
 };
 Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
     getFields: function (config) {

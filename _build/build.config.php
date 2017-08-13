@@ -1,6 +1,7 @@
 <?php
 
 // define package
+define('PKG_DEV_MODE', true);
 define('PKG_NAME', 'modExtraLayout');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
 define('PKG_NAME_SHORT', 'mel');
@@ -8,7 +9,12 @@ define('PKG_NAME_SHORT', 'mel');
 define('PKG_VERSION', '1.0.0');
 define('PKG_RELEASE', 'beta');
 define('PKG_AUTO_INSTALL', true);
-define('PKG_NAMESPACE_PATH', '{core_path}components/' . PKG_NAME_LOWER . '/');
+
+if (PKG_DEV_MODE) {
+    define('PKG_NAMESPACE_PATH', '{base_path}' . PKG_NAME . '/core/components/' . PKG_NAME_LOWER . '/');
+} else {
+    define('PKG_NAMESPACE_PATH', '{core_path}components/' . PKG_NAME_LOWER . '/');
+}
 
 // define paths
 if (isset($_SERVER['MODX_BASE_PATH'])) {
@@ -50,6 +56,8 @@ $BUILD_RESOLVERS_BEFORE = array(// 'setup',
 );
 
 $BUILD_RESOLVERS_AFTER = array(
+    // 'extension',
+    'dev',
     'tables',
     'chunks',
 );

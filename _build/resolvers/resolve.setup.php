@@ -32,11 +32,7 @@ if (!function_exists('installPackage')) {
                     /** @noinspection PhpUndefinedFieldInspection */
                     $url = $foundPackage->location;
 
-                    if (!downloadPackage($url, $modx->getOption('core_path') .
-                                               'packages/' .
-                                               $foundPackage->signature .
-                                               '.transport.zip')
-                    ) {
+                    if (!downloadPackage($url, $modx->getOption('core_path') . 'packages/' . $foundPackage->signature . '.transport.zip')) {
                         return array(
                             'success' => 0,
                             'message' => "Could not download package <b>{$packageName}</b>.",
