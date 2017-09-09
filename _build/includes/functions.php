@@ -13,7 +13,6 @@ function getSnippetContent($filename)
     return rtrim(rtrim(trim($data[1]), '?>'));
 }
 
-
 /**
  * Recursive directory remove
  *

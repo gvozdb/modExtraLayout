@@ -1,7 +1,6 @@
 <?php
 /** @var modX $modx */
 /** @var array $sources */
-
 $settings = array();
 $tmp = array(
     'main' => array(

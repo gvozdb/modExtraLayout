@@ -17,8 +17,8 @@ class melTools
         $this->modx = &$modx;
         $this->config = &$config;
 
-        $path = MODX_CORE_PATH . 'components/modextralayout/model/modextralayout/';
-        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout', $path);
+        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout',
+            $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/');
     }
 
     /**

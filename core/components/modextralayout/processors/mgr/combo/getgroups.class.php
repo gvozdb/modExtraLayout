@@ -10,9 +10,9 @@ class melComboGroupGetListProcessor extends modProcessor
      */
     public function initialize()
     {
-        $path = MODX_CORE_PATH . 'components/modextralayout/model/modextralayout/';
-        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout', $path);
-        $this->mel->initialize($this->modx->context->get('key'));
+        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout',
+            $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/');
+        $this->mel->initialize($this->modx->context->key);
 
         return parent::initialize();
     }

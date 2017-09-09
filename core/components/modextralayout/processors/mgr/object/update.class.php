@@ -14,10 +14,8 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
      */
     public function initialize()
     {
-        $path = MODX_CORE_PATH . 'components/modextralayout/model/modextralayout/';
-        if (!$this->mel = $this->modx->getService('modextralayout', 'modExtraLayout', $path)) {
-            return false;
-        }
+        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout',
+            $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/');
         $this->mel->initialize($this->modx->context->key);
 
         return parent::initialize();

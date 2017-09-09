@@ -1,7 +1,6 @@
 <?php
 /** @var modX $modx */
 /** @var array $sources */
-
 $plugins = array();
 $tmp = array(
     'melSystem' => array(
@@ -20,10 +19,10 @@ foreach ($tmp as $k => $v) {
         'name' => $k,
         'category' => 0,
         'description' => @$v['description'],
-        'plugincode' => getSnippetContent($sources['source_core'] . '/elements/plugins/plugin.' . $v['file'] . '.php'),
+        'plugincode' => getSnippetContent($sources['source_core'] . '/elements/plugins/' . $v['file'] . '.php'),
         'static' => BUILD_PLUGIN_STATIC,
         'source' => 1,
-        'static_file' => 'core/components/' . PKG_NAME_LOWER . '/elements/plugins/plugin.' . $v['file'] . '.php',
+        'static_file' => 'core/components/' . PKG_NAME_LOWER . '/elements/plugins/' . $v['file'] . '.php',
     ), '', true, true);
 
     $events = array();

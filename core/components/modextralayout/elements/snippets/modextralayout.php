@@ -2,11 +2,10 @@
 /** @var modX $modx */
 /** @var modExtraLayout $mel */
 /** @var array $scriptProperties */
-
 $sp = &$scriptProperties;
-
-$modelPath = MODX_CORE_PATH . 'components/modextralayout/model/modextralayout/';
-if (!$mel = $modx->getService('modextralayout', 'modExtraLayout', $modelPath, $sp)) {
+if (!$mel = $modx->getService('modextralayout', 'modExtraLayout',
+    $modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/', $sp)
+) {
     return 'Could not load modExtraLayout class!';
 }
 $mel->initialize($modx->context->key);

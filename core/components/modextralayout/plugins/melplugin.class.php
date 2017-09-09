@@ -13,15 +13,9 @@ abstract class melPlugin
     {
         $this->sp = &$sp;
         $this->modx = &$modx;
-        $this->mel = $this->modx->modextralayout;
-
-        if (!is_object($this->mel)) {
-            $path = MODX_CORE_PATH . 'components/modextralayout/model/modextralayout/';
-            $this->mel = $this->modx->getService('modextralayout', 'modextralayout', $path, $this->sp);
-        }
-        if (!$this->mel->initialized[$this->modx->context->key]) {
-            $this->mel->initialize($this->modx->context->key);
-        }
+        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout',
+            $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/', $this->sp);
+        $this->mel->initialize($this->modx->context->key);
     }
 
     abstract public function run();

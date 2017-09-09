@@ -1,7 +1,6 @@
 <?php
 /** @var modX $modx */
 /** @var array $sources */
-
 $menus = array();
 $tmp = array(
     'modextralayout' => array(
