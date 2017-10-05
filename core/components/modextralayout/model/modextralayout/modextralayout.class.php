@@ -10,6 +10,8 @@ class modExtraLayout
     public $tools;
     /** @var pdoTools $pdoTools */
     public $pdoTools;
+    /** @var pdoFetch $pdoFetch */
+    public $pdoFetch;
 
     /**
      * @param modX  $modx
@@ -63,6 +65,9 @@ class modExtraLayout
         $this->getTools();
         if ($pdoTools = $this->getPdoTools()) {
             $pdoTools->setConfig($this->config);
+        }
+        if ($pdoFetch = $this->getPdoFetch()) {
+            $pdoFetch->setConfig($this->config);
         }
 
         if (empty($this->initialized[$ctx])) {
@@ -143,5 +148,17 @@ class modExtraLayout
         }
 
         return $this->pdoTools;
+    }
+
+    /**
+     * @return pdoFetch
+     */
+    public function getPdoFetch()
+    {
+        if (class_exists('pdoFetch') && !is_object($this->pdoFetch)) {
+            $this->pdoFetch = $this->modx->getService('pdoFetch');
+        }
+
+        return $this->pdoFetch;
     }
 }

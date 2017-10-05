@@ -7,7 +7,11 @@ $tmp = array(
         'file' => 'system',
         'description' => '',
         'events' => array(
+            // MODX
             'OnMODXInit' => array(),
+
+            // pdoTools
+            'pdoToolsOnFenomInit' => array(),
         ),
     ),
 );
