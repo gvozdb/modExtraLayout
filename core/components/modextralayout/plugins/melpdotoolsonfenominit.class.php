@@ -77,20 +77,23 @@ class melPdoToolsOnFenomInit extends melPlugin
     public function modifiers()
     {
         /** @var MobileDetect $md */
-        if ($md = $this->modx->getService('mobiledetect', 'MobileDetect', MODX_CORE_PATH . 'components/mobiledetect/')) {
-            $key = $md->config['force_browser_variable'];
-            $device = !empty($_GET) && array_key_exists($key, $_GET) ? $this->modx->stripTags($_GET[$key]) : '';
+        $path = MODX_CORE_PATH . 'components/mobiledetect/';
+        if (is_dir($path)) {
+            if ($md = $this->modx->getService('mobiledetect', 'MobileDetect', $path)) {
+                $key = $md->config['force_browser_variable'];
+                $device = !empty($_GET) && array_key_exists($key, $_GET) ? $this->modx->stripTags($_GET[$key]) : '';
 
-            if (empty($device)) {
-                $detector = $md->getDetector();
-                $device = ($detector->isMobile() ? ($detector->isTablet() ? 'tablet' : 'mobile') : 'standard');
-                $md->saveSettings($device);
+                if (empty($device)) {
+                    $detector = $md->getDetector();
+                    $device = ($detector->isMobile() ? ($detector->isTablet() ? 'tablet' : 'mobile') : 'standard');
+                    $md->saveSettings($device);
+                }
+
+                // usage: {if ('standard' | detector) || ('tablet' | detector) || ('mobile' | detector)}{/if}
+                $this->fenom->addModifier('detector', function ($value) use ($device) {
+                    return $value == $device;
+                });
             }
-
-            // usage: {if ('standard' | detector) || ('tablet' | detector) || ('mobile' | detector)}{/if}
-            $this->fenom->addModifier('detector', function ($value) use ($device) {
-                return $value == $device;
-            });
         }
 
         // usage: {'value_to_log' | log}
