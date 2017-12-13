@@ -38,6 +38,11 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
      */
     public function beforeSet()
     {
+        if (($tmp = $this->prepareProperties()) !== true) {
+            return $tmp;
+        }
+        unset($tmp);
+
         // Проверяем на заполненность
         $required = array(
             'group',
@@ -53,6 +58,28 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
         $this->mel->tools->checkProcessorUnique('', 0, $this, $unique, 'mel_err_unique');
 
         return parent::beforeSet();
+    }
+
+    /**
+     * @return string|bool
+     */
+    public function prepareProperties()
+    {
+        $properties = $this->getProperties();
+        // return print_r($properties, 1);
+
+        // Вычисляем позицию
+        // $properties['idx'] = $this->modx->getCount($this->classKey, array(
+        //     'object_id' => (int)$this->getProperty('object_id')
+        // )); // Для группировки по родителю
+        $properties['idx'] = $this->modx->getCount($this->classKey, array('id:!=' => 0));
+        ++$properties['idx'];
+
+        $this->setProperties($properties);
+
+        // return print_r($properties, 1);
+
+        return true;
     }
 }
 
