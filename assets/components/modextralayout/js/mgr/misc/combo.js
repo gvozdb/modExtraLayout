@@ -122,7 +122,7 @@ modExtraLayout.combo.Group = function (config) {
         baseParams: {
             action: 'mgr/combo/getgroups',
             filter: config['filter'] || 0,
-            notempty: config['notempty'] || 1,
+            notempty: config['notempty'] || 1
         },
         pageSize: 20,
         typeAhead: false,
