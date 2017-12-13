@@ -4,7 +4,7 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
 {
     public $objectType = 'melObject';
     public $classKey = 'melObject';
-    public $defaultSortField = 'id';
+    public $defaultSortField = 'idx';
     public $defaultSortDirection = 'DESC';
     public $permission = 'list';
 
@@ -75,11 +75,23 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
-        $array = $object->toArray();
+        $data = $object->toArray();
 
         // Кнопки
-        $array['actions'] = array();
-        $array['actions'][] = array(
+        $data['actions'] = $this->getActions($data);
+
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function getActions(array $data)
+    {
+        $actions = array();
+        $actions[] = array(
             'cls' => '',
             'icon' => 'icon icon-edit',
             'title' => $this->modx->lexicon('mel_button_update'),
@@ -87,8 +99,8 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
             'button' => true,
             'menu' => true,
         );
-        if (!$array['active']) {
-            $array['actions'][] = array(
+        if (!$data['active']) {
+            $actions[] = array(
                 'cls' => '',
                 'icon' => 'icon icon-toggle-on action-green',
                 'title' => $this->modx->lexicon('mel_button_enable'),
@@ -98,7 +110,7 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
                 'menu' => true,
             );
         } else {
-            $array['actions'][] = array(
+            $actions[] = array(
                 'cls' => '',
                 'icon' => 'icon icon-toggle-off action-red',
                 'title' => $this->modx->lexicon('mel_button_disable'),
@@ -108,7 +120,7 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
                 'menu' => true,
             );
         }
-        $array['actions'][] = array(
+        $actions[] = array(
             'cls' => '',
             'icon' => 'icon icon-trash-o action-red',
             'title' => $this->modx->lexicon('mel_button_remove'),
@@ -118,7 +130,7 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
             'menu' => true,
         );
 
-        return $array;
+        return $actions;
     }
 }
 

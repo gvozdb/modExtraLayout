@@ -7,11 +7,14 @@ modExtraLayout.grid.Objects = function (config) {
     Ext.applyIf(config, {
         baseParams: {
             action: config['actionPrefix'] + 'getlist',
-            sort: 'id',
+            sort: 'idx',
             dir: 'DESC',
         },
         multi_select: true,
         // pageSize: Math.round(MODx.config['default_per_page'] / 2),
+        enableDragDrop: true,
+        ddGroup: config['id'],
+        ddAction: config['actionPrefix'] + 'sort',
     });
     modExtraLayout.grid.Objects.superclass.constructor.call(this, config);
 };
@@ -19,6 +22,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
     getFields: function (config) {
         return [
             'id',
+            'idx',
             'parent_formatted',
             'group',
             'name',
@@ -32,6 +36,13 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         return [{
             header: _('mel_grid_id'),
             dataIndex: 'id',
+            width: 70,
+            sortable: true,
+            fixed: true,
+            resizable: false,
+        }, {
+            header: _('mel_grid_idx'),
+            dataIndex: 'idx',
             width: 70,
             sortable: true,
             fixed: true,
@@ -122,7 +133,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         w.setValues({
             active: true,
         });
-        w.show(e.target);
+        w.show(e['target']);
     },
 
     updateObject: function (btn, e, row, activeTab) {
@@ -146,6 +157,8 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             listeners: {
                 success: {
                     fn: function (r) {
+                        var values = r['object'];
+
                         var w = MODx.load({
                             xtype: 'mel-window-object-update',
                             id: Ext.id(),
@@ -162,8 +175,8 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
                             },
                         });
                         w.reset();
-                        w.setValues(r.object);
-                        w.show(e.target);
+                        w.setValues(values);
+                        w.show(e['target']);
                     }, scope: this
                 },
                 failure: {fn: this._listenerHandler, scope: this},

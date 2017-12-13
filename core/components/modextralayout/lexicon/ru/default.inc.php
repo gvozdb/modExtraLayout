@@ -11,6 +11,7 @@ $_lang['mel_tab_main'] = 'Основное';
 
 // Названия столбцов
 $_lang['mel_grid_id'] = 'ID';
+$_lang['mel_grid_idx'] = 'idx';
 $_lang['mel_grid_actions'] = 'Действия';
 $_lang['mel_grid_parent'] = 'Родительский ресурс';
 $_lang['mel_grid_group'] = 'Группа';

@@ -94,6 +94,11 @@ modExtraLayout.combo.Parent = function (config) {
         ),
     });
     modExtraLayout.combo.Parent.superclass.constructor.call(this, config);
+
+    // Обновляем список при открытии
+    this.on('expand', function () {
+        this.getStore().load();
+    }, this);
 };
 Ext.extend(modExtraLayout.combo.Parent, MODx.combo.ComboBox);
 Ext.reg('mel-combo-parent', modExtraLayout.combo.Parent);
@@ -134,6 +139,11 @@ modExtraLayout.combo.Group = function (config) {
         ),
     });
     modExtraLayout.combo.Group.superclass.constructor.call(this, config);
+
+    // Обновляем список при открытии
+    this.on('expand', function () {
+        this.getStore().load();
+    }, this);
 };
 Ext.extend(modExtraLayout.combo.Group, MODx.combo.ComboBox);
 Ext.reg('mel-combo-group', modExtraLayout.combo.Group);

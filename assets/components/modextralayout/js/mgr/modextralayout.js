@@ -8,6 +8,7 @@ Ext.extend(modExtraLayout, Ext.Component, {
     grid: {},
     tree: {},
     panel: {},
+    formpanel: {},
     combo: {},
     config: {},
     view: {},
