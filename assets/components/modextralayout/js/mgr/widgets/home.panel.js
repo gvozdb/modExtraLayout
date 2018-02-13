@@ -13,6 +13,7 @@ modExtraLayout.panel.Home = function (config) {
             defaults: {border: false, autoHeight: true},
             border: true,
             hideMode: 'offsets',
+            enableTabScroll: false,
             items: [{
                 title: _('mel_tab_objects'),
                 layout: 'anchor',

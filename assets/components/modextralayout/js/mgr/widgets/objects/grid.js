@@ -120,12 +120,8 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             xtype: 'mel-window-object-create',
             id: Ext.id(),
             listeners: {
-                success: {
-                    fn: function () {
-                        this.refresh();
-                    },
-                    scope: this
-                },
+                success: {fn: this._listenerRefresh, scope: this},
+                // hide: {fn: this._listenerRefresh, scope: this},
                 failure: {fn: this._listenerHandler, scope: this},
             },
         });
@@ -165,12 +161,8 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
                             record: r,
                             activeTab: activeTab,
                             listeners: {
-                                success: {
-                                    fn: function () {
-                                        this.refresh();
-                                    },
-                                    scope: this
-                                },
+                                success: {fn: this._listenerRefresh, scope: this},
+                                // hide: {fn: this._listenerRefresh, scope: this},
                                 failure: {fn: this._listenerHandler, scope: this},
                             },
                         });

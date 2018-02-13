@@ -321,5 +321,13 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
             MODx.msg.alert(_(success ? 'success' : 'failure'), message);
         }
     },
+
+    _listenerRefresh: function (resp, callback) {
+        if (typeof(callback) == 'function') {
+            callback(resp);
+        }
+
+        this.refresh();
+    },
 });
 Ext.reg('mel-grid-default', modExtraLayout.grid.Default);
