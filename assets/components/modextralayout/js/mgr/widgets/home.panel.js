@@ -14,6 +14,12 @@ modExtraLayout.panel.Home = function (config) {
             border: true,
             hideMode: 'offsets',
             enableTabScroll: false,
+            /*stateful: true,
+            stateId: 'modextra-panel-home',
+            stateEvents: ['tabchange'],
+            getState: function () {
+                return {activeTab: this.items.indexOf(this.getActiveTab())};
+            },*/
             items: [{
                 title: _('mel_tab_objects'),
                 layout: 'anchor',
