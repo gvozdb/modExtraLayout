@@ -78,7 +78,7 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
             sortable: false,
             fixed: true,
             resizable: false,
-            renderer: modExtraLayout.utils.renderActions,
+            renderer: modExtraLayout.renderer['Actions'],
         }];
     },
 

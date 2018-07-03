@@ -74,7 +74,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             sortable: true,
             fixed: true,
             resizable: false,
-            renderer: modExtraLayout.utils.renderBoolean,
+            renderer: modExtraLayout.renderer['Boolean'],
         }, {
             header: _('mel_grid_actions'),
             dataIndex: 'actions',
@@ -83,7 +83,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             sortable: false,
             fixed: true,
             resizable: false,
-            renderer: modExtraLayout.utils.renderActions,
+            renderer: modExtraLayout.renderer['Actions'],
         }];
     },
 

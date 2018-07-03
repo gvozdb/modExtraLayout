@@ -51,28 +51,28 @@
     text-align: center;
 }
 
-ul.mel-row-actions {
+ul.mel-grid__row-actions {
     display: inline-block;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-ul.mel-row-actions li {
+ul.mel-grid__row-actions li {
     float: left;
 }
 
-ul.mel-row-actions .btn {
+ul.mel-grid__row-actions .btn {
     padding: 2px;
     margin-right: 2px;
     min-width: 26px;
 }
 
-ul.mel-row-actions .actions-menu {
+ul.mel-grid__row-actions .actions-menu {
     width: 40px;
 }
 
-ul.mel-row-actions .actions-menu:after {
+ul.mel-grid__row-actions .actions-menu:after {
     content: " \f107";
 }
 
