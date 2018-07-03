@@ -12,8 +12,9 @@ Ext.extend(modExtraLayout, Ext.Component, {
     combo: {},
     config: {},
     view: {},
-    utils: {},
     ux: {},
+    utils: {},
+    renderer: {},
     fields: {},
 });
 Ext.reg('modextralayout', modExtraLayout);
