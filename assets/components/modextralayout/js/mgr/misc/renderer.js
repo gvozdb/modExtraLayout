@@ -43,7 +43,7 @@ modExtraLayout.renderer.Actions = function (value, props, row) {
     );
 };
 
-modExtraLayout.renderer.GridCustomField = function (val, props, row) {
+modExtraLayout.renderer.CustomField = function (val, props, row) {
     var rec = row['json'];
     return String.format(
         '<div class="mel-grid__row-customfield">{0}</div>',
