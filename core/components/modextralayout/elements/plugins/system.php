@@ -3,7 +3,7 @@
 /** @var modExtraLayout $mel */
 $mel = $modx->getService('modextralayout', 'modExtraLayout',
     $modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/');
-$className = 'mel' . $modx->event->name;
+$className = 'mel' . ucfirst($modx->event->name);
 $modx->loadClass('melPlugin', $mel->config['pluginsPath'], true, true);
 $modx->loadClass($className, $mel->config['pluginsPath'], true, true);
 if (class_exists($className)) {
