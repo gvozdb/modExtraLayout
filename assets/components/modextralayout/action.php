@@ -1,12 +1,16 @@
 <?php
-
 /** @var modX $modx */
-/** @var modExtraLayout $mel */
-
-// Подключаем MODX
 if (!isset($modx)) {
     define('MODX_API_MODE', true);
-    require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/index.php';
+    while (!isset($modx) && ($i = isset($i) ? --$i : 10)) {
+        if (($file = dirname(!empty($file) ? dirname($file) : __FILE__) . '/index.php') AND !file_exists($file)) {
+            continue;
+        }
+        require_once $file;
+    }
+    if (!is_object($modx)) {
+        exit('{"success":false,"message":"Access denied"}');
+    }
     $modx->getService('error', 'error.modError');
     $modx->getRequest();
     $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
@@ -19,7 +23,7 @@ if ($ctx != $modx->context->get('key')) {
     $modx->switchContext($ctx);
 }
 
-// Подключаем класс modExtraLayout
+/** @var modExtraLayout $mel */
 if (!$mel = $modx->getService('modextralayout', 'modExtraLayout', MODX_CORE_PATH . 'components/modextralayout/model/modextralayout/')) {
     exit($modx->toJSON(array('success' => false, 'message' => 'Class modExtraLayout not found')));
 }
