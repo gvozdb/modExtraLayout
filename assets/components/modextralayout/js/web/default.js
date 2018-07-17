@@ -1,33 +1,30 @@
 (function () {
     function modExtraLayout(options) {
-        //
-        ['assetsUrl', 'actionUrl'].forEach(function (val, i, arr) {
+        ['actionUrl'].forEach(function (val, i, arr) {
             if (typeof(options[val]) == 'undefined' || options[val] == '') {
                 console.error('[modExtraLayout] Bad config.', arr);
                 return;
             }
         });
-
-        //
         var self = this;
-        self.initialized = false;
-        self.running = false;
+        self['initialized'] = false;
+        self['running'] = false;
 
         /**
          * Инициализирует класс.
          * @returns {boolean}
          */
         self.initialize = function (options) {
-            if (!self.initialized) {
+            if (!self['initialized']) {
                 //
-                self.config = {};
-                self.classes = {};
-                self.selectors = {};
-                self.sendDataTemplate = {
+                self['config'] = {};
+                self['classes'] = {};
+                self['selectors'] = {};
+                self['sendDataTemplate'] = {
                     $element: null,
                     params: null,
                 };
-                self.sendData = $.extend({}, self['sendDataTemplate']);
+                self['sendData'] = $.extend({}, self['sendDataTemplate']);
 
                 //
                 Object.keys(options).forEach(function (key) {
@@ -46,9 +43,9 @@
                     }
                 });
             }
-            self.initialized = true;
+            self['initialized'] = true;
 
-            return self.initialized;
+            return self['initialized'];
         };
 
         /**
@@ -56,7 +53,7 @@
          * @returns {boolean}
          */
         self.run = function () {
-            if (self.initialized && !self.running) {
+            if (self['initialized'] && !self['running']) {
                 /**
                  *
                  */
@@ -102,9 +99,9 @@
                 //     }
                 // });
             }
-            self.running = true;
+            self['running'] = true;
 
-            return self.running;
+            return self['running'];
         };
 
         /**
@@ -112,7 +109,6 @@
          * @type {object}
          */
         self.Submit = {
-            // status: false,
             before: function () {
                 /**
                  *
@@ -213,13 +209,6 @@
 
                     if (response['success']) {
                         self.Message.success(response['message']);
-
-                        /**
-                         *
-                         */
-                        // if (self.sendData.params['action'] == 'object/vote') {
-                        //     //
-                        // }
 
                         // Запускаем колбек
                         if (callback && $.isFunction(callback)) {
