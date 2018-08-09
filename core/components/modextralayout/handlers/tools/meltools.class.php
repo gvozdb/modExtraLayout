@@ -310,6 +310,34 @@ class melTools
     }
 
     /**
+     * Чистит папку в файловой системе
+     *
+     * @param string $path
+     * @param bool   $remove_self
+     */
+    public function cleanDir($path, $remove_self = false)
+    {
+        if (is_dir($path)) {
+            $files = scandir($path);
+            foreach ($files as $v) {
+                if ($v != '.' && $v != '..') {
+                    if (filetype($path . '/' . $v) == 'dir') {
+                        $this->cleanDir($path . '/' . $v, true);
+                    } else {
+                        unlink($path . '/' . $v);
+                    }
+                }
+            }
+            reset($files);
+            if ($remove_self) {
+                rmdir($path);
+            }
+        } elseif (!$remove_self) {
+            mkdir($path, 0755, true);
+        }
+    }
+
+    /**
      * @param string $path
      *
      * @return string
