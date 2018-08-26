@@ -9,16 +9,14 @@ class melTools
     protected $mel;
 
     /**
-     * @param $modx
-     * @param $config
+     * @param modExtraLayout $mel
+     * @param array          $config
      */
-    public function __construct(modX &$modx, &$config)
+    function __construct(modExtraLayout &$mel, $config = array())
     {
-        $this->modx = &$modx;
-        $this->config = &$config;
-
-        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout',
-            $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/');
+        $this->mel = &$mel;
+        $this->modx = &$this->mel->modx;
+        $this->config = $config;
     }
 
     /**

@@ -125,13 +125,15 @@ class modExtraLayout
     }
 
     /**
+     * @param array $config
+     *
      * @return melTools
      */
-    public function getTools()
+    public function getTools(array $config = array())
     {
         if (!is_object($this->tools)) {
             if ($class = $this->modx->loadClass('tools.melTools', $this->config['handlersPath'], true, true)) {
-                $this->tools = new $class($this->modx, $this->config);
+                $this->tools = new $class($this, $config);
             }
         }
 
