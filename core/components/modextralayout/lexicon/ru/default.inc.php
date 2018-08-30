@@ -17,6 +17,7 @@ $_lang['mel_grid_parent'] = 'Родительский ресурс';
 $_lang['mel_grid_group'] = 'Группа';
 $_lang['mel_grid_name'] = 'Название';
 $_lang['mel_grid_description'] = 'Описание';
+$_lang['mel_grid_createdon'] = 'Создано';
 $_lang['mel_grid_active'] = 'Вкл';
 
 // Название полей
@@ -24,6 +25,7 @@ $_lang['mel_field_parent'] = 'Родительский ресурс';
 $_lang['mel_field_group'] = 'Группа';
 $_lang['mel_field_name'] = 'Название';
 $_lang['mel_field_description'] = 'Описание';
+$_lang['mel_field_createdon'] = 'Создано';
 $_lang['mel_field_active'] = 'Включено';
 
 // Подтверждения

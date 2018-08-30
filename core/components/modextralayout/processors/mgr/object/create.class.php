@@ -75,6 +75,9 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
         $properties['idx'] = $this->modx->getCount($this->classKey, array('id:!=' => 0));
         ++$properties['idx'];
 
+        // Создано
+        $properties['createdon'] = $properties['createdon'] ?: time();
+
         $this->setProperties($properties);
 
         // return print_r($properties, 1);

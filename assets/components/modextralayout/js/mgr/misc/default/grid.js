@@ -89,7 +89,7 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
     getSearchField: function (config, width) {
         return {
             xtype: 'mel-field-search',
-            id: config.id + '__tbar-search',
+            id: config['id'] + '__tbar-search',
             filterName: 'query',
             width: width || 250,
             listeners: {

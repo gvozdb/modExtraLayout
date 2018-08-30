@@ -55,6 +55,28 @@ Ext.reg('mel-field-search', modExtraLayout.combo.Search);
  * @param config
  * @constructor
  */
+modExtraLayout.combo.DateTime = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        timePosition: 'right',
+        allowBlank: true,
+        hiddenFormat: 'U', // 'Y-m-d H:i:s',
+        dateFormat: MODx.config['manager_date_format'],
+        timeFormat: MODx.config['manager_time_format'],
+        dateWidth: 120,
+        timeWidth: 120,
+    });
+    modExtraLayout.combo.DateTime.superclass.constructor.call(this, config);
+};
+Ext.extend(modExtraLayout.combo.DateTime, Ext.ux.form.DateTime);
+Ext.reg('mel-datetime', modExtraLayout.combo.DateTime);
+
+
+/**
+ *
+ * @param config
+ * @constructor
+ */
 modExtraLayout.combo.Parent = function (config) {
     config = config || {};
     Ext.applyIf(config, {

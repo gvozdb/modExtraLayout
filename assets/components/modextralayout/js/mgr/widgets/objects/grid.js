@@ -1,7 +1,7 @@
 modExtraLayout.grid.Objects = function (config) {
     config = config || {};
-    if (!config.id) {
-        config.id = 'mel-grid-objects';
+    if (!config['id']) {
+        config['id'] = 'mel-grid-objects';
     }
     config['actionPrefix'] = 'mgr/object/';
     Ext.applyIf(config, {
@@ -27,6 +27,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             'group',
             'name',
             'description',
+            'createdon',
             'active',
             'actions',
         ];
@@ -68,6 +69,15 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             width: 400,
             sortable: false,
         }, {
+            header: _('mel_grid_createdon'),
+            dataIndex: 'createdon',
+            width: 130,
+            sortable: true,
+            fixed: true,
+            resizable: false,
+            hidden: false,
+            renderer: modExtraLayout.renderer['DateTime'],
+        }, {
             header: _('mel_grid_active'),
             dataIndex: 'active',
             width: 70,
@@ -95,7 +105,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             scope: this,
         }, '->', {
             xtype: 'mel-combo-group',
-            id: config.id + '-group',
+            id: config['id'] + '-group',
             filterName: 'group',
             emptyText: _('mel_grid_group') + '...',
             width: 150,
@@ -154,6 +164,11 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
                 success: {
                     fn: function (r) {
                         var values = r['object'];
+                        ['createdon', 'updatedon'].forEach(function (k) {
+                            if (values[k]) {
+                                values[k] = '' + values[k];
+                            }
+                        });
 
                         var w = MODx.load({
                             xtype: 'mel-window-object-update',

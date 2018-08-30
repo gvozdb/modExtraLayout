@@ -4,6 +4,20 @@ modExtraLayout.renderer.Boolean = function (val) {
         : String.format('<span class="red">{0}</span>', _('no'));
 };
 
+modExtraLayout.renderer.DateTime = function (string) {
+    if (string && string != '0000-00-00 00:00:00' && string != '-1-11-30 00:00:00' && string != 0) {
+        var date = /^[0-9]+$/.test(string)
+            ? new Date(string * 1000)
+            : new Date(string.replace(/(\d+)-(\d+)-(\d+)/, '$2/$3/$1'));
+        var format = MODx.config['mel_backend_datetime_format'];
+        if (!format) {
+            format = '%d.%m.%Y <span class="action-gray">%H:%M</span>';
+        }
+        return strftime(format, date);
+    }
+    return '';
+};
+
 modExtraLayout.renderer.Actions = function (value, props, row) {
     var res = [];
     var cls, icon, title, action, item;

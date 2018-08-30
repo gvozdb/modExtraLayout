@@ -9,6 +9,12 @@ $tmp = array(
         //     'value' => true,
         // ),
     ),
+    'backend' => array(
+        // 'backend_datetime_format' => array(
+        //     'xtype' => 'textfield',
+        //     'value' => '%d.%m.%Y <span class="action-gray">%H:%M</span>',
+        // ),
+    ),
     'frontend' => array(
         'frontend_css' => array(
             'xtype' => 'textfield',

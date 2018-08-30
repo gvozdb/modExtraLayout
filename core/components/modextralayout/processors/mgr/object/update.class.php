@@ -41,6 +41,10 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
         if (!$id = (int)$this->getProperty('id')) {
             return $this->modx->lexicon('mel_err_ns');
         }
+        if (($tmp = $this->prepareProperties()) !== true) {
+            return $tmp;
+        }
+        unset($tmp);
 
         // Проверяем на заполненность
         $required = array(
@@ -57,6 +61,24 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
         $this->mel->tools->checkProcessorUnique('', 0, $this, $unique, 'mel_err_unique');
 
         return parent::beforeSet();
+    }
+
+    /**
+     * @return string|bool
+     */
+    public function prepareProperties()
+    {
+        $properties = $this->getProperties();
+        // return print_r($properties, 1);
+
+        // Создано
+        $properties['createdon'] = $properties['createdon'] ?: time();
+
+        $this->setProperties($properties);
+
+        // return print_r($properties, 1);
+
+        return true;
     }
 }
 

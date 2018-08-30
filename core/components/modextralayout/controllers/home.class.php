@@ -48,6 +48,8 @@ class modExtraLayoutHomeManagerController extends modExtraManagerController
         $this->addCss($this->mel->config['cssUrl'] . 'mgr/main.css');
         $this->addCss($this->mel->config['cssUrl'] . 'mgr/bootstrap.buttons.css');
 
+        $this->addJavascript($this->mel->config['jsUrl'] . 'vendor/strftime.min.js');
+
         $this->addJavascript($this->mel->config['jsUrl'] . 'mgr/modextralayout.js');
 
         $this->addJavascript($this->mel->config['jsUrl'] . 'mgr/misc/ux.js');
