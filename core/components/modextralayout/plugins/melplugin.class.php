@@ -9,12 +9,15 @@ abstract class melPlugin
     /** @var array $sp */
     protected $sp;
 
-    public function __construct(&$modx, &$sp)
+    /**
+     * @param modExtraLayout $mel
+     * @param array          $sp
+     */
+    public function __construct(modExtraLayout &$mel, array &$sp)
     {
+        $this->mel = &$mel;
+        $this->modx = &$this->mel->modx;
         $this->sp = &$sp;
-        $this->modx = &$modx;
-        $this->mel = $this->modx->getService('modextralayout', 'modExtraLayout',
-            $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/', $this->sp);
         $this->mel->initialize($this->modx->context->key);
     }
 

@@ -48,7 +48,7 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
 
         // Проверяем на заполненность
         $required = array(
-            'group',
+            // 'group',
             'parent',
             'name:mel_err_required_name',
         );

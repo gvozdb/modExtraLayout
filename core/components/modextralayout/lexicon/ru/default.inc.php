@@ -65,5 +65,11 @@ $_lang['mel_message_'] = '';
 // ComboBox
 $_lang['mel_combo_list_empty'] = 'Выпадающий список пуст...';
 
+// Группы
+$_lang['mel_group_group_1'] = 'Group 1';
+$_lang['mel_group_group_2'] = 'Group 2';
+$_lang['mel_group_group_3'] = 'Group 3';
+$_lang['mel_group_group_4'] = 'Group 4';
+
 // Другое
 $_lang['mel_'] = '';

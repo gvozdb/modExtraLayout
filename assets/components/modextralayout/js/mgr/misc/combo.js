@@ -153,7 +153,7 @@ modExtraLayout.combo.Group = function (config) {
         listEmptyText: '<div style="padding: 7px;">' + _('mel_combo_list_empty') + '</div>',
         tpl: new Ext.XTemplate('\
             <tpl for="."><div class="x-combo-list-item mel-combo__list-item">\
-                <span>\
+                <span class="mel-combo__row-group mel-combo__row-{value}">\
                     {display}\
                 </span>\
             </div></tpl>',

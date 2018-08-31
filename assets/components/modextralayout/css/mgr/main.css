@@ -204,3 +204,43 @@ a.x-menu-item .x-menu-item-text .icon {
     border-color: #3697cd;
     color: #fff;
 }
+
+/* Grid Groups */
+.mel-grid__row-group {
+}
+
+.mel-grid__row-group_1 {
+    color: #3a960d !important;
+}
+
+.mel-grid__row-group_2 {
+    color: #ec1049 !important;
+}
+
+.mel-grid__row-group_3 {
+    color: #ff751f !important;
+}
+
+.mel-grid__row-group_4 {
+    color: dimgray !important;
+}
+
+/* Combo Groups */
+.mel-combo__row-group {
+}
+
+.mel-combo__row-group_1 {
+    color: #3a960d !important;
+}
+
+.mel-combo__row-group_2 {
+    color: #ec1049 !important;
+}
+
+.mel-combo__row-group_3 {
+    color: #ff751f !important;
+}
+
+.mel-combo__row-group_4 {
+    color: dimgray !important;
+}

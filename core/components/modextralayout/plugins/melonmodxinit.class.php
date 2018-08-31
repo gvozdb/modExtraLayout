@@ -26,7 +26,7 @@ class melOnMODXInit extends melPlugin
             ),
         ));
     }
-    
+
     /**
      * @param array $map
      *

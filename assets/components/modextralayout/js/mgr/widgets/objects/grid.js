@@ -37,14 +37,14 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         return [{
             header: _('mel_grid_id'),
             dataIndex: 'id',
-            width: 70,
+            width: 50,
             sortable: true,
             fixed: true,
             resizable: false,
         }, {
             header: _('mel_grid_idx'),
             dataIndex: 'idx',
-            width: 70,
+            width: 50,
             sortable: true,
             fixed: true,
             resizable: false,
@@ -58,6 +58,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             dataIndex: 'group',
             width: 100,
             sortable: true,
+            renderer: modExtraLayout.renderer['Group'],
         }, {
             header: _('mel_grid_name'),
             dataIndex: 'name',
@@ -80,7 +81,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         }, {
             header: _('mel_grid_active'),
             dataIndex: 'active',
-            width: 70,
+            width: 60,
             sortable: true,
             fixed: true,
             resizable: false,
@@ -89,7 +90,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             header: _('mel_grid_actions'),
             dataIndex: 'actions',
             id: 'actions',
-            width: 200,
+            width: 130,
             sortable: false,
             fixed: true,
             resizable: false,

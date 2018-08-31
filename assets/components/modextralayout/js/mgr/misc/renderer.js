@@ -64,3 +64,12 @@ modExtraLayout.renderer.CustomField = function (val, props, row) {
         rec['customfield']
     );
 };
+
+modExtraLayout.renderer.Group = function (val, props, row) {
+    var rec = row['json'];
+    return String.format(
+        '<div class="mel-grid__row-group mel-grid__row-{0}">{1}</div>',
+        rec['group'] || '',
+        rec['group'] ? _('mel_group_' + rec['group']) : ''
+    );
+};

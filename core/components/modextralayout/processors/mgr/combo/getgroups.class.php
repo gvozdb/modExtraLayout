@@ -37,10 +37,10 @@ class melComboGroupGetListProcessor extends modProcessor
 
         $rows = array(
             '',
-            'Group 1',
-            'Group 2',
-            'Group 3',
-            'Group 4',
+            'group_1',
+            'group_2',
+            'group_3',
+            'group_4',
         );
         foreach ($rows as $v) {
             $tmp = null;
@@ -53,8 +53,8 @@ class melComboGroupGetListProcessor extends modProcessor
                 }
             } else {
                 $tmp = array(
-                    'display' => $v,
-                    'value' => preg_replace('/\s+/', '_', strtolower($v)),
+                    'display' => $this->modx->lexicon('mel_group_' . $v),
+                    'value' => strtolower($v),
                 );
             }
             if (!empty($tmp)) {
