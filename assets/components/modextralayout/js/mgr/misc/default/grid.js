@@ -306,15 +306,20 @@ Ext.extend(modExtraLayout.grid.Default, MODx.grid.Grid, {
         if (typeof(callback) == 'function') {
             callback(resp);
         }
+        // console.log('resp', resp);
 
         var success = false;
         var message = '';
-        if (typeof(resp['message']) != 'undefined') {
+        if ('a' in resp && 'response' in resp['a']/* && 'result' in resp['a']*/) {
+            if (resp.a.response['status'] != 200) {
+                message = resp.a.response['status'] + ': ' + resp.a.response['statusText'];
+            } else {
+                success = resp.a.result['success'];
+                message = resp.a.result['message'];
+            }
+        } else {
             success = resp['success'];
             message = resp['message'];
-        } else if (typeof(resp.a.result['message']) != 'undefined') {
-            success = resp.a.result['success'];
-            message = resp.a.result['message'];
         }
 
         if (message) {
