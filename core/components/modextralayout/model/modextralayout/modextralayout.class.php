@@ -36,6 +36,7 @@ class modExtraLayout
 
             'corePath' => $corePath,
             'modelPath' => $corePath . 'model/',
+            'vendorPath' => $corePath . 'vendor/',
             'pluginsPath' => $corePath . 'plugins/',
             'handlersPath' => $corePath . 'handlers/',
             'chunksPath' => $corePath . 'elements/chunks/',
