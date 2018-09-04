@@ -16,9 +16,13 @@ class melObjectEnableProcessor extends modObjectProcessor
             return $this->failure($this->modx->lexicon('access_denied'));
         }
 
-        $ids = $this->modx->fromJSON($this->getProperty('ids'));
-        if (empty($ids)) {
-            return $this->failure($this->modx->lexicon('mel_err_ns'));
+        if ($ids = $this->getProperty('id')) {
+            $ids = array($ids);
+        } else {
+            $ids = $this->modx->fromJSON($this->getProperty('ids'));
+            if (empty($ids)) {
+                return $this->failure($this->modx->lexicon('mel_err_ns'));
+            }
         }
 
         foreach ($ids as $id) {
