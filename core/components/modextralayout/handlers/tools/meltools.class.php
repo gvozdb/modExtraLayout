@@ -285,10 +285,14 @@ class melTools
     /**
      * @param $json
      *
-     * @return int
+     * @return int|bool
      */
     public function isJSON($json)
     {
+        if (!is_string($json)) {
+            return false;
+        }
+
         $pcre_regex = '
             /
             (?(DEFINE)
