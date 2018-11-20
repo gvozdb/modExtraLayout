@@ -11,97 +11,102 @@
         self['running'] = false;
 
         /**
-         * Инициализирует класс.
-         * @returns {boolean}
+         * @type {object}
          */
-        self.initialize = function (options) {
-            if (!self['initialized']) {
-                //
-                self['config'] = {};
-                self['classes'] = {};
-                self['selectors'] = {};
-                self['sendDataTemplate'] = {
-                    $element: null,
-                    params: null,
-                };
-                self['sendData'] = $.extend({}, self['sendDataTemplate']);
+        self.Base = {
+            /**
+             * Инициализирует класс.
+             * @returns {boolean}
+             */
+            initialize: function (options) {
+                if (!self['initialized']) {
+                    //
+                    self['config'] = {};
+                    self['classes'] = {};
+                    self['selectors'] = {};
+                    self['sendDataTemplate'] = {
+                        $element: null,
+                        params: null,
+                    };
+                    self['sendData'] = $.extend({}, self['sendDataTemplate']);
 
-                //
-                Object.keys(options).forEach(function (key) {
-                    if (['selectors'].indexOf(key) !== -1) {
-                        return;
-                    }
-                    self.config[key] = options[key];
-                });
+                    //
+                    Object.keys(options).forEach(function (key) {
+                        if (['selectors'].indexOf(key) !== -1) {
+                            return;
+                        }
+                        self.config[key] = options[key];
+                    });
 
-                //
-                ['selectors'].forEach(function (key) {
-                    if (options[key]) {
-                        Object.keys(options[key]).forEach(function (i) {
-                            self.selectors[i] = options.selectors[i];
-                        });
-                    }
-                });
-            }
-            self['initialized'] = true;
+                    //
+                    ['selectors'].forEach(function (key) {
+                        if (options[key]) {
+                            Object.keys(options[key]).forEach(function (i) {
+                                self.selectors[i] = options.selectors[i];
+                            });
+                        }
+                    });
+                }
+                self['initialized'] = true;
 
-            return self['initialized'];
-        };
+                return self['initialized'];
+            },
 
-        /**
-         * Запускает основные действия.
-         * @returns {boolean}
-         */
-        self.run = function () {
-            if (self['initialized'] && !self['running']) {
-                /**
-                 *
-                 */
-                // $(document).on('click', self.selectors['voteButton'], function (e) {
-                //     e.preventDefault();
-                //
-                //     var $button = $(this);
-                //     var $object = $button.closest(self.selectors['voteObject']);
-                //     if ($object.length && $button.length) {
-                //         var object = $object.data('nkn-vote-object');
-                //         var value = $button.data('nkn-vote-value');
-                //         var sendData = $.extend({}, self['sendDataTemplate']);
-                //
-                //         // Готовим параметры запроса
-                //         sendData['$element'] = $button;
-                //         sendData['params'] = {
-                //             action: 'object/vote',
-                //             object: object,
-                //             value: value,
-                //         };
-                //
-                //         // Если уже есть активная кнопка - запомним в параметры
-                //         var $last = $object.find(self.selectors['voteButton']).filter('.' + self.classes['voteButtonActive']);
-                //         if ($last.length && !$last.data('nkn-vote-tmp')) {
-                //             console.log('$last', $last);
-                //             sendData['$last'] = $last;
-                //         }
-                //
-                //         // console.log(sendData);
-                //
-                //         // Шлём запрос
-                //         self.sendData = $.extend({}, sendData);
-                //         self.Submit.post();
-                //
-                //         // // Шлём запрос
-                //         // if (!self.Submit['status']) {
-                //         //     self.sendData = $.extend({}, sendData);
-                //         //     self.Submit.post();
-                //         // } else {
-                //         //     // Пишем в очередь
-                //         //     self.Queue.push(sendData);
-                //         // }
-                //     }
-                // });
-            }
-            self['running'] = true;
+            /**
+             * Запускает основные действия.
+             * @returns {boolean}
+             */
+            run: function () {
+                if (self['initialized'] && !self['running']) {
+                    /**
+                     *
+                     */
+                    // $(document).on('click', self.selectors['voteButton'], function (e) {
+                    //     e.preventDefault();
+                    //
+                    //     var $button = $(this);
+                    //     var $object = $button.closest(self.selectors['voteObject']);
+                    //     if ($object.length && $button.length) {
+                    //         var object = $object.data('nkn-vote-object');
+                    //         var value = $button.data('nkn-vote-value');
+                    //         var sendData = $.extend({}, self['sendDataTemplate']);
+                    //
+                    //         // Готовим параметры запроса
+                    //         sendData['$element'] = $button;
+                    //         sendData['params'] = {
+                    //             action: 'object/vote',
+                    //             object: object,
+                    //             value: value,
+                    //         };
+                    //
+                    //         // Если уже есть активная кнопка - запомним в параметры
+                    //         var $last = $object.find(self.selectors['voteButton']).filter('.' + self.classes['voteButtonActive']);
+                    //         if ($last.length && !$last.data('nkn-vote-tmp')) {
+                    //             console.log('$last', $last);
+                    //             sendData['$last'] = $last;
+                    //         }
+                    //
+                    //         // console.log(sendData);
+                    //
+                    //         // Шлём запрос
+                    //         self.sendData = $.extend({}, sendData);
+                    //         self.Submit.post();
+                    //
+                    //         // // Шлём запрос
+                    //         // if (!self.Submit['status']) {
+                    //         //     self.sendData = $.extend({}, sendData);
+                    //         //     self.Submit.post();
+                    //         // } else {
+                    //         //     // Пишем в очередь
+                    //         //     self.Queue.push(sendData);
+                    //         // }
+                    //     }
+                    // });
+                }
+                self['running'] = true;
 
-            return self['running'];
+                return self['running'];
+            },
         };
 
         /**
@@ -247,10 +252,10 @@
         /**
          * Initialize && Run!
          */
-        if (self.initialize(options)) {
-            self.run();
+        if (self.Base.initialize(options)) {
+            self.Base.run();
         }
     }
 
-    window.modExtraLayout = modExtraLayout;
+    window['modExtraLayout'] = modExtraLayout;
 })();
