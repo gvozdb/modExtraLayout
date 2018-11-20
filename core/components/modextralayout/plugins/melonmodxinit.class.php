@@ -1,12 +1,17 @@
 <?php
 
 /**
- * Расширяем нативный MAP массив
+ *
  */
 class melOnMODXInit extends melPlugin
 {
     public function run()
     {
+        // Чистим истёкшие регистры
+        $this->modx->getService('registry', 'registry.modRegistry');
+        $this->modx->removeCollection('registry.db.modDbRegisterMessage', array('expires:>' => 1, 'expires:<' => time()));
+
+        //
         $this->map(array(
             'modResource' => array(
                 'composites' => array(
@@ -28,6 +33,8 @@ class melOnMODXInit extends melPlugin
     }
 
     /**
+     * Расширяет нативный MAP массив
+     *
      * @param array $map
      *
      * @return bool
