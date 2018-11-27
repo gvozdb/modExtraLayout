@@ -28,8 +28,9 @@ $_lang['mel_field_description'] = 'Описание';
 $_lang['mel_field_createdon'] = 'Создано';
 $_lang['mel_field_active'] = 'Включено';
 
-// Подтверждения
-$_lang['mel_confirm_remove'] = 'Вы уверены, что хотите удалить объект(-ы)?';
+// Заголовки окон
+$_lang['mel_window_object_create'] = 'Добавить объект';
+$_lang['mel_window_object_update'] = 'Редактировать объект';
 
 // Кнопки
 $_lang['mel_button_create'] = 'Добавить';
@@ -41,9 +42,8 @@ $_lang['mel_button_disable_multiple'] = 'Выключить выбранное';
 $_lang['mel_button_remove'] = 'Удалить';
 $_lang['mel_button_remove_multiple'] = 'Удалить выбранное';
 
-// Заголовки окон
-$_lang['mel_window_object_create'] = 'Добавить объект';
-$_lang['mel_window_object_update'] = 'Редактировать объект';
+// Подтверждения
+$_lang['mel_confirm_remove'] = 'Вы уверены, что хотите удалить объект(-ы)?';
 
 // Ошибки конкретизированные
 $_lang['mel_err_required_name'] = 'Необходимо указать название.';
