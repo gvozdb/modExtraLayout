@@ -39,7 +39,7 @@ define('MODX_ASSETS_URL', MODX_BASE_URL . 'assets/');
 // define build options
 define('BUILD_MENU_UPDATE', true);
 define('BUILD_SETTING_UPDATE', false);
-define('BUILD_CHUNK_UPDATE', false);
+define('BUILD_CHUNK_UPDATE', (PKG_DEV_MODE ?: false));
 define('BUILD_SNIPPET_UPDATE', true);
 define('BUILD_PLUGIN_UPDATE', true);
 // define('BUILD_EVENT_UPDATE', true);
