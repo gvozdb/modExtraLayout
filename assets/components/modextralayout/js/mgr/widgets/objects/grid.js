@@ -144,14 +144,14 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
     },
 
     updateObject: function (btn, e, row, activeTab) {
-        if (typeof(row) != 'undefined') {
+        if (typeof(row) !== 'undefined') {
             this.menu.record = row.data;
         } else if (!this.menu.record) {
             return false;
         }
         var id = this.menu.record.id;
 
-        if (typeof(activeTab) == 'undefined') {
+        if (typeof(activeTab) === 'undefined') {
             activeTab = 0;
         }
 
