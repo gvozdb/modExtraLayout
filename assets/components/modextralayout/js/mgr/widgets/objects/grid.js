@@ -3,7 +3,7 @@ modExtraLayout.grid.Objects = function (config) {
     if (!config['id']) {
         config['id'] = 'mel-grid-objects';
     }
-    config['actionPrefix'] = 'mgr/object/';
+    config['actionPrefix'] = 'mgr/objects/';
     Ext.applyIf(config, {
         baseParams: {
             action: config['actionPrefix'] + 'getlist',
