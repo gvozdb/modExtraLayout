@@ -1,3 +1,4 @@
+{*@formatter:off*}
 <p>
     <strong>[[+name]]</strong> -
     <small>[[+description]]</small>
