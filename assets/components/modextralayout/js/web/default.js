@@ -109,7 +109,7 @@
         self.Submit = {
             timestamp: 0,
             post: function (beforeCallback, afterCallback) {
-                if (!self.sendData['params'] || !self.sendData.params['action']) {
+                if (!self.sendData['params']) {
                     return;
                 }
 
