@@ -1,6 +1,6 @@
 (function () {
     function modExtraLayout(options) {
-        var self = this;
+        let self = this;
         self['initialized'] = false;
         self['running'] = false;
         self['fatal'] = false;
@@ -29,7 +29,9 @@
                         postTimeout: 500, // замираем на пол секунды перед отсылкой запроса
                     };
                     self['classes'] = {};
-                    self['selectors'] = {};
+                    self['selectors'] = {
+                        form: '.js-mel-form',
+                    };
                     self['sendDataTemplate'] = {
                         $element: null,
                         params: null,
@@ -65,37 +67,33 @@
                     /**
                      *
                      */
-                    $(document).on('click', self.selectors['voteButton'], function (e) {
+                    $(document).on('submit', self.selectors['form'], function (e) {
                         e.preventDefault();
 
-                        var $button = $(this);
-                        var $object = $button.closest(self.selectors['voteObject']);
-                        if ($object.length && $button.length) {
-                            var object = $object.data('nkn-vote-object');
-                            var value = $button.data('nkn-vote-value');
+                        let data = $form.serializeArray();
+                        data.push({
+                            name: 'action',
+                            value: 'get/results',
+                        });
+                        // console.log('data', data);
 
-                            // Готовим параметры запроса
-                            var sendData = $.extend({}, self['sendDataTemplate']);
-                            sendData['$element'] = $button;
-                            sendData['params'] = {
-                                action: 'object/vote',
-                                object: object,
-                                value: value,
-                            };
-                            // console.log(sendData);
+                        // Готовим параметры запроса
+                        let sendData = $.extend({}, self['sendDataTemplate']);
+                        sendData['$element'] = $form;
+                        sendData['params'] = data;
+                        // console.log(sendData);
 
-                            // Колбеки
-                            var callbackBefore = function (response) {
-                                console.log('callbackBefore response', response);
-                            };
-                            var callbackAfter = function (response) {
-                                console.log('callbackAfter response', response);
-                            };
+                        // Колбеки
+                        let callbackBefore = function (response) {
+                            console.log('callbackBefore response', response);
+                        };
+                        let callbackAfter = function (response) {
+                            console.log('callbackAfter response', response);
+                        };
 
-                            // Шлём запрос
-                            self.sendData = $.extend({}, sendData);
-                            self.Submit.post(callbackBefore, callbackAfter);
-                        }
+                        // Шлём запрос
+                        self.sendData = $.extend({}, sendData);
+                        self.Submit.post(callbackBefore, callbackAfter);
                     });
                 }
                 self['running'] = true;
@@ -116,7 +114,7 @@
                 }
 
                 //
-                var _post = function (beforeCallback, afterCallback) {
+                let _post = function (beforeCallback, afterCallback) {
                     // Запускаем колбек перед отсылкой запроса
                     if (beforeCallback && $.isFunction(beforeCallback)) {
                         beforeCallback.call(this, self.sendData['params']);
@@ -147,7 +145,7 @@
                     // Если он не изменён, то посылаем запрос на сервер
                     // Нужно для того, чтобы не слать кучу запросов
                     // Шлём только последний запрос
-                    var timestamp = (new Date().getTime());
+                    let timestamp = (new Date().getTime());
                     self.Submit['timestamp'] = timestamp;
                     window.setTimeout(function () {
                         if (self.Submit['timestamp'] === timestamp) {
