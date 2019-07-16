@@ -341,11 +341,19 @@ class melTools
 
     /**
      * @param string $path
+     * @param bool $is_url
      *
      * @return string
      */
-    public function sanitizePath($path)
+    public function sanitizePath($path, $is_url = true)
     {
-        return preg_replace(array("/\.*[\/|\\\]/i", "/[\/|\\\]+/i"), array('/', '/'), $path);
+        $regexp = ['/\.*[\/|\\\]/i'];
+        if ($is_url) {
+            $regexp[] = '/(?<=[^:])[\/|\\\]+/i';
+        } else {
+            $regexp[] = '/[\/|\\\]+/i';
+        }
+
+        return preg_replace($regexp, '/', $path);
     }
 }

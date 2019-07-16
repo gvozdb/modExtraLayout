@@ -21,7 +21,7 @@ modExtraLayout.renderer.DateTime = function (string) {
 modExtraLayout.renderer.Actions = function (value, props, row) {
     var res = [];
     var cls, icon, title, action, item;
-    if (typeof(value) == 'object') {
+    if (typeof(value) === 'object') {
         for (var i in value) {
             if (!value.hasOwnProperty(i)) {
                 continue;
@@ -32,8 +32,8 @@ modExtraLayout.renderer.Actions = function (value, props, row) {
             }
 
             icon = a['icon'] ? a['icon'] : '';
-            if (typeof(a['cls']) == 'object') {
-                if (typeof(a['cls']['button']) != 'undefined') {
+            if (typeof(a['cls']) === 'object') {
+                if (typeof(a['cls']['button']) !== 'undefined') {
                     icon += ' ' + a['cls']['button'];
                 }
             } else {
