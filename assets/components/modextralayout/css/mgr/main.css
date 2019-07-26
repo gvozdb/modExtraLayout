@@ -129,6 +129,10 @@ a.x-menu-item .x-menu-item-text .icon {
 }
 
 /* Window */
+.x-window-body {
+    max-height: 80vh;
+}
+
 .mel-window .x-window-body.mel-window-tabs {
     padding: 5px 10px 5px 10px;
 }
