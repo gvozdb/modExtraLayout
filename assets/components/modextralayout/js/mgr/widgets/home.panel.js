@@ -1,6 +1,7 @@
 modExtraLayout.panel.Home = function (config) {
     config = config || {};
     Ext.apply(config, {
+        bodyCssClass: 'mel-w',
         baseCls: 'modx-formpanel',
         layout: 'anchor',
         hideMode: 'offsets',

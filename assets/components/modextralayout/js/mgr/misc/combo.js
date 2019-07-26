@@ -100,7 +100,7 @@ modExtraLayout.combo.Parent = function (config) {
         anchor: '100%',
         listEmptyText: '<div style="padding: 7px;">' + _('mel_combo_list_empty') + '</div>',
         tpl: new Ext.XTemplate('\
-            <tpl for="."><div class="x-combo-list-item mel-combo__list-item">\
+            <tpl for="."><div class="x-combo-list-item mel-combo-row">\
                 <tpl if="parents">\
                     <div class="parents">\
                         <tpl for="parents">\
@@ -152,8 +152,8 @@ modExtraLayout.combo.Group = function (config) {
         anchor: '100%',
         listEmptyText: '<div style="padding: 7px;">' + _('mel_combo_list_empty') + '</div>',
         tpl: new Ext.XTemplate('\
-            <tpl for="."><div class="x-combo-list-item mel-combo__list-item">\
-                <span class="mel-combo__row-group mel-combo__row-{value}">\
+            <tpl for="."><div class="x-combo-list-item mel-combo-row">\
+                <span class="mel-combo-row__group mel-combo-row__{value}">\
                     {display}\
                 </span>\
             </div></tpl>',

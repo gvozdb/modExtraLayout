@@ -20,9 +20,9 @@ modExtraLayout.grid.Default = function (config) {
             showPreview: true,
             scrollOffset: 0,
             getRowClass: function (rec) {
-                var cls = [];
-                if (rec.data['active'] != undefined && rec.data['active'] == 0) {
-                    cls.push('mel-grid__row_disabled');
+                var cls = ['mel-grid-row'];
+                if (typeof(rec.data['active']) !== 'undefined' && rec.data['active'] == 0) {
+                    cls.push('mel-grid-row_disabled');
                 }
                 return cls.join(' ');
             },

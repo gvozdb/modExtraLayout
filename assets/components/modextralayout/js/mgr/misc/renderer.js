@@ -1,23 +1,11 @@
-modExtraLayout.renderer.Boolean = function (val) {
-    return val
-        ? String.format('<span class="green">{0}</span>', _('yes'))
-        : String.format('<span class="red">{0}</span>', _('no'));
-};
-
-modExtraLayout.renderer.DateTime = function (string) {
-    if (string && string != '0000-00-00 00:00:00' && string != '-1-11-30 00:00:00' && string != 0) {
-        var date = /^[0-9]+$/.test(string)
-            ? new Date(string * 1000)
-            : new Date(string.replace(/(\d+)-(\d+)-(\d+)/, '$2/$3/$1'));
-        var format = MODx.config['mel_backend_datetime_format'];
-        if (!format) {
-            format = '%d.%m.%Y <span class="action-gray">%H:%M</span>';
-        }
-        return strftime(format, date);
-    }
-    return '';
-};
-
+/**
+ *
+ * @param value
+ * @param props
+ * @param row
+ * @returns {*}
+ * @constructor
+ */
 modExtraLayout.renderer.Actions = function (value, props, row) {
     var res = [];
     var cls, icon, title, action, item;
@@ -52,15 +40,50 @@ modExtraLayout.renderer.Actions = function (value, props, row) {
     }
 
     return String.format(
-        '<ul class="mel-grid__row-actions">{0}</ul>',
+        '<ul class="mel-grid-row__actions">{0}</ul>',
         res.join('')
     );
 };
 
+/**
+ *
+ * @param string
+ * @returns {string}
+ * @constructor
+ */
+modExtraLayout.renderer.DateTime = function (string) {
+    if (string && string != '0000-00-00 00:00:00' && string != '-1-11-30 00:00:00' && string != 0) {
+        var date = /^[0-9]+$/.test(string)
+            ? new Date(string * 1000)
+            : new Date(string.replace(/(\d+)-(\d+)-(\d+)/, '$2/$3/$1'));
+        var format = MODx.config['mel_backend_datetime_format'];
+        if (!format) {
+            format = '%d.%m.%Y <span class="action-gray">%H:%M</span>';
+        }
+        return strftime(format, date);
+    }
+    return '';
+};
+
+/**
+ *
+ * @param val
+ * @returns {*}
+ * @constructor
+ */
+modExtraLayout.renderer.Boolean = function (val) {
+    return String.format(
+        '<div class="mel-grid-col__boolean {0}">{1}</div>',
+        val ? 'green' : 'red',
+        _(val ? 'yes' : 'no')
+    );
+};
+
+
 modExtraLayout.renderer.CustomField = function (val, props, row) {
     var rec = row['json'];
     return String.format(
-        '<div class="mel-grid__row-customfield">{0}</div>',
+        '<div class="mel-grid-row__customfield">{0}</div>',
         rec['customfield']
     );
 };
@@ -68,7 +91,7 @@ modExtraLayout.renderer.CustomField = function (val, props, row) {
 modExtraLayout.renderer.Group = function (val, props, row) {
     var rec = row['json'];
     return String.format(
-        '<div class="mel-grid__row-group mel-grid__row-{0}">{1}</div>',
+        '<div class="mel-grid-row__group mel-grid-row__{0}">{1}</div>',
         rec['group'] || '',
         rec['group'] ? _('mel_group_' + rec['group']) : ''
     );
