@@ -31,7 +31,7 @@ ul.mel-grid-col__actions {
     list-style: none;
     display: flex;
     flex-flow: row wrap;
-    min-height: 33px;
+    min-height: 28px;
     margin: -7px 0;
     padding: 0;
     justify-content: center;
@@ -54,25 +54,25 @@ ul.mel-grid-col__actions .actions-menu:after {
 .mel-grid-col__boolean {
     display: flex;
     flex-flow: column;
-    min-height: 33px;
+    min-height: 28px;
     margin: -7px 0;
     justify-content: center;
     /*align-items: center;*/
 }
 
 /* Groups */
-.mel-grid-row__group {
+.mel-grid-col__group {
 }
-.mel-grid-row__group_1 {
+.mel-grid-col__group_1 {
     color: #3a960d !important;
 }
-.mel-grid-row__group_2 {
+.mel-grid-col__group_2 {
     color: #ec1049 !important;
 }
-.mel-grid-row__group_3 {
+.mel-grid-col__group_3 {
     color: #ff751f !important;
 }
-.mel-grid-row__group_4 {
+.mel-grid-col__group_4 {
     color: dimgray !important;
 }
 

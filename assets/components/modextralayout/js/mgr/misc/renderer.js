@@ -40,7 +40,7 @@ modExtraLayout.renderer.Actions = function (value, props, row) {
     }
 
     return String.format(
-        '<ul class="mel-grid-row__actions">{0}</ul>',
+        '<ul class="mel-grid-col__actions">{0}</ul>',
         res.join('')
     );
 };
@@ -83,7 +83,7 @@ modExtraLayout.renderer.Boolean = function (val) {
 modExtraLayout.renderer.CustomField = function (val, props, row) {
     var rec = row['json'];
     return String.format(
-        '<div class="mel-grid-row__customfield">{0}</div>',
+        '<div class="mel-grid-col__customfield">{0}</div>',
         rec['customfield']
     );
 };
@@ -91,7 +91,7 @@ modExtraLayout.renderer.CustomField = function (val, props, row) {
 modExtraLayout.renderer.Group = function (val, props, row) {
     var rec = row['json'];
     return String.format(
-        '<div class="mel-grid-row__group mel-grid-row__{0}">{1}</div>',
+        '<div class="mel-grid-col__group mel-grid-col__{0}">{1}</div>',
         rec['group'] || '',
         rec['group'] ? _('mel_group_' + rec['group']) : ''
     );
