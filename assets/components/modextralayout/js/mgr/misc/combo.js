@@ -46,7 +46,6 @@ Ext.extend(modExtraLayout.combo.Search, Ext.form.TwinTriggerField, {
         this.fireEvent('clear', this);
     },
 });
-Ext.reg('mel-combo-search', modExtraLayout.combo.Search);
 Ext.reg('mel-field-search', modExtraLayout.combo.Search);
 
 
