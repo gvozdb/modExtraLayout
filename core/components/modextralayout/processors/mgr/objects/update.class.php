@@ -71,8 +71,10 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
         $properties = $this->getProperties();
         // return print_r($properties, 1);
 
-        // Создано
-        $properties['createdon'] = $properties['createdon'] ?: time();
+        // Создано, обновлено
+        unset($properties['createdon']);
+        $this->unsetProperty('createdon');
+        $properties['updatedon'] = time();
 
         $this->setProperties($properties);
 
