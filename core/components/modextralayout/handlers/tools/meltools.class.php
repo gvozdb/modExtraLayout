@@ -292,7 +292,6 @@ class melTools
         if (!is_string($json)) {
             return false;
         }
-
         $pcre_regex = '
             /
             (?(DEFINE)
@@ -309,6 +308,15 @@ class melTools
         ';
 
         return preg_match($pcre_regex, $json);
+
+        // 2 variable:
+        $valid = false;
+        if (is_string($json)) {
+            @json_decode($json);
+            $valid = (json_last_error() === JSON_ERROR_NONE);
+        }
+
+        return $valid;
     }
 
     /**
