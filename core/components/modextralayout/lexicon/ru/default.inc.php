@@ -26,8 +26,7 @@ $_lang['mel_field_createdon'] = 'Создано';
 $_lang['mel_field_active'] = 'Включено';
 
 // Заголовки окон
-$_lang['mel_window_object_create'] = 'Добавить объект';
-$_lang['mel_window_object_update'] = 'Редактировать объект';
+$_lang['mel_window_'] = '';
 
 // Кнопки
 $_lang['mel_button_'] = '';

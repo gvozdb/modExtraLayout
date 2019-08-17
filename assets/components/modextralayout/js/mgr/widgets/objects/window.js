@@ -139,7 +139,7 @@ modExtraLayout.window.ObjectCreate = function (config) {
         config['id'] = 'mel-window-object-create';
     }
     Ext.applyIf(config, {
-        title: _('mel_window_object_create'),
+        title: _('mel_window_create'),
         baseParams: {
             action: 'mgr/objects/create',
         },
@@ -166,7 +166,7 @@ modExtraLayout.window.ObjectUpdate = function (config) {
         config['id'] = 'mel-window-object-update';
     }
     Ext.applyIf(config, {
-        title: _('mel_window_object_update'),
+        title: _('mel_window_update'),
         baseParams: {
             action: 'mgr/objects/update',
         },

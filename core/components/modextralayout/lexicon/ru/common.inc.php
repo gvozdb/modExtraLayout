@@ -18,6 +18,10 @@ $_lang['mel_button_disable_multiple'] = 'Выключить выбранное';
 $_lang['mel_button_remove'] = 'Удалить';
 $_lang['mel_button_remove_multiple'] = 'Удалить выбранное';
 
+// Заголовки окон
+$_lang['mel_window_create'] = 'Создать';
+$_lang['mel_window_update'] = 'Редактировать';
+
 // Подтверждения
 $_lang['mel_confirm_other'] = 'Вы уверены?';
 $_lang['mel_confirm_remove'] = 'Вы уверены, что хотите удалить объект(-ы)?';
