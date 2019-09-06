@@ -8,6 +8,10 @@ $_lang['mel_grid_id'] = 'ID';
 $_lang['mel_grid_idx'] = 'idx';
 $_lang['mel_grid_actions'] = 'Действия';
 
+// Заголовки окон
+$_lang['mel_window_create'] = 'Создать';
+$_lang['mel_window_update'] = 'Редактировать';
+
 // Кнопки
 $_lang['mel_button_create'] = 'Добавить';
 $_lang['mel_button_update'] = 'Редактировать';
@@ -17,10 +21,6 @@ $_lang['mel_button_disable'] = 'Выключить';
 $_lang['mel_button_disable_multiple'] = 'Выключить выбранное';
 $_lang['mel_button_remove'] = 'Удалить';
 $_lang['mel_button_remove_multiple'] = 'Удалить выбранное';
-
-// Заголовки окон
-$_lang['mel_window_create'] = 'Создать';
-$_lang['mel_window_update'] = 'Редактировать';
 
 // Подтверждения
 $_lang['mel_confirm_other'] = 'Вы уверены?';

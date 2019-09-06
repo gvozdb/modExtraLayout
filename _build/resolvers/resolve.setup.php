@@ -93,7 +93,6 @@ if (!function_exists('installPackage')) {
 }
 
 if (!function_exists('downloadPackage')) {
-
     function downloadPackage($src, $dst)
     {
         if (ini_get('allow_url_fopen')) {

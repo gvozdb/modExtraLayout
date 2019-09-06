@@ -26,9 +26,11 @@
                 if (!self['initialized']) {
                     //
                     self['config'] = {
-                        postTimeout: 500, // замираем на пол секунды перед отсылкой запроса
                     };
-                    self['classes'] = {};
+                    self['classes'] = {
+                        loading: 'is-loading',
+                        active: 'is-active',
+                    };
                     self['selectors'] = {
                         form: '.js-mel-form',
                     };
@@ -104,32 +106,38 @@
 
         /**
          * Отсылает запрос на сервер.
-         * @type {object}
+         *
+         * @type {{post: post, timestamp: number}}
          */
         self.Submit = {
+            timeout: 500, // замираем на пол секунды перед отсылкой запроса
             timestamp: 0,
-            post: function (beforeCallback, afterCallback) {
-                if (!self.sendData['params']) {
+            post: function (beforeCallback, afterCallback, timeout) {
+                if (!self.sendData['formData']) {
                     return;
                 }
+                if (typeof(timeout) === 'undefined') {
+                    timeout = self.Submit['timeout'];
+                }
+                timeout = parseInt(timeout) || 0;
 
                 //
-                let _post = function (beforeCallback, afterCallback) {
+                var _post = function (beforeCallback, afterCallback) {
                     // Запускаем колбек перед отсылкой запроса
                     if (beforeCallback && $.isFunction(beforeCallback)) {
-                        beforeCallback.call(this, self.sendData['params']);
+                        beforeCallback.call(this, self.sendData['formData']);
                     }
 
-                    $.post(self.config['actionUrl'], self.sendData['params'], function (response) {
+                    $.post(self.config['actionUrl'], self.sendData['formData'], function (response) {
                         // Запускаем колбек после отсылки запроса
                         if (afterCallback && $.isFunction(afterCallback)) {
-                            afterCallback.call(this, response, self.sendData['params']);
+                            afterCallback.call(this, response, self.sendData['formData']);
                         }
 
                         if (response['success']) {
                             //
                         } else {
-                            self.Message.error(response['message']);
+                            // self.Message.error(response['message']);
                         }
                     }, 'json')
                         .fail(function () {
@@ -140,18 +148,18 @@
                 };
 
                 //
-                if (self.config['postTimeout']) {
+                if (timeout) {
                     // Записываем текущий timestamp и через 0.5 секунды проверяем его
                     // Если он не изменён, то посылаем запрос на сервер
                     // Нужно для того, чтобы не слать кучу запросов
                     // Шлём только последний запрос
-                    let timestamp = (new Date().getTime());
+                    var timestamp = (new Date().getTime());
                     self.Submit['timestamp'] = timestamp;
                     window.setTimeout(function () {
                         if (self.Submit['timestamp'] === timestamp) {
                             _post(beforeCallback, afterCallback);
                         }
-                    }, self.config['postTimeout']);
+                    }, timeout);
                 } else {
                     _post(beforeCallback, afterCallback);
                 }
@@ -179,9 +187,7 @@
         /**
          * Initialize && Run!
          */
-        if (self.Base.initialize(options)) {
-            self.Base.run();
-        }
+        self.Base.initialize(options) && self.Base.run();
     }
 
     window['modExtraLayout'] = modExtraLayout;

@@ -7,6 +7,12 @@
  */
 .mel-grid {
 }
+.mel-grid_small {
+}
+.mel-grid_small .x-grid3-cell-inner,
+.mel-grid_small .x-grid3-hd-inner {
+    padding: 8px 5px;
+}
 
 /**
  * Grid / Rows
@@ -180,6 +186,15 @@ a.x-menu-item .x-menu-item-text .icon {
 .modx-panel-subtabs .x-tab-panel-bwrap {
     border: 1px solid #f0f0f0;
     margin-top: -1px;
+}
+
+/**
+ * Panel
+ */
+.mel-panel {
+}
+.mel-panel input[readonly]:not(.x-trigger-noedit) {
+    opacity: .6;
 }
 
 /**

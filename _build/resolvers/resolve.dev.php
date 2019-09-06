@@ -6,9 +6,9 @@ if ($transport->xpdo) {
     $modx = &$transport->xpdo;
 
     $settings = array(
-        PKG_NAME_SHORT . '_core_path' => (MODX_BASE_PATH . PKG_NAME . '/core/components/' . PKG_NAME_LOWER . '/'),
-        PKG_NAME_SHORT . '_assets_url' => (MODX_BASE_URL . PKG_NAME . '/assets/components/' . PKG_NAME_LOWER . '/'),
-        PKG_NAME_SHORT . '_assets_path' => (MODX_BASE_PATH . PKG_NAME . '/assets/components/' . PKG_NAME_LOWER . '/'),
+        'mel_core_path' => (MODX_BASE_PATH . 'modExtraLayout/core/components/modextralayout/'),
+        'mel_assets_url' => (MODX_BASE_URL . 'modExtraLayout/assets/components/modextralayout/'),
+        'mel_assets_path' => (MODX_BASE_PATH . 'modExtraLayout/assets/components/modextralayout/'),
     );
 
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
@@ -16,25 +16,22 @@ if ($transport->xpdo) {
         case xPDOTransport::ACTION_UPGRADE:
             if (PKG_DEV_MODE) {
                 foreach ($settings as $k => $v) {
-                    if (!$modx->getCount('modSystemSetting', array('key' => $k))) {
+                    if (!$modx->getCount('modSystemSetting', ['key' => $k])) {
                         /** @var modSystemSetting $setting */
                         $setting = $modx->newObject('modSystemSetting');
-                        $setting->fromArray(array(
-                            'namespace' => PKG_NAME_LOWER,
-                            'area' => PKG_NAME_SHORT . '_dev',
+                        $setting->fromArray([
+                            'namespace' => 'modextralayout',
+                            'area' => 'mel_dev',
                             'xtype' => 'textfield',
                             'key' => $k,
                             'value' => $v,
-                        ), '', true, true);
+                        ], '', true, true);
                         $setting->save();
                         $modx->log(modX::LOG_LEVEL_INFO, 'Added setting <b>' . $k . '</b> = ' . $v);
                     }
                 }
             } else {
-                if ($modx->removeCollection('modSystemSetting', array(
-                    'key:IN' => array_keys($settings),
-                ))
-                ) {
+                if ($modx->removeCollection('modSystemSetting', ['key:IN' => array_keys($settings)])) {
                     $modx->log(modX::LOG_LEVEL_INFO, 'Removed dev settings');
                 }
             }
