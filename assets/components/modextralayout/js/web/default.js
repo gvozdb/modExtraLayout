@@ -34,6 +34,8 @@
                     self['selectors'] = {
                         form: '.js-mel-form',
                     };
+                    self['messages'] = {
+                    };
                     self['sendDataTemplate'] = {
                         $element: null,
                         params: null,
@@ -42,15 +44,15 @@
 
                     //
                     Object.keys(options).forEach(function (key) {
-                        if (['selectors'].indexOf(key) !== -1) {
+                        if (['selectors', 'messages'].indexOf(key) !== -1) {
                             return;
                         }
                         self.config[key] = options[key];
                     });
-                    ['selectors'].forEach(function (key) {
+                    ['selectors', 'messages'].forEach(function (key) {
                         if (options[key]) {
                             Object.keys(options[key]).forEach(function (i) {
-                                self.selectors[i] = options.selectors[i];
+                                self[key][i] = options[key][i];
                             });
                         }
                     });
