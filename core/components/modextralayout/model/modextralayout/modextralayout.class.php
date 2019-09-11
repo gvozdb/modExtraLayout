@@ -74,10 +74,10 @@ class modExtraLayout
 
         $this->getTools();
         if ($pdoTools = $this->getPdoTools()) {
-            $pdoTools->setConfig($this->config);
+            // $pdoTools->setConfig($this->config);
         }
         if ($pdoFetch = $this->getPdoFetch()) {
-            $pdoFetch->setConfig($this->config);
+            // $pdoFetch->setConfig($this->config);
         }
 
         if (empty($this->initialized[$ctx])) {
