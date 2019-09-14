@@ -96,43 +96,57 @@ class modExtraLayout
     }
 
     /**
-     * @param string $objectName
-     * @param array  $sp
+     * @param array $services
      *
      * @return bool
      */
-    public function loadFrontendScripts($objectName = '', array $sp = [])
+    public function loadFrontendScripts(array $services = [])
     {
-        $version = $this->version;
-        if (empty($objectName)) {
-            $objectName = 'modExtraLayout';
+        $flag = false;
+        if (empty($services)) {
+            $services = [
+                'main' => [],
+            ];
         }
-        $objectName = trim($objectName);
 
-        if (empty($this->modx->loadedjscripts[$objectName]) && (!defined('MODX_API_MODE') || !MODX_API_MODE)) {
-            $pls = $this->tools->makePlaceholders($this->config);
-            if ($css = trim($this->modx->getOption('mel_frontend_css'))) {
-                $this->modx->regClientCSS(str_replace($pls['pl'], $pls['vl'], $css . '?v=' . $version));
+        $version = time(); // $this->version;
+        foreach ([
+            'main',
+        ] as $service_key) {
+            if (!isset($services[$service_key])) {
+                continue;
             }
-            if ($js = trim($this->modx->getOption('mel_frontend_js'))) {
-                $this->modx->regClientScript(str_replace($pls['pl'], $pls['vl'], $js . '?v=' . $version));
-            }
+            $service_name = 'modExtraLayout' . ucfirst($service_key);
+            $service_properties = is_array($services[$service_key]) ? $services[$service_key] : [];
 
-            $params = $this->modx->toJSON(array_merge([
-                // 'assetsUrl' => $this->config['assetsUrl'],
-                'actionUrl' => $this->config['actionUrl'],
-            ], $sp));
-
-            $this->modx->regClientScript('<script>
-                if (typeof(' . $objectName . 'Cls) === "undefined") {
-                    var ' . $objectName . 'Cls = new ' . $objectName . '(' . $params . ');
+            if (empty($this->modx->loadedjscripts[$service_name]) && (!defined('MODX_API_MODE') || !MODX_API_MODE)) {
+                $pls = $this->tools->makePlaceholders($this->config);
+                if ($css = trim($this->modx->getOption('mel_frontend_' . $service_key . '_css')) . '?v=' . $version) {
+                    $this->modx->regClientCSS(str_replace($pls['pl'], $pls['vl'], $css));
                 }
-            </script>', true);
+                if ($js = trim($this->modx->getOption('mel_frontend_' . $service_key . '_js')) . '?v=' . $version) {
+                    $this->modx->regClientScript(str_replace($pls['pl'], $pls['vl'], $js));
+                }
+                unset($pls, $css, $js);
 
-            $this->modx->loadedjscripts[$objectName] = true;
+                $params = $this->modx->toJSON(array_merge([
+                    // 'assetsUrl' => $this->config['assetsUrl'],
+                    'actionUrl' => $this->config['actionUrl'],
+                ], $service_properties));
+
+                $this->modx->regClientScript('<script>
+                    if (typeof(' . $service_name . 'Cls) === "undefined") {
+                        var ' . $service_name . 'Cls = new ' . $service_name . '(' . $params . ');
+                    }
+                </script>', true);
+
+                $this->modx->loadedjscripts[$service_name] = true;
+            }
+
+            $flag = empty($flag) ? !empty($this->modx->loadedjscripts[$service_name]) : $flag;
         }
 
-        return !empty($this->modx->loadedjscripts[$objectName]);
+        return $flag;
     }
 
     /**

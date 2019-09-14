@@ -16,13 +16,13 @@ $tmp = array(
         // ),
     ),
     'frontend' => array(
-        'frontend_css' => array(
+        'frontend_main_css' => array(
             'xtype' => 'textfield',
-            'value' => '[[+cssUrl]]web/default.css',
+            'value' => '[[+cssUrl]]web/main.css',
         ),
-        'frontend_js' => array(
+        'frontend_main_js' => array(
             'xtype' => 'textfield',
-            'value' => '[[+jsUrl]]web/default.js',
+            'value' => '[[+jsUrl]]web/main.js',
         ),
     ),
 );

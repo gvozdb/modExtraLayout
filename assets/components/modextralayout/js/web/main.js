@@ -1,12 +1,12 @@
 (function () {
-    function modExtraLayout(options) {
+    function modExtraLayoutMain(options) {
         let self = this;
         self['initialized'] = false;
         self['running'] = false;
         self['fatal'] = false;
         ['actionUrl'].forEach(function (val, i, arr) {
             if (typeof(options[val]) === 'undefined' || options[val] === '') {
-                console.error('[modExtraLayout] Bad config.', arr);
+                console.error('[modExtraLayoutMain] Bad config.', arr);
                 self['fatal'] = true;
             }
         });
@@ -143,7 +143,7 @@
                         }
                     }, 'json')
                         .fail(function () {
-                            console.error('[modExtraLayout] Bad request.', self['sendData']);
+                            console.error('[modExtraLayoutMain] Bad request.', self['sendData']);
                         })
                         .done(function () {
                         });
@@ -192,5 +192,5 @@
         self.Base.initialize(options) && self.Base.run();
     }
 
-    window['modExtraLayout'] = modExtraLayout;
+    window['modExtraLayoutMain'] = modExtraLayoutMain;
 })();
