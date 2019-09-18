@@ -37,8 +37,7 @@
                     self['messages'] = {
                     };
                     self['sendDataTemplate'] = {
-                        $element: null,
-                        params: null,
+                        formData: null,
                     };
                     self['sendData'] = $.extend({}, self['sendDataTemplate']);
 
@@ -83,8 +82,7 @@
 
                         // Готовим параметры запроса
                         let sendData = $.extend({}, self['sendDataTemplate']);
-                        sendData['$element'] = $form;
-                        sendData['params'] = data;
+                        sendData['formData'] = data;
                         // console.log(sendData);
 
                         // Колбеки
@@ -114,9 +112,12 @@
         self.Submit = {
             timeout: 500, // замираем на N секунд перед отсылкой запроса
             timeoutInstance: undefined,
-            post: function (beforeCallback, afterCallback, timeout) {
-                if (!self.sendData['params']) {
+            post: function (beforeCallback, afterCallback, options, timeout) {
+                if (!self.sendData['formData']) {
                     return;
+                }
+                if (typeof(options) === 'undefined') {
+                    options = {};
                 }
                 if (typeof(timeout) === 'undefined') {
                     timeout = self.Submit['timeout'];
@@ -128,21 +129,27 @@
                 self.Submit['timeoutInstance'] = window.setTimeout(function () {
                     // Запускаем колбек перед отсылкой запроса
                     if (beforeCallback && $.isFunction(beforeCallback)) {
-                        beforeCallback.call(this, self.sendData['params']);
+                        beforeCallback.call(this, self.sendData['formData']);
                     }
 
-                    $.post(self.config['actionUrl'], self.sendData['params'], function (response) {
-                        // Запускаем колбек после отсылки запроса
-                        if (afterCallback && $.isFunction(afterCallback)) {
-                            afterCallback.call(this, response, self.sendData['params']);
-                        }
+                    $.ajax($.extend({
+                        type: 'POST',
+                        url: self.config['actionUrl'],
+                        data: self.sendData['formData'],
+                        success: function (response) {
+                            // Запускаем колбек после отсылки запроса
+                            if (afterCallback && $.isFunction(afterCallback)) {
+                                afterCallback.call(this, response, self.sendData['formData']);
+                            }
 
-                        if (response['success']) {
-                            //
-                        } else {
-                            self.Message.error(response['message']);
-                        }
-                    }, 'json')
+                            if (response['success']) {
+                                //
+                            } else {
+                                self.Message.error(response['message']);
+                            }
+                        },
+                        dataType: 'json',
+                    }, options))
                         .fail(function () {
                             console.error('[modExtraLayoutMain] Bad request.', self['sendData']);
                         })
