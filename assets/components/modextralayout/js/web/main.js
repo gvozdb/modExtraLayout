@@ -109,13 +109,13 @@
         /**
          * Отсылает запрос на сервер.
          *
-         * @type {{post: post, timestamp: number}}
+         * @type {{post: post, timeoutInstance: *, timeout: number}}
          */
         self.Submit = {
-            timeout: 500, // замираем на пол секунды перед отсылкой запроса
-            timestamp: 0,
+            timeout: 500, // замираем на N секунд перед отсылкой запроса
+            timeoutInstance: undefined,
             post: function (beforeCallback, afterCallback, timeout) {
-                if (!self.sendData['formData']) {
+                if (!self.sendData['params']) {
                     return;
                 }
                 if (typeof(timeout) === 'undefined') {
@@ -124,22 +124,23 @@
                 timeout = parseInt(timeout) || 0;
 
                 //
-                var _post = function (beforeCallback, afterCallback) {
+                self.Submit['timeoutInstance'] && window.clearTimeout(self.Submit['timeoutInstance']);
+                self.Submit['timeoutInstance'] = window.setTimeout(function () {
                     // Запускаем колбек перед отсылкой запроса
                     if (beforeCallback && $.isFunction(beforeCallback)) {
-                        beforeCallback.call(this, self.sendData['formData']);
+                        beforeCallback.call(this, self.sendData['params']);
                     }
 
-                    $.post(self.config['actionUrl'], self.sendData['formData'], function (response) {
+                    $.post(self.config['actionUrl'], self.sendData['params'], function (response) {
                         // Запускаем колбек после отсылки запроса
                         if (afterCallback && $.isFunction(afterCallback)) {
-                            afterCallback.call(this, response, self.sendData['formData']);
+                            afterCallback.call(this, response, self.sendData['params']);
                         }
 
                         if (response['success']) {
                             //
                         } else {
-                            // self.Message.error(response['message']);
+                            self.Message.error(response['message']);
                         }
                     }, 'json')
                         .fail(function () {
@@ -147,24 +148,7 @@
                         })
                         .done(function () {
                         });
-                };
-
-                //
-                if (timeout) {
-                    // Записываем текущий timestamp и через 0.5 секунды проверяем его
-                    // Если он не изменён, то посылаем запрос на сервер
-                    // Нужно для того, чтобы не слать кучу запросов
-                    // Шлём только последний запрос
-                    var timestamp = (new Date().getTime());
-                    self.Submit['timestamp'] = timestamp;
-                    window.setTimeout(function () {
-                        if (self.Submit['timestamp'] === timestamp) {
-                            _post(beforeCallback, afterCallback);
-                        }
-                    }, timeout);
-                } else {
-                    _post(beforeCallback, afterCallback);
-                }
+                }, timeout);
             },
         };
 
