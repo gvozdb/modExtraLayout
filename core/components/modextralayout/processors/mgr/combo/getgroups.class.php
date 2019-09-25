@@ -22,44 +22,49 @@ class melComboGroupGetListProcessor extends modProcessor
      */
     public function process()
     {
+        $output = [];
+
+        //
         $filter = $this->getProperty('filter', false);
-        $notempty = $this->getProperty('notempty', true);
-        if ($filter) {
-            $output = array(
-                array(
-                    'display' => '(Все)',
-                    'value' => '',
-                ),
-            );
-        } else {
-            $output = array();
+        if (!empty($filter)) {
+            $output[] = [
+                'display' => '(Все)',
+                'value' => '',
+            ];
         }
 
-        $rows = array(
-            '',
+        //
+        $notempty = $this->getProperty('notempty', true);
+        if (!empty($filter) || empty($notempty)) {
+            $output[] = [
+                'display' => '(Не указано)',
+                'value' => '_',
+            ];
+        }
+
+        //
+        if (empty($filter)) {
+            $query = $this->getProperty('query', '');
+            if (!empty($query)) {
+                $output[] = [
+                    'display' => $query,
+                    'value' => $query,
+                ];
+            }
+        }
+
+        //
+        $rows = [
             'group_1',
             'group_2',
             'group_3',
             'group_4',
-        );
+        ];
         foreach ($rows as $v) {
-            $tmp = null;
-            if (empty($v)) {
-                if ($filter || !$notempty) {
-                    $tmp = array(
-                        'display' => '(Не указано)',
-                        'value' => '_',
-                    );
-                }
-            } else {
-                $tmp = array(
-                    'display' => $this->modx->lexicon('mel_group_' . $v),
-                    'value' => strtolower($v),
-                );
-            }
-            if (!empty($tmp)) {
-                $output[] = $tmp;
-            }
+            $output[] = [
+                'display' => $this->modx->lexicon('mel_group_' . $v),
+                'value' => strtolower($v),
+            ];
         }
 
         return $this->outputArray($output);
