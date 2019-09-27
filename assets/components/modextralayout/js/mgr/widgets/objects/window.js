@@ -7,8 +7,7 @@
  */
 modExtraLayout.fields.Object = function (config) {
     var data = config['record'] ? config.record['object'] : null;
-
-    var r = {
+    var fields = {
         xtype: 'modx-tabs',
         border: true,
         autoHeight: true,
@@ -34,7 +33,15 @@ modExtraLayout.fields.Object = function (config) {
         },
     };
 
-    r.items[0].items.push({
+    //
+    var tabs = {
+        main: fields.items[0].items,
+    };
+
+    /**
+     *  Tab / Main
+     */
+    tabs['main'].push({
         layout: 'column',
         border: false,
         style: {marginTop: '0px'},
@@ -117,14 +124,14 @@ modExtraLayout.fields.Object = function (config) {
     });
 
     if (data) {
-        r.items[0].items.push({
+        tabs['main'].push({
             xtype: 'hidden',
             id: config['id'] + '-id',
             name: 'id',
         });
     }
 
-    return r;
+    return fields;
 };
 
 /**
