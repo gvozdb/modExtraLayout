@@ -156,7 +156,7 @@ modExtraLayout.window.ObjectCreate = function (config) {
 };
 Ext.extend(modExtraLayout.window.ObjectCreate, modExtraLayout.window.Default, {
     getFields: function (config) {
-        return modExtraLayout.fields.Object(config);
+        return modExtraLayout.fields.Object.bind(this)(config);
     },
 });
 Ext.reg('mel-window-object-create', modExtraLayout.window.ObjectCreate);
@@ -183,7 +183,7 @@ modExtraLayout.window.ObjectUpdate = function (config) {
 };
 Ext.extend(modExtraLayout.window.ObjectUpdate, modExtraLayout.window.Default, {
     getFields: function (config) {
-        return modExtraLayout.fields.Object(config);
+        return modExtraLayout.fields.Object.bind(this)(config);
     },
 });
 Ext.reg('mel-window-object-update', modExtraLayout.window.ObjectUpdate);
