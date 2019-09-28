@@ -28,10 +28,7 @@
  * Grid / Columns
  */
 .x-grid3-col-actions {
-    /*padding: 4px 0;*/
-    /*text-align: center;*/
-    padding-left: 0;
-    padding-right: 0;
+    padding: 13px 0 !important;
 }
 ul.mel-grid-col__actions {
     list-style: none;
