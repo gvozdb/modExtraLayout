@@ -80,22 +80,21 @@
                         });
                         // console.log('data', data);
 
-                        // Готовим параметры запроса
+                        // Prepare sending data
                         let sendData = $.extend({}, self['sendDataTemplate']);
                         sendData['formData'] = data;
                         // console.log(sendData);
 
-                        // Колбеки
-                        let callbackBefore = function (response) {
-                            console.log('callbackBefore response', response);
-                        };
-                        let callbackAfter = function (response) {
-                            console.log('callbackAfter response', response);
-                        };
-
-                        // Шлём запрос
+                        // Submit
                         self.sendData = $.extend({}, sendData);
-                        self.Submit.post(callbackBefore, callbackAfter);
+                        self.Submit.post(
+                            function (response) {
+                                console.log('callbackBefore response', response);
+                            },
+                            function (response) {
+                                console.log('callbackAfter response', response);
+                            }
+                        );
                     });
                 }
                 self['running'] = true;
