@@ -121,11 +121,11 @@ class modExtraLayout
 
             if (empty($this->modx->loadedjscripts[$service_name]) && (!defined('MODX_API_MODE') || !MODX_API_MODE)) {
                 $pls = $this->tools->makePlaceholders($this->config);
-                if ($css = trim($this->modx->getOption('mel_frontend_' . $service_key . '_css')) . '?v=' . $version) {
-                    $this->modx->regClientCSS(str_replace($pls['pl'], $pls['vl'], $css));
+                if ($css = trim($this->modx->getOption('mel_frontend_' . $service_key . '_css'))) {
+                    $this->modx->regClientCSS(str_replace($pls['pl'], $pls['vl'], $css . '?v=' . $version));
                 }
-                if ($js = trim($this->modx->getOption('mel_frontend_' . $service_key . '_js')) . '?v=' . $version) {
-                    $this->modx->regClientScript(str_replace($pls['pl'], $pls['vl'], $js));
+                if ($js = trim($this->modx->getOption('mel_frontend_' . $service_key . '_js'))) {
+                    $this->modx->regClientScript(str_replace($pls['pl'], $pls['vl'], $js . '?v=' . $version));
                 }
                 unset($pls, $css, $js);
 
