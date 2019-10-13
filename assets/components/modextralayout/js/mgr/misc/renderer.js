@@ -53,7 +53,7 @@ modExtraLayout.renderer.Actions = function (value, props, row) {
  */
 modExtraLayout.renderer.DateTime = function (string) {
     if (string && string != '0000-00-00 00:00:00' && string != '-1-11-30 00:00:00' && string != 0) {
-        var date = /^[0-9]+$/.test(string)
+        var date = /^[-0-9]+$/.test(string)
             ? new Date(string * 1000)
             : new Date(string.replace(/(\d+)-(\d+)-(\d+)/, '$2/$3/$1'));
         var format = MODx.config['mel_backend_datetime_format'];

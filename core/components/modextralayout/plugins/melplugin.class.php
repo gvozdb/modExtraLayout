@@ -21,5 +21,5 @@ abstract class melPlugin
         $this->mel->initialize($this->modx->context->key);
     }
 
-    abstract public function run();
+    // abstract public function run();
 }
