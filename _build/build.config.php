@@ -2,6 +2,7 @@
 
 // define package
 define('PKG_DEV_MODE', true);
+define('PKG_ENCRYPT', false);
 define('PKG_NAME', 'modExtraLayout');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
 define('PKG_NAME_SHORT', 'mel');

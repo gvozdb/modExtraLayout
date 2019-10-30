@@ -47,8 +47,59 @@ if (!XPDO_CLI_MODE) {
 
 $builder = new modPackageBuilder($modx);
 $builder->createPackage(PKG_NAME_LOWER, PKG_VERSION, PKG_RELEASE);
-$builder->registerNamespace(PKG_NAME_LOWER, false, true, PKG_NAMESPACE_PATH);
 
+//
+if (PKG_ENCRYPT) {
+    $username = '';
+    $api_key = '';
+    if ($packageWithProvider = $modx->getObject('transport.modTransportPackage', array(
+        'package_name' => PKG_NAME,
+        'provider:!=' => 0,
+    ))) {
+        /** @var modTransportProvider $provider */
+        if ($provider = $packageWithProvider->getOne('Provider')) {
+            $username = $provider->username;
+            $api_key = $provider->api_key;
+        }
+    }
+    unset($packageWithProvider, $provider);
+
+    $client = $modx->getService('rest.modRestCurlClient');
+    $result = $client->request('https://modstore.pro/extras/package/', 'encode', 'POST', array(
+        'package' => PKG_NAME,
+        'http_host' => $modx->getOption('http_host'),
+        'username' => $username,
+        'api_key' => $api_key,
+        'version' => PKG_VERSION . '-' . PKG_RELEASE,
+        'vehicle_version' => '2.0.0'
+    ), array('contentType' => 'application/xml'));
+    $data = new SimpleXMLElement($result);
+    if (!empty($data->key)) {
+        $modx->log(modX::LOG_LEVEL_INFO, 'Key: ' . $data->key);
+    } elseif (!empty($data->message)) {
+        $modx->log(modX::LOG_LEVEL_INFO, 'Error: ' . $data->message);
+    }
+
+    define('PKG_ENCODE_KEY', $data->key);
+
+    $builder->package->put(array(
+        'source' => $sources['source_core'] . '/model/encryptedvehicle.class.php',
+        'target' => "return MODX_CORE_PATH . 'components/" . PKG_NAME_LOWER . "/model/';",
+    ), array(
+        'vehicle_class' => 'xPDOFileVehicle',
+        xPDOTransport::UNINSTALL_FILES => false,
+    ));
+
+    $builder->putVehicle($builder->createVehicle(array(
+        'source' => $sources['resolvers'] . 'resolve.encryption.php',
+    ), array('vehicle_class' => 'xPDOScriptVehicle')));
+
+    $modx->loadClass('transport.xPDOObjectVehicle', XPDO_CORE_PATH, true, true);
+    require_once $sources['source_core'] . '/model/encryptedvehicle.class.php';
+}
+
+//
+$builder->registerNamespace(PKG_NAME_LOWER, false, true, PKG_NAMESPACE_PATH);
 $modx->log(modX::LOG_LEVEL_INFO, 'Created Transport Package and Namespace.');
 
 // load system settings
@@ -173,6 +224,10 @@ $attr = array(
     xPDOTransport::UPDATE_OBJECT => true,
     xPDOTransport::RELATED_OBJECTS => true,
 );
+if (PKG_ENCRYPT) {
+    $attr['vehicle_class'] = 'encryptedVehicle';
+    $attr[xPDOTransport::ABORT_INSTALL_ON_VEHICLE_FAIL] = true;
+}
 
 // add snippets
 if (defined('BUILD_SNIPPET_UPDATE')) {
@@ -279,6 +334,13 @@ $builder->setPackageAttributes(array(
 ));
 $modx->log(modX::LOG_LEVEL_INFO, 'Added package attributes and setup options.');
 
+//
+if (PKG_ENCRYPT) {
+    $builder->putVehicle($builder->createVehicle(array(
+        'source' => $sources['resolvers'] . 'resolve.encryption.php',
+    ), array('vehicle_class' => 'xPDOScriptVehicle')));
+}
+
 // zip up package
 $modx->log(modX::LOG_LEVEL_INFO, 'Packing up transport package zip...');
 $builder->pack();
@@ -296,7 +358,18 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
     $versionSignature = explode('.', $sig[1]);
 
     /** @var modTransportPackage $package */
-    if (!$package = $modx->getObject('transport.modTransportPackage', array('signature' => $signature))) {
+    if (!$package = $modx->getObject('transport.modTransportPackage', array(
+        'signature' => $signature,
+    ))) {
+        $provider_id = 0;
+        if ($packageWithProvider = $modx->getObject('transport.modTransportPackage', array(
+            'package_name' => PKG_NAME,
+            'provider:!=' => 0,
+        ))) {
+            $provider_id = $packageWithProvider->get('provider');
+        }
+        unset($packageWithProvider);
+
         $package = $modx->newObject('transport.modTransportPackage');
         $package->set('signature', $signature);
         $package->fromArray(array(
@@ -304,7 +377,7 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
             'updated' => null,
             'state' => 1,
             'workspace' => 1,
-            'provider' => 0,
+            'provider' => $provider_id,
             'source' => $signature . '.transport.zip',
             'package_name' => PKG_NAME,
             'version_major' => $versionSignature[0],
