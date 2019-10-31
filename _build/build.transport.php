@@ -45,6 +45,7 @@ if (!XPDO_CLI_MODE) {
     echo '<pre>';
 }
 
+//
 $builder = new modPackageBuilder($modx);
 $builder->createPackage(PKG_NAME_LOWER, PKG_VERSION, PKG_RELEASE);
 
@@ -370,6 +371,7 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
         }
         unset($packageWithProvider);
 
+        //
         $package = $modx->newObject('transport.modTransportPackage');
         $package->set('signature', $signature);
         $package->fromArray(array(
