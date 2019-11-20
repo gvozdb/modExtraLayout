@@ -15,7 +15,9 @@ $exists_single = false;
 $className = 'mel' . $modx->event->name;
 $modx->loadClass('melPlugin', $mel->config['pluginsPath'], true, true);
 $modx->loadClass('melPluginGroup', $mel->config['pluginsPath'], true, true);
-$modx->loadClass($className, $mel->config['pluginsPath'], true, true);
+if (file_exists($mel->config['pluginsPath'] . strtolower($className) . '.class.php')) {
+    $modx->loadClass($className, $mel->config['pluginsPath'], true, true);
+}
 
 //
 if (class_exists('melPluginGroup')) {
