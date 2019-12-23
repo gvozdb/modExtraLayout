@@ -52,6 +52,7 @@ foreach ($classes as $list) {
         $class->{$modx->event->name}();
     }
 }
+unset($classes, $list, $class);
 
 // //
 // $modx->loadClass('melPluginGroup', $mel->config['pluginsPath'], true, true);
