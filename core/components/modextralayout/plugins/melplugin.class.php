@@ -2,11 +2,21 @@
 
 abstract class melPlugin
 {
-    /** @var modX $modx */
+    /**
+     * @var int $priority
+     */
+    public $priority = 0;
+    /**
+     * @var modX $modx
+     */
     protected $modx;
-    /** @var modExtraLayout $mel */
+    /**
+     * @var modExtraLayout $mel
+     */
     protected $mel;
-    /** @var array $sp */
+    /**
+     * @var array $sp
+     */
     protected $sp;
 
     /**

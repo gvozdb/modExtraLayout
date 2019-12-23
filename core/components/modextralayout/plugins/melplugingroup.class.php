@@ -6,6 +6,11 @@
 class melPluginGroup extends melPlugin
 {
     /**
+     * @var int $priority
+     */
+    public $priority = 0;
+
+    /**
      * @param modExtraLayout $mel
      * @param array          $sp
      */
