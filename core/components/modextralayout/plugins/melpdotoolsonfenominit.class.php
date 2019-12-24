@@ -26,13 +26,13 @@ class melPdoToolsOnFenomInit extends melPlugin
      */
     public function allowedFunctions()
     {
-        $this->fenom->addAllowedFunctions(array(
+        $this->fenom->addAllowedFunctions([
             'array_merge',
             'array_diff',
             'array_map',
             // 'md5',
             // 'http_build_query',
-        ));
+        ]);
     }
 
     /**
@@ -42,18 +42,18 @@ class melPdoToolsOnFenomInit extends melPlugin
     {
         // usage: {chunk 'site/nav' ['param' => 'value']}
         $this->fenom->addFunction('chunk', function (array $params) {
-            $this->mel->pdoTools->debugParserModifier($params[0], 'chunk', (!empty($params[1]) ? $params[1] : array()));
-            $result = $this->mel->tools->getChunk(('@FILE ' . 'chunks/' . $params[0] . '.tpl'), (!empty($params[1]) ? $params[1] : array()));
-            $this->mel->pdoTools->debugParserModifier($params[0], 'chunk', (!empty($params[1]) ? $params[1] : array()));
+            $this->mel->pdoTools->debugParserModifier($params[0], 'chunk', (!empty($params[1]) ? $params[1] : []));
+            $result = $this->mel->tools->getChunk(('@FILE ' . 'chunks/' . $params[0] . '.tpl'), (!empty($params[1]) ? $params[1] : []));
+            $this->mel->pdoTools->debugParserModifier($params[0], 'chunk', (!empty($params[1]) ? $params[1] : []));
 
             return $result;
         });
 
         // usage: {snippet 'pdoResources' ['param' => 'value']}
         $this->fenom->addFunction('snippet', function (array $params) {
-            $this->mel->pdoTools->debugParserModifier($params[0], 'snippet', (!empty($params[1]) ? $params[1] : array()));
-            $result = $this->mel->pdoTools->runSnippet($params[0], (!empty($params[1]) ? $params[1] : array()));
-            $this->mel->pdoTools->debugParserModifier($params[0], 'snippet', (!empty($params[1]) ? $params[1] : array()));
+            $this->mel->pdoTools->debugParserModifier($params[0], 'snippet', (!empty($params[1]) ? $params[1] : []));
+            $result = $this->mel->pdoTools->runSnippet($params[0], (!empty($params[1]) ? $params[1] : []));
+            $this->mel->pdoTools->debugParserModifier($params[0], 'snippet', (!empty($params[1]) ? $params[1] : []));
 
             return $result;
         });

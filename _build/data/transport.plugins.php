@@ -1,25 +1,25 @@
 <?php
 /** @var modX $modx */
 /** @var array $sources */
-$plugins = array();
-$tmp = array(
-    'melSystem' => array(
+$plugins = [];
+$tmp = [
+    'melSystem' => [
         'file' => 'system',
         'description' => '',
-        'events' => array(
+        'events' => [
             // MODX
-            'OnMODXInit' => array(),
+            'OnMODXInit' => [],
 
             // pdoTools
-            'pdoToolsOnFenomInit' => array(),
-        ),
-    ),
-);
+            'pdoToolsOnFenomInit' => [],
+        ],
+    ],
+];
 
 foreach ($tmp as $k => $v) {
     /** @var modplugin $plugin */
     $plugin = $modx->newObject('modPlugin');
-    $plugin->fromArray(array(
+    $plugin->fromArray([
         'name' => $k,
         'category' => 0,
         'description' => @$v['description'],
@@ -27,18 +27,18 @@ foreach ($tmp as $k => $v) {
         'static' => BUILD_PLUGIN_STATIC,
         'source' => 1,
         'static_file' => 'core/components/' . PKG_NAME_LOWER . '/elements/plugins/' . $v['file'] . '.php',
-    ), '', true, true);
+    ], '', true, true);
 
-    $events = array();
+    $events = [];
     if (!empty($v['events'])) {
         foreach ($v['events'] as $k2 => $v2) {
             /** @var modPluginEvent $event */
             $event = $modx->newObject('modPluginEvent');
-            $event->fromArray(array_merge(array(
+            $event->fromArray(array_merge([
                 'event' => $k2,
                 'priority' => 0,
                 'propertyset' => 0,
-            ), $v2), '', true, true);
+            ], $v2), '', true, true);
             $events[] = $event;
         }
         unset($v['events']);

@@ -46,31 +46,31 @@ class melObjectSortProcessor extends modObjectProcessor
         $c = $this->modx->newQuery($this->classKey);
         $c->command('UPDATE');
         if (!empty($this->_object_key)) {
-            $c->where(array(
+            $c->where([
                 $this->_object_key => $this->_object,
-            ));
+            ]);
         }
         if ($source->get('idx') < $target->get('idx')) {
-            $c->query['set']['idx'] = array(
+            $c->query['set']['idx'] = [
                 'value' => '`idx` - 1',
                 'type' => false,
-            );
-            $c->andCondition(array(
+            ];
+            $c->andCondition([
                 'idx:<=' => $target->idx,
                 'idx:>' => $source->idx,
-            ));
-            $c->andCondition(array(
+            ]);
+            $c->andCondition([
                 'idx:>' => 0,
-            ));
+            ]);
         } else {
-            $c->query['set']['idx'] = array(
+            $c->query['set']['idx'] = [
                 'value' => '`idx` + 1',
                 'type' => false,
-            );
-            $c->andCondition(array(
+            ];
+            $c->andCondition([
                 'idx:>=' => $target->idx,
                 'idx:<' => $source->idx,
-            ));
+            ]);
         }
         $c->prepare();
         $c->stmt->execute();
@@ -85,7 +85,7 @@ class melObjectSortProcessor extends modObjectProcessor
     {
         if (!empty($this->_object_key)) {
             $source->set($this->_object_key, $this->_object);
-            $source->set('idx', $this->modx->getCount($this->classKey, array($this->_object_key => $this->_object)));
+            $source->set('idx', $this->modx->getCount($this->classKey, [$this->_object_key => $this->_object]));
             $source->save();
         }
     }
@@ -96,7 +96,7 @@ class melObjectSortProcessor extends modObjectProcessor
     public function updateIndex()
     {
         // Update indexes
-        $condition = empty($this->_object_key) ? array('id:!=' => 0) : array($this->_object_key => $this->_object);
+        $condition = empty($this->_object_key) ? ['id:!=' => 0] : [$this->_object_key => $this->_object];
         $c = $this->modx->newQuery($this->classKey, $condition);
         $c->select('id');
         $c->sortby('idx', 'ASC');
@@ -106,7 +106,7 @@ class melObjectSortProcessor extends modObjectProcessor
             $update = $this->modx->prepare("UPDATE {$table} SET idx = ? WHERE id = ?");
             while ($id = $c->stmt->fetch(PDO::FETCH_COLUMN)) {
                 $i = empty($i) ? 1 : ++$i;
-                $update->execute(array($i, $id));
+                $update->execute([$i, $id]);
             }
         }
     }

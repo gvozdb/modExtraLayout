@@ -2,7 +2,7 @@
 
 class melTools
 {
-    public $config = array();
+    public $config = [];
     /** @var modX $modx */
     protected $modx;
     /** @var modExtraLayout $mel */
@@ -12,7 +12,7 @@ class melTools
      * @param modExtraLayout $mel
      * @param array          $config
      */
-    function __construct(modExtraLayout &$mel, $config = array())
+    function __construct(modExtraLayout &$mel, $config = [])
     {
         $this->mel = &$mel;
         $this->modx = &$this->mel->modx;
@@ -65,7 +65,7 @@ class melTools
         modProcessor &$processor,
         array $data,
         $default_lexicon = '',
-        array $condition_add = array()
+        array $condition_add = []
     ) {
         $has_error = false;
         if (is_array($data) && !empty($data)) {
@@ -81,9 +81,9 @@ class melTools
                     $lexicon = $default_lexicon;
                 }
 
-                $condition = array(
+                $condition = [
                     $key => $processor->getProperty($key),
-                );
+                ];
                 if (!empty($condition_add)) {
                     $condition = array_merge($condition, $condition_add);
                 }
@@ -110,7 +110,7 @@ class melTools
      *
      * @return array
      */
-    public function invokeEvent($eventName, array $params = array(), $glue = '<br/>')
+    public function invokeEvent($eventName, array $params = [], $glue = '<br/>')
     {
         if (isset($this->modx->event->returnedValues)) {
             $this->modx->event->returnedValues = null;
@@ -128,11 +128,11 @@ class melTools
             $params = array_merge($params, $this->modx->event->returnedValues);
         }
 
-        return array(
+        return [
             'success' => empty($message),
             'message' => $message,
             'data' => $params,
-        );
+        ];
     }
 
     /**
@@ -141,13 +141,13 @@ class melTools
      *
      * @return modProcessorResponse
      */
-    public function runProcessor($action = '', $data = array())
+    public function runProcessor($action = '', $data = [])
     {
         $this->modx->error->reset();
         $processorsPath = !empty($this->mel->config['processorsPath']) ? $this->mel->config['processorsPath'] : MODX_CORE_PATH;
 
         /* @var modProcessorResponse $response */
-        $response = $this->modx->runProcessor($action, $data, array('processors_path' => $processorsPath));
+        $response = $this->modx->runProcessor($action, $data, ['processors_path' => $processorsPath]);
 
         return $this->mel->config['prepareResponse'] ? $this->prepareResponse($response) : $response;
     }
@@ -189,7 +189,7 @@ class melTools
      */
     public function formatProcessorErrors(modProcessorResponse $response, $glue = '<br>')
     {
-        $errormsgs = array();
+        $errormsgs = [];
 
         if ($response->hasMessage()) {
             $errormsgs[] = $response->getMessage();
@@ -213,7 +213,7 @@ class melTools
      *
      * @return string
      */
-    public function getChunk($chunk, array $params = array())
+    public function getChunk($chunk, array $params = [])
     {
         if ($pdoTools = $this->mel->getPdoTools()) {
             return $pdoTools->getChunk($chunk, $params);
@@ -228,12 +228,12 @@ class melTools
      * @var string $prefix
      * @return array $array Two nested arrays With placeholders and values
      */
-    public function makePlaceholders(array $array = array(), $prefix = '')
+    public function makePlaceholders(array $array = [], $prefix = '')
     {
-        $result = array(
-            'pl' => array(),
-            'vl' => array(),
-        );
+        $result = [
+            'pl' => [],
+            'vl' => [],
+        ];
         foreach ($array as $k => $v) {
             if (is_array($v)) {
                 $result = array_merge_recursive($result, $this->makePlaceholders($v, $prefix . $k . '.'));
@@ -253,13 +253,13 @@ class melTools
      *
      * @return array|string
      */
-    public function success($message = '', $data = array(), $placeholders = array())
+    public function success($message = '', $data = [], $placeholders = [])
     {
-        $response = array(
+        $response = [
             'success' => true,
             'message' => $this->modx->lexicon($message, $placeholders),
             'data' => $data,
-        );
+        ];
 
         return $this->mel->config['jsonResponse'] ? $this->modx->toJSON($response) : $response;
     }
@@ -271,13 +271,13 @@ class melTools
      *
      * @return array|string
      */
-    public function failure($message = '', $data = array(), $placeholders = array())
+    public function failure($message = '', $data = [], $placeholders = [])
     {
-        $response = array(
+        $response = [
             'success' => false,
             'message' => $this->modx->lexicon($message, $placeholders),
             'data' => $data,
-        );
+        ];
 
         return $this->mel->config['jsonResponse'] ? $this->modx->toJSON($response) : $response;
     }

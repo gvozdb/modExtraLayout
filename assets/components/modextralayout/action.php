@@ -26,9 +26,9 @@ if ($ctx != $modx->context->get('key')) {
 /** @var modExtraLayout $mel */
 if (!$mel = $modx->getService('modextralayout', 'modExtraLayout',
     $modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/')) {
-    exit($modx->toJSON(array('success' => false, 'message' => 'Class modExtraLayout not found')));
+    exit($modx->toJSON(['success' => false, 'message' => 'Class modExtraLayout not found']));
 }
-$mel->initialize($ctx, array('jsonResponse' => true));
+$mel->initialize($ctx, ['jsonResponse' => true]);
 
 //
 if (empty($_REQUEST['action'])) {

@@ -1,16 +1,16 @@
 <?php
 /** @var modX $modx */
 /** @var array $sources */
-$chunks = array();
-$tmp = array(
-    'tpl.modExtraLayout.row' => array(
+$chunks = [];
+$tmp = [
+    'tpl.modExtraLayout.row' => [
         'file' => 'row',
         'description' => '',
-    ),
-);
+    ],
+];
 
 // Save chunks for setup options
-$BUILD_CHUNKS = array();
+$BUILD_CHUNKS = [];
 
 foreach ($tmp as $k => $v) {
     $static_file = 'core/components/' . PKG_NAME_LOWER . '/elements/chunks/' . $v['file'] . '.tpl';
@@ -20,7 +20,7 @@ foreach ($tmp as $k => $v) {
 
     /** @var modChunk $chunk */
     $chunk = $modx->newObject('modChunk');
-    $chunk->fromArray(array(
+    $chunk->fromArray([
         'id' => 0,
         'name' => $k,
         'description' => @$v['description'],
@@ -28,7 +28,7 @@ foreach ($tmp as $k => $v) {
         'source' => 1,
         'static' => (PKG_DEV_MODE || BUILD_CHUNK_STATIC),
         'static_file' => $static_file,
-    ), '', true, true);
+    ], '', true, true);
     $BUILD_CHUNKS[$k] = file_get_contents($sources['source_core'] . '/elements/chunks/' . $v['file'] . '.tpl');
     unset($static_file);
 

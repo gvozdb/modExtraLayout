@@ -39,30 +39,30 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
     {
         $c->leftJoin('modResource', 'modResource', 'modResource.id = melObject.parent');
 
-        $c->select(array($this->modx->getSelectColumns('melObject', 'melObject')));
-        $c->select(array('modResource.pagetitle as parent_formatted'));
+        $c->select([$this->modx->getSelectColumns('melObject', 'melObject')]);
+        $c->select(['modResource.pagetitle as parent_formatted']);
 
         // Фильтр по свойствам основного объекта
-        foreach (array('group') as $v) {
+        foreach (['group'] as $v) {
             if (${$v} = $this->getProperty($v)) {
                 if (${$v} == '_') {
-                    $c->where(array(
+                    $c->where([
                         '(' . $this->classKey . '.' . $v . ' = "" OR ' . $this->classKey . '.' . $v . ' IS NULL)',
-                    ));
+                    ]);
                 } else {
-                    $c->where(array(
+                    $c->where([
                         $this->classKey . '.' . $v => ${$v},
-                    ));
+                    ]);
                 }
             }
         }
 
         // Поиск
         if ($query = trim($this->getProperty('query'))) {
-            $c->where(array(
+            $c->where([
                 $this->classKey . '.name:LIKE' => "%{$query}%",
                 'OR:' . $this->classKey . '.description:LIKE' => "%{$query}%",
-            ));
+            ]);
         }
 
         return $c;
@@ -90,17 +90,17 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
      */
     public function getActions(array $data)
     {
-        $actions = array();
-        $actions[] = array(
+        $actions = [];
+        $actions[] = [
             'cls' => '',
             'icon' => 'icon icon-edit',
             'title' => $this->modx->lexicon('mel_button_update'),
             'action' => 'updateObject',
             'button' => true,
             'menu' => true,
-        );
+        ];
         if (!$data['active']) {
-            $actions[] = array(
+            $actions[] = [
                 'cls' => '',
                 'icon' => 'icon icon-toggle-on action-green',
                 'title' => $this->modx->lexicon('mel_button_enable'),
@@ -108,9 +108,9 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
                 'action' => 'enableObject',
                 'button' => true,
                 'menu' => true,
-            );
+            ];
         } else {
-            $actions[] = array(
+            $actions[] = [
                 'cls' => '',
                 'icon' => 'icon icon-toggle-off action-red',
                 'title' => $this->modx->lexicon('mel_button_disable'),
@@ -118,9 +118,9 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
                 'action' => 'disableObject',
                 'button' => true,
                 'menu' => true,
-            );
+            ];
         }
-        $actions[] = array(
+        $actions[] = [
             'cls' => '',
             'icon' => 'icon icon-trash-o action-red',
             'title' => $this->modx->lexicon('mel_button_remove'),
@@ -128,7 +128,7 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
             'action' => 'removeObject',
             'button' => true,
             'menu' => true,
-        );
+        ];
 
         return $actions;
     }

@@ -75,7 +75,7 @@ class melComboGroupGetListProcessor extends modProcessor
      */
     public function getLanguageTopics()
     {
-        return array('modextralayout:default');
+        return ['modextralayout:default'];
     }
 }
 

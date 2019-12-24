@@ -21,7 +21,7 @@ class modExtraLayoutHomeManagerController extends modExtraManagerController
      */
     public function getLanguageTopics()
     {
-        return array('modextralayout:default');
+        return ['modextralayout:default'];
     }
 
     /**

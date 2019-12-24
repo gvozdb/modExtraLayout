@@ -1,13 +1,13 @@
 <?php
 /** @var modX $modx */
 /** @var array $sources */
-$snippets = array();
-$tmp = array(
-    'modExtraLayout' => array(
+$snippets = [];
+$tmp = [
+    'modExtraLayout' => [
         'file' => 'modextralayout',
         'description' => '',
-    ),
-);
+    ],
+];
 
 foreach ($tmp as $k => $v) {
     $static_file = 'core/components/' . PKG_NAME_LOWER . '/elements/snippets/' . $v['file'] . '.php';
@@ -17,7 +17,7 @@ foreach ($tmp as $k => $v) {
 
     /** @var modSnippet $snippet */
     $snippet = $modx->newObject('modSnippet');
-    $snippet->fromArray(array(
+    $snippet->fromArray([
         'id' => 0,
         'name' => $k,
         'description' => @$v['description'],
@@ -25,7 +25,7 @@ foreach ($tmp as $k => $v) {
         'source' => 1,
         'static' => (PKG_DEV_MODE || BUILD_SNIPPET_STATIC),
         'static_file' => $static_file,
-    ), '', true, true);
+    ], '', true, true);
     /** @noinspection PhpIncludeInspection */
     $properties = include $sources['build'] . 'properties/' . $v['file'] . '.php';
     $snippet->setProperties($properties);

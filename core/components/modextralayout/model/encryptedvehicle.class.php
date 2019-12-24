@@ -12,7 +12,7 @@ class encryptedVehicle extends xPDOObjectVehicle
      * @param $object
      * @param array $attributes
      */
-    public function put(&$transport, &$object, $attributes = array())
+    public function put(&$transport, &$object, $attributes = [])
     {
         parent::put($transport, $object, $attributes);
 
@@ -142,20 +142,20 @@ class encryptedVehicle extends xPDOObjectVehicle
         $endpoint = 'package/decode/' . $action;
 
         /** @var modTransportPackage $package */
-        $package = $transport->xpdo->getObject('transport.modTransportPackage', array(
+        $package = $transport->xpdo->getObject('transport.modTransportPackage', [
             'signature' => $transport->signature,
-        ));
+        ]);
         if ($package instanceof modTransportPackage) {
             /** @var modTransportProvider $provider */
             if ($provider = $package->getOne('Provider')) {
                 $provider->xpdo->setOption('contentType', 'default');
-                $params = array(
+                $params = [
                     'package' => $package->package_name,
                     'version' => $transport->version,
                     'username' => $provider->username,
                     'api_key' => $provider->api_key,
                     'vehicle_version' => self::version,
-                );
+                ];
 
                 $response = $provider->request($endpoint, 'POST', $params);
                 if ($response->isError()) {

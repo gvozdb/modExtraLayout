@@ -52,12 +52,13 @@ define('BUILD_CHUNK_STATIC', false);
 define('BUILD_SNIPPET_STATIC', false);
 define('BUILD_PLUGIN_STATIC', false);
 
-$BUILD_RESOLVERS_BEFORE = array(// 'setup',
-);
+$BUILD_RESOLVERS_BEFORE = [
+    // 'setup',
+];
 
-$BUILD_RESOLVERS_AFTER = array(
+$BUILD_RESOLVERS_AFTER = [
     // 'extension',
     'dev',
     'tables',
     'chunks',
-);
+];

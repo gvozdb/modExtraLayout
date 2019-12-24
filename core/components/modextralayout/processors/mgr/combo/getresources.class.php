@@ -3,7 +3,7 @@
 class melComboResourceGetListProcessor extends modObjectGetListProcessor
 {
     public $classKey = 'modResource';
-    public $languageTopics = array('resource');
+    public $languageTopics = ['resource'];
     public $defaultSortField = 'menuindex';
     public $defaultSortDirection = 'ASC';
 
@@ -17,17 +17,17 @@ class melComboResourceGetListProcessor extends modObjectGetListProcessor
         $c->select('id,pagetitle');
 
         if ($context_key = $this->getProperty('context_key')) {
-            $c->where(array('context_key' => $context_key));
+            $c->where(['context_key' => $context_key]);
         }
         if ($isfolder = (int)$this->getProperty('isfolder')) {
-            $c->where(array('isfolder' => $isfolder));
+            $c->where(['isfolder' => $isfolder]);
         }
         if ($query = trim($this->getProperty('query'))) {
-            $c->where(array(
+            $c->where([
                 'id:LIKE' => "{$query}%",
                 'OR:pagetitle:LIKE' => "%{$query}%",
                 'OR:longtitle:LIKE' => "%{$query}%",
-            ));
+            ]);
         }
 
         return $c;
@@ -43,13 +43,13 @@ class melComboResourceGetListProcessor extends modObjectGetListProcessor
         $array = $obj->toArray();
 
         if ($this->getProperty('parents')) {
-            $array['parents'] = array();
-            $parents = $this->modx->getParentIds($array['id'], 4, array('context' => $array['context_key']));
+            $array['parents'] = [];
+            $parents = $this->modx->getParentIds($array['id'], 4, ['context' => $array['context_key']]);
             if ($parents[count($parents) - 1] == 0) {
                 unset($parents[count($parents) - 1]);
             }
             if (!empty($parents) && is_array($parents)) {
-                $q = $this->modx->newQuery($this->classKey, array('id:IN' => $parents));
+                $q = $this->modx->newQuery($this->classKey, ['id:IN' => $parents]);
                 $q->select('id,pagetitle');
                 if ($q->prepare() && $q->stmt->execute()) {
                     while ($row = $q->stmt->fetch(PDO::FETCH_ASSOC)) {

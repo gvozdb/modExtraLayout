@@ -67,10 +67,10 @@ unset($classes, $list, $class);
 
 // Удаляем событие у плагина, если такого класса не существует
 if ($exists_group === false && $exists_single === false) {
-    if ($event = $modx->getObject('modPluginEvent', array(
+    if ($event = $modx->getObject('modPluginEvent', [
         'pluginid' => $modx->event->plugin->get('id'),
         'event' => $modx->event->name,
-    ))) {
+    ])) {
         $event->remove();
     }
 }

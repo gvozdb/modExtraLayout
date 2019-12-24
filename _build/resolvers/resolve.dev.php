@@ -5,11 +5,11 @@
 if ($transport->xpdo) {
     $modx = &$transport->xpdo;
 
-    $settings = array(
+    $settings = [
         'mel_core_path' => (MODX_BASE_PATH . 'modExtraLayout/core/components/modextralayout/'),
         'mel_assets_url' => (MODX_BASE_URL . 'modExtraLayout/assets/components/modextralayout/'),
         'mel_assets_path' => (MODX_BASE_PATH . 'modExtraLayout/assets/components/modextralayout/'),
-    );
+    ];
 
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:

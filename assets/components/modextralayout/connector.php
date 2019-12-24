@@ -21,7 +21,7 @@ $modx->getRequest();
 
 /** @var modConnectorRequest $request */
 $request = $modx->request;
-$request->handleRequest(array(
+$request->handleRequest([
     'processors_path' => $path,
     'location' => '',
-));
+]);

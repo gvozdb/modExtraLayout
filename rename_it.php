@@ -26,11 +26,11 @@ $tmp = explode('/', $start);
 array_pop($tmp);
 $end = implode('/', $tmp) . '/' . $new_name;
 @rename($start, $end);
-rename_extra($end, array($old_name, $old_name_lower, $old_short_name), array(
+rename_extra($end, [$old_name, $old_name_lower, $old_short_name], [
     $new_name,
     $new_name_lower,
     $new_short_name,
-));
+]);
 
 /**
  * Recurvice rename of files and its content
@@ -41,7 +41,7 @@ rename_extra($end, array($old_name, $old_name_lower, $old_short_name), array(
  *
  * @return void
  */
-function rename_extra($start_path, $find = array(), $replace = array())
+function rename_extra($start_path, $find = [], $replace = [])
 {
     $items = scandir($start_path);
 

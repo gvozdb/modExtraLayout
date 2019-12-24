@@ -4,7 +4,7 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
 {
     public $objectType = 'melObject';
     public $classKey = 'melObject';
-    public $languageTopics = array('modextralayout:default');
+    public $languageTopics = ['modextralayout:default'];
     public $permission = 'create';
     /** @var modExtraLayout $mel */
     protected $mel;
@@ -44,17 +44,17 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
         unset($tmp);
 
         // Проверяем на заполненность
-        $required = array(
+        $required = [
             // 'group',
             'parent',
             'name:mel_err_required_name',
-        );
+        ];
         $this->mel->tools->checkProcessorRequired($this, $required, 'mel_err_required');
 
         // Проверяем на уникальность
-        $unique = array(
+        $unique = [
             'name:mel_err_unique_name',
-        );
+        ];
         $this->mel->tools->checkProcessorUnique('', 0, $this, $unique, 'mel_err_unique');
 
         return parent::beforeSet();
@@ -72,7 +72,7 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
         // $properties['idx'] = $this->modx->getCount($this->classKey, array(
         //     'object_id' => (int)$this->getProperty('object_id')
         // )); // Для группировки по родителю
-        $properties['idx'] = $this->modx->getCount($this->classKey, array('id:!=' => 0));
+        $properties['idx'] = $this->modx->getCount($this->classKey, ['id:!=' => 0]);
         ++$properties['idx'];
 
         // Создано

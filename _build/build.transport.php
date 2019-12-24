@@ -16,7 +16,7 @@ if (file_exists('build.model.php')) {
 
 // define sources
 $root = dirname(dirname(__FILE__)) . '/';
-$sources = array(
+$sources = [
     'root' => $root,
     'build' => $root . '_build/',
     'data' => $root . '_build/data/',
@@ -29,7 +29,7 @@ $sources = array(
     'pages' => $root . 'core/components/' . PKG_NAME_LOWER . '/elements/pages/',
     'source_assets' => $root . 'assets/components/' . PKG_NAME_LOWER,
     'source_core' => $root . 'core/components/' . PKG_NAME_LOWER,
-);
+];
 unset($root);
 
 require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
@@ -53,10 +53,10 @@ $builder->createPackage(PKG_NAME_LOWER, PKG_VERSION, PKG_RELEASE);
 if (PKG_ENCRYPT) {
     $username = '';
     $api_key = '';
-    if ($packageWithProvider = $modx->getObject('transport.modTransportPackage', array(
+    if ($packageWithProvider = $modx->getObject('transport.modTransportPackage', [
         'package_name' => PKG_NAME,
         'provider:!=' => 0,
-    ))) {
+    ])) {
         /** @var modTransportProvider $provider */
         if ($provider = $packageWithProvider->getOne('Provider')) {
             $username = $provider->username;
@@ -66,14 +66,14 @@ if (PKG_ENCRYPT) {
     unset($packageWithProvider, $provider);
 
     $client = $modx->getService('rest.modRestCurlClient');
-    $result = $client->request('https://modstore.pro/extras/package/', 'encode', 'POST', array(
+    $result = $client->request('https://modstore.pro/extras/package/', 'encode', 'POST', [
         'package' => PKG_NAME,
         'http_host' => $modx->getOption('http_host'),
         'username' => $username,
         'api_key' => $api_key,
         'version' => PKG_VERSION . '-' . PKG_RELEASE,
         'vehicle_version' => '2.0.0'
-    ), array('contentType' => 'application/xml'));
+    ], ['contentType' => 'application/xml']);
     $data = new SimpleXMLElement($result);
     if (!empty($data->key)) {
         $modx->log(modX::LOG_LEVEL_INFO, 'Key: ' . $data->key);
@@ -83,17 +83,17 @@ if (PKG_ENCRYPT) {
 
     define('PKG_ENCODE_KEY', $data->key);
 
-    $builder->package->put(array(
+    $builder->package->put([
         'source' => $sources['source_core'] . '/model/encryptedvehicle.class.php',
         'target' => "return MODX_CORE_PATH . 'components/" . PKG_NAME_LOWER . "/model/';",
-    ), array(
+    ], [
         'vehicle_class' => 'xPDOFileVehicle',
         xPDOTransport::UNINSTALL_FILES => false,
-    ));
+    ]);
 
-    $builder->putVehicle($builder->createVehicle(array(
+    $builder->putVehicle($builder->createVehicle([
         'source' => $sources['resolvers'] . 'resolve.encryption.php',
-    ), array('vehicle_class' => 'xPDOScriptVehicle')));
+    ], ['vehicle_class' => 'xPDOScriptVehicle']));
 
     $modx->loadClass('transport.xPDOObjectVehicle', XPDO_CORE_PATH, true, true);
     require_once $sources['source_core'] . '/model/encryptedvehicle.class.php';
@@ -109,11 +109,11 @@ if (defined('BUILD_SETTING_UPDATE')) {
     if (!is_array($settings)) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Could not package in settings.');
     } else {
-        $attributes = array(
+        $attributes = [
             xPDOTransport::UNIQUE_KEY => 'key',
             xPDOTransport::PRESERVE_KEYS => true,
             xPDOTransport::UPDATE_OBJECT => BUILD_SETTING_UPDATE,
-        );
+        ];
         foreach ($settings as $setting) {
             $vehicle = $builder->createVehicle($setting, $attributes);
             $builder->putVehicle($vehicle);
@@ -129,10 +129,10 @@ if (defined('BUILD_EVENT_UPDATE')) {
     if (!is_array($events)) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Could not package in events.');
     } else {
-        $attributes = array(
+        $attributes = [
             xPDOTransport::PRESERVE_KEYS => true,
             xPDOTransport::UPDATE_OBJECT => BUILD_EVENT_UPDATE,
-        );
+        ];
         foreach ($events as $event) {
             $vehicle = $builder->createVehicle($event, $attributes);
             $builder->putVehicle($vehicle);
@@ -144,11 +144,11 @@ if (defined('BUILD_EVENT_UPDATE')) {
 
 // package in default access policy
 if (defined('BUILD_POLICY_UPDATE')) {
-    $attributes = array(
+    $attributes = [
         xPDOTransport::PRESERVE_KEYS => false,
-        xPDOTransport::UNIQUE_KEY => array('name'),
+        xPDOTransport::UNIQUE_KEY => ['name'],
         xPDOTransport::UPDATE_OBJECT => BUILD_POLICY_UPDATE,
-    );
+    ];
     $policies = include $sources['data'] . 'transport.policies.php';
     if (!is_array($policies)) {
         $modx->log(modX::LOG_LEVEL_FATAL, 'Adding policies failed.');
@@ -165,19 +165,19 @@ if (defined('BUILD_POLICY_UPDATE')) {
 // package in default access policy templates
 if (defined('BUILD_POLICY_TEMPLATE_UPDATE')) {
     $templates = include dirname(__FILE__) . '/data/transport.policytemplates.php';
-    $attributes = array(
+    $attributes = [
         xPDOTransport::PRESERVE_KEYS => false,
-        xPDOTransport::UNIQUE_KEY => array('name'),
+        xPDOTransport::UNIQUE_KEY => ['name'],
         xPDOTransport::UPDATE_OBJECT => BUILD_POLICY_TEMPLATE_UPDATE,
         xPDOTransport::RELATED_OBJECTS => true,
-        xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array(
-            'Permissions' => array(
+        xPDOTransport::RELATED_OBJECT_ATTRIBUTES => [
+            'Permissions' => [
                 xPDOTransport::PRESERVE_KEYS => false,
                 xPDOTransport::UPDATE_OBJECT => BUILD_PERMISSION_UPDATE,
-                xPDOTransport::UNIQUE_KEY => array('template', 'name'),
-            ),
-        ),
-    );
+                xPDOTransport::UNIQUE_KEY => ['template', 'name'],
+            ],
+        ],
+    ];
     if (is_array($templates)) {
         foreach ($templates as $template) {
             $vehicle = $builder->createVehicle($template, $attributes);
@@ -194,12 +194,12 @@ if (defined('BUILD_POLICY_TEMPLATE_UPDATE')) {
 // Load menus
 if (defined('BUILD_MENU_UPDATE')) {
     $menus = include $sources['data'] . 'transport.menu.php';
-    $attributes = array(
+    $attributes = [
         xPDOTransport::PRESERVE_KEYS => true,
         xPDOTransport::UPDATE_OBJECT => BUILD_MENU_UPDATE,
         xPDOTransport::UNIQUE_KEY => 'text',
         xPDOTransport::RELATED_OBJECTS => true,
-    );
+    ];
     if (is_array($menus)) {
         foreach ($menus as $menu) {
             $vehicle = $builder->createVehicle($menu, $attributes);
@@ -219,12 +219,12 @@ $modx->log(xPDO::LOG_LEVEL_INFO, 'Created category.');
 $category = $modx->newObject('modCategory');
 $category->set('category', PKG_NAME);
 // create category vehicle
-$attr = array(
+$attr = [
     xPDOTransport::UNIQUE_KEY => 'category',
     xPDOTransport::PRESERVE_KEYS => false,
     xPDOTransport::UPDATE_OBJECT => true,
     xPDOTransport::RELATED_OBJECTS => true,
-);
+];
 if (PKG_ENCRYPT) {
     $attr['vehicle_class'] = 'encryptedVehicle';
     $attr[xPDOTransport::ABORT_INSTALL_ON_VEHICLE_FAIL] = true;
@@ -232,11 +232,11 @@ if (PKG_ENCRYPT) {
 
 // add snippets
 if (defined('BUILD_SNIPPET_UPDATE')) {
-    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Snippets'] = array(
+    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Snippets'] = [
         xPDOTransport::PRESERVE_KEYS => false,
         xPDOTransport::UPDATE_OBJECT => BUILD_SNIPPET_UPDATE,
         xPDOTransport::UNIQUE_KEY => 'name',
-    );
+    ];
     $snippets = include $sources['data'] . 'transport.snippets.php';
     if (!is_array($snippets)) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Could not package in snippets.');
@@ -248,11 +248,11 @@ if (defined('BUILD_SNIPPET_UPDATE')) {
 
 // add chunks
 if (defined('BUILD_CHUNK_UPDATE')) {
-    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Chunks'] = array(
+    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Chunks'] = [
         xPDOTransport::PRESERVE_KEYS => false,
         xPDOTransport::UPDATE_OBJECT => BUILD_CHUNK_UPDATE,
         xPDOTransport::UNIQUE_KEY => 'name',
-    );
+    ];
     $chunks = include $sources['data'] . 'transport.chunks.php';
     if (!is_array($chunks)) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Could not package in chunks.');
@@ -264,16 +264,16 @@ if (defined('BUILD_CHUNK_UPDATE')) {
 
 // add plugins
 if (defined('BUILD_PLUGIN_UPDATE')) {
-    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Plugins'] = array(
+    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['Plugins'] = [
         xPDOTransport::PRESERVE_KEYS => false,
         xPDOTransport::UPDATE_OBJECT => BUILD_PLUGIN_UPDATE,
         xPDOTransport::UNIQUE_KEY => 'name',
-    );
-    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['PluginEvents'] = array(
+    ];
+    $attr[xPDOTransport::RELATED_OBJECT_ATTRIBUTES]['PluginEvents'] = [
         xPDOTransport::PRESERVE_KEYS => true,
         xPDOTransport::UPDATE_OBJECT => BUILD_PLUGIN_UPDATE,
-        xPDOTransport::UNIQUE_KEY => array('pluginid', 'event'),
-    );
+        xPDOTransport::UNIQUE_KEY => ['pluginid', 'event'],
+    ];
     $plugins = include $sources['data'] . 'transport.plugins.php';
     if (!is_array($plugins)) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Could not package in plugins.');
@@ -287,7 +287,7 @@ $vehicle = $builder->createVehicle($category, $attr);
 
 /** @var array $BUILD_RESOLVERS_BEFORE */
 foreach ($BUILD_RESOLVERS_BEFORE as $resolver) {
-    if ($vehicle->resolve('php', array('source' => $sources['resolvers'] . 'resolve.' . $resolver . '.php'))) {
+    if ($vehicle->resolve('php', ['source' => $sources['resolvers'] . 'resolve.' . $resolver . '.php'])) {
         $modx->log(modX::LOG_LEVEL_INFO, 'Added resolver "' . $resolver . '" to category.');
     } else {
         $modx->log(modX::LOG_LEVEL_INFO, 'Could not add resolver "' . $resolver . '" to category.');
@@ -295,18 +295,18 @@ foreach ($BUILD_RESOLVERS_BEFORE as $resolver) {
 }
 
 // now pack in resolvers
-$vehicle->resolve('file', array(
+$vehicle->resolve('file', [
     'source' => $sources['source_assets'],
     'target' => "return MODX_ASSETS_PATH . 'components/';",
-));
-$vehicle->resolve('file', array(
+]);
+$vehicle->resolve('file', [
     'source' => $sources['source_core'],
     'target' => "return MODX_CORE_PATH . 'components/';",
-));
+]);
 
 /** @var array $BUILD_RESOLVERS_AFTER */
 foreach ($BUILD_RESOLVERS_AFTER as $resolver) {
-    if ($vehicle->resolve('php', array('source' => $sources['resolvers'] . 'resolve.' . $resolver . '.php'))) {
+    if ($vehicle->resolve('php', ['source' => $sources['resolvers'] . 'resolve.' . $resolver . '.php'])) {
         $modx->log(modX::LOG_LEVEL_INFO, 'Added resolver "' . $resolver . '" to category.');
     } else {
         $modx->log(modX::LOG_LEVEL_INFO, 'Could not add resolver "' . $resolver . '" to category.');
@@ -319,27 +319,27 @@ $builder->putVehicle($vehicle);
 
 /** @var array $BUILD_CHUNKS */
 // now pack in the license file, readme and setup options
-$builder->setPackageAttributes(array(
+$builder->setPackageAttributes([
     'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
     'license' => file_get_contents($sources['docs'] . 'license.txt'),
     'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
     'chunks' => $BUILD_CHUNKS,
-    'setup-options' => array(
+    'setup-options' => [
         'source' => $sources['build'] . 'setup.options.php',
-    ),
+    ],
     /*
     'requires' => array(
         'pdotools' => '>=2.5.0-pl',
     ),
     */
-));
+]);
 $modx->log(modX::LOG_LEVEL_INFO, 'Added package attributes and setup options.');
 
 //
 if (PKG_ENCRYPT) {
-    $builder->putVehicle($builder->createVehicle(array(
+    $builder->putVehicle($builder->createVehicle([
         'source' => $sources['resolvers'] . 'resolve.encryption.php',
-    ), array('vehicle_class' => 'xPDOScriptVehicle')));
+    ], ['vehicle_class' => 'xPDOScriptVehicle']));
 }
 
 // zip up package
@@ -359,14 +359,14 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
     $versionSignature = explode('.', $sig[1]);
 
     /** @var modTransportPackage $package */
-    if (!$package = $modx->getObject('transport.modTransportPackage', array(
+    if (!$package = $modx->getObject('transport.modTransportPackage', [
         'signature' => $signature,
-    ))) {
+    ])) {
         $provider_id = 0;
-        if ($packageWithProvider = $modx->getObject('transport.modTransportPackage', array(
+        if ($packageWithProvider = $modx->getObject('transport.modTransportPackage', [
             'package_name' => PKG_NAME,
             'provider:!=' => 0,
-        ))) {
+        ])) {
             $provider_id = $packageWithProvider->get('provider');
         }
         unset($packageWithProvider);
@@ -374,7 +374,7 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
         //
         $package = $modx->newObject('transport.modTransportPackage');
         $package->set('signature', $signature);
-        $package->fromArray(array(
+        $package->fromArray([
             'created' => date('Y-m-d h:i:s'),
             'updated' => null,
             'state' => 1,
@@ -385,7 +385,7 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
             'version_major' => $versionSignature[0],
             'version_minor' => !empty($versionSignature[1]) ? $versionSignature[1] : 0,
             'version_patch' => !empty($versionSignature[2]) ? $versionSignature[2] : 0,
-        ));
+        ]);
         if (!empty($sig[2])) {
             $r = preg_split('/([0-9]+)/', $sig[2], -1, PREG_SPLIT_DELIM_CAPTURE);
             if (is_array($r) && !empty($r)) {

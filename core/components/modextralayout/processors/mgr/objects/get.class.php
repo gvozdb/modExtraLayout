@@ -4,7 +4,7 @@ class melObjectGetProcessor extends modObjectGetProcessor
 {
     public $objectType = 'melObject';
     public $classKey = 'melObject';
-    public $languageTopics = array('modextralayout:default');
+    public $languageTopics = ['modextralayout:default'];
     public $permission = 'view';
 
     /**

@@ -25,7 +25,7 @@ $c->limit($limit);
 $items = $modx->getIterator('melObject', $c);
 
 // Iterate through items
-$list = array();
+$list = [];
 /** @var melObject $item */
 foreach ($items as $item) {
     $list[] = $mel->tools->getChunk($tpl, $item->toArray());

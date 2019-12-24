@@ -4,7 +4,7 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
 {
     public $objectType = 'melObject';
     public $classKey = 'melObject';
-    public $languageTopics = array('modextralayout:default');
+    public $languageTopics = ['modextralayout:default'];
     public $permission = 'save';
     /** @var modExtraLayout $mel */
     protected $mel;
@@ -47,17 +47,17 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
         unset($tmp);
 
         // Проверяем на заполненность
-        $required = array(
+        $required = [
             // 'group',
             'parent',
             'name:mel_err_required_name',
-        );
+        ];
         $this->mel->tools->checkProcessorRequired($this, $required, 'mel_err_required');
 
         // Проверяем на уникальность
-        $unique = array(
+        $unique = [
             'name:mel_err_unique_name',
-        );
+        ];
         $this->mel->tools->checkProcessorUnique('', 0, $this, $unique, 'mel_err_unique');
 
         return parent::beforeSet();

@@ -4,7 +4,7 @@ class melObjectDisableProcessor extends modObjectProcessor
 {
     public $objectType = 'melObject';
     public $classKey = 'melObject';
-    public $languageTopics = array('modextralayout:default');
+    public $languageTopics = ['modextralayout:default'];
     public $permission = 'save';
 
     /**
@@ -17,7 +17,7 @@ class melObjectDisableProcessor extends modObjectProcessor
         }
 
         if ($ids = $this->getProperty('id')) {
-            $ids = array($ids);
+            $ids = [$ids];
         } else {
             $ids = $this->modx->fromJSON($this->getProperty('ids'));
             if (empty($ids)) {
