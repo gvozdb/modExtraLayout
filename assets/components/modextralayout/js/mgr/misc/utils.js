@@ -1,3 +1,10 @@
+/**
+ *
+ * @param actions
+ * @param grid
+ * @param selected
+ * @returns {[]}
+ */
 modExtraLayout.utils.getMenu = function (actions, grid, selected) {
     var menu = [];
     var cls, icon, title, action;

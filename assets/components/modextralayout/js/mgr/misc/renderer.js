@@ -79,7 +79,14 @@ modExtraLayout.renderer.Boolean = function (val) {
     );
 };
 
-
+/**
+ *
+ * @param val
+ * @param props
+ * @param row
+ * @returns {string}
+ * @constructor
+ */
 modExtraLayout.renderer.CustomField = function (val, props, row) {
     var rec = row['json'];
     return String.format(
@@ -88,6 +95,14 @@ modExtraLayout.renderer.CustomField = function (val, props, row) {
     );
 };
 
+/**
+ *
+ * @param val
+ * @param props
+ * @param row
+ * @returns {string}
+ * @constructor
+ */
 modExtraLayout.renderer.Group = function (val, props, row) {
     var rec = row['json'];
     return String.format(
