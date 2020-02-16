@@ -150,9 +150,11 @@ class modExtraLayout
     }
 
     /**
+     * @param string $page
+     *
      * @return bool
      */
-    public function loadManagerScripts()
+    public function loadManagerScripts($page)
     {
         /** @var modManagerController $controller */
         $controller = $this->modx->controller;
@@ -188,8 +190,8 @@ class modExtraLayout
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/objects/grid.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/objects/window.js?v=' . $version;
 
-        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/home.panel.js?v=' . $version;
-        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/sections/home.js?v=' . $version;
+        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/' . $page . '.panel.js?v=' . $version;
+        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/sections/' . $page . '.js?v=' . $version;
 
         // Config
         $controller->addHtml('
@@ -198,7 +200,7 @@ class modExtraLayout
                 modExtraLayout.config[\'connector_url\'] = "' . $this->config['connectorUrl'] . '";
                 Ext.onReady(function() {
                     MODx.load({
-                        xtype: "modextralayout-page-home",
+                        xtype: "modextralayout-page-' . $page . '",
                     });
                 });
             </script>

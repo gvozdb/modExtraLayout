@@ -9,6 +9,9 @@ $_lang['modextralayout'] = 'modExtraLayout';
 $_lang['mel_menu_home'] = 'modExtraLayout';
 $_lang['mel_menu_home_desc'] = 'Заготовка для разработки пакетов';
 
+// Заголовки
+$_lang['mel_title_home'] = 'modExtraLayout / Главная';
+
 // Табы
 $_lang['mel_tab_objects'] = 'Объекты';
 

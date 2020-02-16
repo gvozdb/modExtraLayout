@@ -2,7 +2,13 @@
 
 class modExtraLayoutHomeManagerController extends modExtraManagerController
 {
-    /** @var modExtraLayout $mel */
+    /**
+     * @var string $page
+     */
+    public $page = 'home';
+    /**
+     * @var modExtraLayout $mel
+     */
     public $mel;
 
     /**
@@ -37,7 +43,7 @@ class modExtraLayoutHomeManagerController extends modExtraManagerController
      */
     public function getPageTitle()
     {
-        return $this->modx->lexicon('modextralayout');
+        return $this->modx->lexicon('mel_title_' . $this->page);
     }
 
     /**
@@ -45,7 +51,7 @@ class modExtraLayoutHomeManagerController extends modExtraManagerController
      */
     public function loadCustomCssJs()
     {
-        $this->mel->loadManagerScripts();
+        $this->mel->loadManagerScripts($this->page);
     }
 
     /**
@@ -53,6 +59,6 @@ class modExtraLayoutHomeManagerController extends modExtraManagerController
      */
     public function getTemplateFile()
     {
-        return $this->mel->config['templatesPath'] . 'home.tpl';
+        return $this->mel->config['templatesPath'] . $this->page . '.tpl';
     }
 }
