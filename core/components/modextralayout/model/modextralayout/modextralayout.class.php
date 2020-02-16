@@ -190,8 +190,8 @@ class modExtraLayout
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/objects/grid.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/objects/window.js?v=' . $version;
 
-        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/' . $page . '.panel.js?v=' . $version;
-        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/sections/' . $page . '.js?v=' . $version;
+        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/pages/' . $page . '.panel.js?v=' . $version;
+        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/pages/' . $page . '.js?v=' . $version;
 
         // Config
         $controller->addHtml('
