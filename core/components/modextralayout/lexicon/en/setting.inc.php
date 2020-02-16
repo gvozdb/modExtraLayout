@@ -1,3 +1,2 @@
 <?php
-
-include_once dirname(__FILE__) . '/../ru/setting.inc.php';
+require dirname(__FILE__) . '/../ru/setting.inc.php';

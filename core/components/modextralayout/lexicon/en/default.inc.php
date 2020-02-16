@@ -1,6 +1,4 @@
 <?php
-
-include_once dirname(__FILE__) . '/../ru/default.inc.php';
-
-include_once 'common.inc.php';
-include_once 'setting.inc.php';
+require dirname(__FILE__) . '/../ru/default.inc.php';
+require 'common.inc.php';
+require 'setting.inc.php';

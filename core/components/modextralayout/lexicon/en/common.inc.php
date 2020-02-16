@@ -1,3 +1,2 @@
 <?php
-
-include_once dirname(__FILE__) . '/../ru/common.inc.php';
+require dirname(__FILE__) . '/../ru/common.inc.php';
