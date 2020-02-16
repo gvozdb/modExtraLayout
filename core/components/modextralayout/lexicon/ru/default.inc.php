@@ -4,7 +4,10 @@ require 'setting.inc.php';
 
 // Основное
 $_lang['modextralayout'] = 'modExtraLayout';
-$_lang['mel_menu_desc'] = 'Заготовка для разработки пакетов';
+
+// Меню
+$_lang['mel_menu_home'] = 'modExtraLayout';
+$_lang['mel_menu_home_desc'] = 'Заготовка для разработки пакетов';
 
 // Табы
 $_lang['mel_tab_objects'] = 'Объекты';
