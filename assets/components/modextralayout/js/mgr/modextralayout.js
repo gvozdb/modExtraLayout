@@ -3,19 +3,19 @@ var modExtraLayout = function (config) {
     modExtraLayout.superclass.constructor.call(this, config);
 };
 Ext.extend(modExtraLayout, Ext.Component, {
+    config: {},
+    utils: {},
     page: {},
-    window: {},
-    grid: {},
-    tree: {},
+    view: {},
     panel: {},
     formpanel: {},
+    grid: {},
+    tree: {},
+    window: {},
     combo: {},
-    config: {},
-    view: {},
-    ux: {},
-    utils: {},
     renderer: {},
     fields: {},
+    ux: {},
 });
 Ext.reg('modextralayout', modExtraLayout);
 

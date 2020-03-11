@@ -49,7 +49,17 @@ foreach (glob($mel->config['pluginsPath'] . 'melplugin*.class.php') as $filepath
 ksort($classes);
 foreach ($classes as $list) {
     foreach ($list as $class) {
-        $class->{$modx->event->name}();
+        //
+        $event = $modx->event;
+
+        // Run method
+        $class->{$event->name}();
+
+        //
+        if ($event->name !== $modx->event->name) {
+            $modx->event = $event;
+        }
+        unset($event);
     }
 }
 unset($classes, $list, $class);
