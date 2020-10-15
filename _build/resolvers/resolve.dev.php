@@ -5,6 +5,10 @@
 if ($transport->xpdo) {
     $modx = &$transport->xpdo;
 
+    if (!defined('PKG_DEV_MODE')) {
+        return true;
+    }
+
     $settings = [
         'mel_core_path' => (MODX_BASE_PATH . 'modExtraLayout/core/components/modextralayout/'),
         'mel_assets_url' => (MODX_BASE_URL . 'modExtraLayout/assets/components/modextralayout/'),
