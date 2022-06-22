@@ -123,8 +123,8 @@ modExtraLayout.combo.Group = function (config) {
         name: 'group',
         baseParams: {
             action: 'mgr/combo/getgroups',
-            filter: config['filter'] || 0,
-            notempty: config['notempty'] || 1
+            filter: typeof(config.filter) !== 'undefined' ? config.filter : 0,
+            notempty: typeof(config.notempty) !== 'undefined' ? config.notempty : 1,
         },
         tpl: new Ext.XTemplate('\
             <tpl for="."><div class="x-combo-list-item mel-combo-row">\

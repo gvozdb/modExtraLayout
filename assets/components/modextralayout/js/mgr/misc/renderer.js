@@ -88,7 +88,7 @@ modExtraLayout.renderer.Boolean = function (val) {
  * @constructor
  */
 modExtraLayout.renderer.CustomField = function (val, props, row) {
-    var rec = row['json'];
+    var rec = row.json;
     return String.format(
         '<div class="mel-grid-col__customfield">{0}</div>',
         rec['customfield']
@@ -104,7 +104,7 @@ modExtraLayout.renderer.CustomField = function (val, props, row) {
  * @constructor
  */
 modExtraLayout.renderer.Group = function (val, props, row) {
-    var rec = row['json'];
+    var rec = row.json;
     return String.format(
         '<div class="mel-grid-col__group mel-grid-col__{0}">{1}</div>',
         rec['group'] || '',

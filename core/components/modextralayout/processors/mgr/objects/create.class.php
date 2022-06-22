@@ -63,7 +63,7 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
     /**
      * @return string|bool
      */
-    public function prepareProperties()
+    private function prepareProperties()
     {
         $properties = $this->getProperties();
         // return print_r($properties, 1);

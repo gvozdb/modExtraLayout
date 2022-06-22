@@ -21,7 +21,7 @@ abstract class melPlugin
 
     /**
      * @param modExtraLayout $mel
-     * @param array          $sp
+     * @param array $sp
      */
     public function __construct(modExtraLayout &$mel, array &$sp)
     {

@@ -35,13 +35,20 @@ unset($root);
 require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
 require_once $sources['build'] . '/includes/functions.php';
 
+$loglevel = modX::LOG_LEVEL_INFO;
+if ($loglevel_key = strtoupper(@$_GET['loglevel']?:'')) {
+    $loglevel = defined('modX::LOG_LEVEL_' . $loglevel_key)
+        ? constant('modX::LOG_LEVEL_' . $loglevel_key)
+        : $loglevel;
+}
+
 $modx = new modX();
 $modx->initialize('mgr');
-$modx->setLogLevel(modX::LOG_LEVEL_INFO);
+$modx->setLogLevel($loglevel);
 $modx->setLogTarget('ECHO');
 $modx->getService('error', 'error.modError');
 $modx->loadClass('transport.modPackageBuilder', '', false, true);
-if (!XPDO_CLI_MODE) {
+if (!XPDO_CLI_MODE && @$_GET['html'] !== '0') {
     echo '<pre>';
 }
 
@@ -406,7 +413,7 @@ if (!empty($_GET['download'])) {
     echo '<script>document.location.href = "/core/packages/' . $signature . '.transport.zip' . '";</script>';
 }
 
-$modx->log(modX::LOG_LEVEL_INFO, "\n<br />Execution time: {$totalTime}\n");
-if (!XPDO_CLI_MODE) {
+$modx->log(modX::LOG_LEVEL_WARN, "\n\nExecution time: {$totalTime}\n");
+if (!XPDO_CLI_MODE && @$_GET['html'] !== '0') {
     echo '</pre>';
 }

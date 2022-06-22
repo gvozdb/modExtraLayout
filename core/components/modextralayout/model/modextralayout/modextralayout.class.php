@@ -22,6 +22,7 @@ class modExtraLayout
      */
     public $pdoFetch;
 
+
     /**
      * @param modX  $modx
      * @param array $config
@@ -95,6 +96,7 @@ class modExtraLayout
         return ($this->initialized[$ctx] = true);
     }
 
+
     /**
      * @param array $services
      *
@@ -148,6 +150,7 @@ class modExtraLayout
 
         return $flag;
     }
+
 
     /**
      * @param string $page
@@ -208,6 +211,7 @@ class modExtraLayout
 
         return true;
     }
+
 
     /**
      * @param array $config
