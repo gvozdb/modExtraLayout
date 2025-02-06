@@ -43,7 +43,7 @@ modExtraLayout.utils.getMenu = function (actions, grid, selected) {
             cls = a['cls'] ? a['cls'] : '';
         }
         title = a['title'] ? a['title'] : a['title'];
-        action = a['action'] ? grid[a['action']] : '';
+        action = a['action'] ? (typeof(a['action']) === 'function' ? a['action'] : grid[a['action']]) : '';
 
         menu.push({
             handler: action,

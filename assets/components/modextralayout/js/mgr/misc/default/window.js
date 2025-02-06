@@ -1,3 +1,7 @@
+/**
+ * @param config
+ * @constructor
+ */
 modExtraLayout.window.Default = function (config) {
     config = config || {};
     Ext.applyIf(config, {

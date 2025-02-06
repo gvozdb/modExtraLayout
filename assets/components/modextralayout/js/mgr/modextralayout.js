@@ -10,6 +10,7 @@ Ext.extend(modExtraLayout, Ext.Component, {
     panel: {},
     formpanel: {},
     grid: {},
+    gridlocal: {},
     tree: {},
     window: {},
     combo: {},

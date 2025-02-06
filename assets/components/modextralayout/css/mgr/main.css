@@ -15,6 +15,25 @@
 }
 
 /**
+ * Grid / Top Toolbar
+ */
+.mel-grid-toptbar_field {
+    padding-top: 0 !important;;
+    padding-bottom: 5px !important;
+}
+
+/**
+ * Grid / Buttons
+ */
+.mel-grid__tbar-button {
+}
+.mel-grid__tbar-button button {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+/**
  * Grid / Rows
  */
 .mel-grid-row {

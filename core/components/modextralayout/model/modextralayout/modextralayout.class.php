@@ -180,6 +180,7 @@ class modExtraLayout
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/modextralayout.js?v=' . $version;
 
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/default/grid.js?v=' . $version;
+        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/default/gridlocal.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/default/window.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/default/formpanel.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/default/panel.js?v=' . $version;
@@ -189,6 +190,9 @@ class modExtraLayout
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/utils.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/renderer.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/misc/combo.js?v=' . $version;
+
+        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/subobjects/gridlocal.js?v=' . $version;
+        $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/files/gridlocal.js?v=' . $version;
 
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/objects/grid.js?v=' . $version;
         $controller->head['js'][] = $this->config['jsUrl'] . 'mgr/widgets/objects/window.js?v=' . $version;

@@ -75,6 +75,14 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
         $properties['idx'] = $this->modx->getCount($this->classKey, ['id:!=' => 0]);
         ++$properties['idx'];
 
+        // // Files
+        // $properties['files'] = @($this->mel->tools->isJSON($properties['files'])
+        //     ? $this->modx->fromJSON($properties['files']) : $properties['files']) ?: [];
+        // foreach ($properties['files'] as &$file) {
+        //     $file = $file['urlpath'];
+        // }
+        // unset($file);
+
         // Создано
         $properties['createdon'] = $properties['createdon'] ?: time();
 

@@ -413,7 +413,7 @@ if (!empty($_GET['download'])) {
     echo '<script>document.location.href = "/core/packages/' . $signature . '.transport.zip' . '";</script>';
 }
 
-$modx->log(modX::LOG_LEVEL_WARN, "\n\nExecution time: {$totalTime}\n");
+$modx->log(modX::LOG_LEVEL_WARN, "Execution time: {$totalTime}");
 if (!XPDO_CLI_MODE && @$_GET['html'] !== '0') {
     echo '</pre>';
 }

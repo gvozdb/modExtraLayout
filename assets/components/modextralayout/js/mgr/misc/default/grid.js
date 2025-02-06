@@ -1,3 +1,7 @@
+/**
+ * @param config
+ * @constructor
+ */
 modExtraLayout.grid.Default = function (config) {
     config = config || {};
 

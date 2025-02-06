@@ -6,15 +6,15 @@
  * @returns {*}
  * @constructor
  */
-modExtraLayout.renderer.Actions = function (value, props, row) {
+modExtraLayout.renderer.Actions = function (actions, props, row) {
     var res = [];
     var cls, icon, title, action, item;
-    if (typeof(value) === 'object') {
-        for (var i in value) {
-            if (!value.hasOwnProperty(i)) {
+    if (typeof(actions) === 'object') {
+        for (var i in actions) {
+            if (!actions.hasOwnProperty(i)) {
                 continue;
             }
-            var a = value[i];
+            var a = actions[i];
             if (!a['button']) {
                 continue;
             }
@@ -31,8 +31,8 @@ modExtraLayout.renderer.Actions = function (value, props, row) {
             title = a['title'] ? a['title'] : '';
 
             item = String.format(
-                '<li class="{0}"><button class="btn btn-default {1}" action="{2}" title="{3}"></button></li>',
-                cls, icon, action, title
+                '<li class="{0}"><button class="btn btn-default {1}" action="{2}" action-index="{3}" title="{4}"></button></li>',
+                cls, icon, action, i, title
             );
 
             res.push(item);

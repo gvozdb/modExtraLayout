@@ -1,13 +1,11 @@
 /**
- * Вкладки/поля для окон добавления/редактирования
- *
  * @param config
  * @returns {{object}}
  * @constructor
  */
 modExtraLayout.fields.Object = function (config) {
-    var data = config['record'] ? config.record['object'] : null;
-    var fields = {
+    const data = config['record'] ? config.record['object'] : null;
+    const fields = {
         xtype: 'modx-tabs',
         border: true,
         autoHeight: true,
@@ -32,15 +30,13 @@ modExtraLayout.fields.Object = function (config) {
             },
         },
     };
-
-    //
-    var tabs = {
+    const tabs = {
         main: fields.items[0].items,
     };
 
-    /**
-     *  Tab / Main
-     */
+
+    //
+    // Tab / Main
     tabs['main'].push({
         layout: 'column',
         border: false,
@@ -114,6 +110,40 @@ modExtraLayout.fields.Object = function (config) {
         items: [{
             columnWidth: 1,
             layout: 'form',
+            style: {margin: '0px'},
+            items: [{
+                xtype: 'mel-gridlocal-subobjects',
+                id: config['id'] + '-subobjects-grid',
+                name: 'subobjects',
+                fieldLabel: _('mel_field_subobjects'),
+                anchor: '100%',
+            }],
+        }],
+    }, {
+        layout: 'column',
+        border: false,
+        style: {marginTop: '0px'},
+        anchor: '100%',
+        items: [{
+            columnWidth: 1,
+            layout: 'form',
+            style: {margin: '0px'},
+            items: [{
+                xtype: 'mel-gridlocal-files',
+                id: config['id'] + '-files-grid',
+                name: 'files',
+                fieldLabel: _('mel_field_files'),
+                anchor: '100%',
+            }],
+        }],
+    }, {
+        layout: 'column',
+        border: false,
+        style: {marginTop: '0px'},
+        anchor: '100%',
+        items: [{
+            columnWidth: 1,
+            layout: 'form',
             items: [{
                 xtype: 'xcheckbox',
                 id: config['id'] + '-active',
@@ -122,6 +152,7 @@ modExtraLayout.fields.Object = function (config) {
             }],
         }],
     });
+
 
     if (data) {
         tabs['main'].push({
@@ -134,9 +165,8 @@ modExtraLayout.fields.Object = function (config) {
     return fields;
 };
 
+
 /**
- * Окно добавления объекта
- *
  * @param config
  * @constructor
  */
@@ -161,9 +191,8 @@ Ext.extend(modExtraLayout.window.ObjectCreate, modExtraLayout.window.Default, {
 });
 Ext.reg('mel-window-object-create', modExtraLayout.window.ObjectCreate);
 
+
 /**
- * Окно редактирования объекта
- *
  * @param config
  * @constructor
  */

@@ -1,3 +1,7 @@
+/**
+ * @param config
+ * @constructor
+ */
 modExtraLayout.formpanel.Default = function (config) {
     config = config || {};
 

@@ -127,7 +127,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
     },
 
     createObject: function (btn, e) {
-        var w = MODx.load({
+        const w = MODx.load({
             xtype: 'mel-window-object-create',
             id: Ext.id(),
             listeners: {
@@ -140,7 +140,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         w.setValues({
             active: true,
         });
-        w.show(e['target']);
+        w.show(e.target);
     },
 
     updateObject: function (btn, e, row, activeTab) {
@@ -149,7 +149,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         } else if (!this.menu.record) {
             return false;
         }
-        var id = this.menu.record.id;
+        const id = this.menu.record.id;
 
         if (typeof(activeTab) === 'undefined') {
             activeTab = 0;
@@ -164,14 +164,14 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             listeners: {
                 success: {
                     fn: function (r) {
-                        var values = r['object'];
+                        const values = r['object'];
                         ['createdon', 'updatedon'].forEach(function (k) {
                             if (values[k]) {
                                 values[k] = '' + values[k];
                             }
                         });
 
-                        var w = MODx.load({
+                        const w = MODx.load({
                             xtype: 'mel-window-object-update',
                             id: Ext.id(),
                             record: r,
@@ -184,7 +184,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
                         });
                         w.reset();
                         w.setValues(values);
-                        w.show(e['target']);
+                        w.show(e.target);
                     }, scope: this
                 },
                 failure: {fn: this._listenerHandler, scope: this},

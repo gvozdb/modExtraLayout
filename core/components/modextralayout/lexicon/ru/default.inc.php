@@ -18,6 +18,7 @@ $_lang['mel_tab_objects'] = 'Объекты';
 // Названия столбцов
 $_lang['mel_grid_parent'] = 'Родительский ресурс';
 $_lang['mel_grid_group'] = 'Группа';
+$_lang['mel_grid_file'] = 'Файл';
 $_lang['mel_grid_name'] = 'Название';
 $_lang['mel_grid_description'] = 'Описание';
 $_lang['mel_grid_createdon'] = 'Создано';
@@ -26,6 +27,10 @@ $_lang['mel_grid_active'] = 'Вкл';
 // Название полей
 $_lang['mel_field_parent'] = 'Родительский ресурс';
 $_lang['mel_field_group'] = 'Группа';
+$_lang['mel_field_file'] = 'Файл';
+$_lang['mel_field_file_select'] = 'Выбрать файл';
+$_lang['mel_field_files'] = 'Файлы';
+$_lang['mel_field_subobjects'] = 'Внутренние объекты';
 $_lang['mel_field_name'] = 'Название';
 $_lang['mel_field_description'] = 'Описание';
 $_lang['mel_field_createdon'] = 'Создано';
@@ -43,6 +48,8 @@ $_lang['mel_confirm_'] = '';
 // Ошибки конкретизированные
 $_lang['mel_err_required_name'] = 'Необходимо указать название.';
 $_lang['mel_err_unique_name'] = 'Название должно быть уникальным.';
+$_lang['mel_err_unique_files'] = 'Файл должен быть уникальным.';
+$_lang['xap_err_unique_subobject'] = 'Внутренний объект должен быть уникальным.';
 
 // Успехи
 $_lang['mel_success_'] = '';
