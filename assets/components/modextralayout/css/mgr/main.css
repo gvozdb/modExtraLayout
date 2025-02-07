@@ -3,6 +3,15 @@
 }
 
 /**
+ * Grid Local
+ */
+.mel-gridlocal {
+}
+.mel-gridlocal .x-form-invalid + .x-grid3 {
+    border-color: #BE0000 !important;
+}
+
+/**
  * Grid
  */
 .mel-grid {

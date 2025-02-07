@@ -6,8 +6,11 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
     public $classKey = 'melObject';
     public $languageTopics = ['modextralayout:default'];
     public $permission = 'create';
-    /** @var modExtraLayout $mel */
+    /**
+     * @var modExtraLayout $mel
+     */
     protected $mel;
+
 
     /**
      * @return bool
@@ -20,6 +23,7 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
 
         return parent::initialize();
     }
+
 
     /**
      * @return bool|string
@@ -48,6 +52,8 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
             // 'group',
             'parent',
             'name:mel_err_required_name',
+            'files:mel_err_required_file',
+            'subobjects:mel_err_required_subobject',
         ];
         $this->mel->tools->checkProcessorRequired($this, $required, 'mel_err_required');
 
@@ -75,13 +81,17 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
         $properties['idx'] = $this->modx->getCount($this->classKey, ['id:!=' => 0]);
         ++$properties['idx'];
 
-        // // Files
-        // $properties['files'] = @($this->mel->tools->isJSON($properties['files'])
-        //     ? $this->modx->fromJSON($properties['files']) : $properties['files']) ?: [];
-        // foreach ($properties['files'] as &$file) {
-        //     $file = $file['urlpath'];
-        // }
-        // unset($file);
+        // Subobjects
+        $properties['subobjects'] = @($this->mel->tools->isJSON($properties['subobjects'])
+            ? $this->modx->fromJSON($properties['subobjects']) : $properties['subobjects']) ?: [];
+
+        // Files
+        $properties['files'] = @($this->mel->tools->isJSON($properties['files'])
+            ? $this->modx->fromJSON($properties['files']) : $properties['files']) ?: [];
+        foreach ($properties['files'] as &$file) {
+            $file = ['file' => $file['file'] ?: $file['urlpath']];
+        }
+        unset($file);
 
         // Создано
         $properties['createdon'] = $properties['createdon'] ?: time();

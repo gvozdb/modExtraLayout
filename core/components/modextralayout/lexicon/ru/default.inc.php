@@ -15,6 +15,7 @@ $_lang['mel_title_home'] = 'modExtraLayout - Главная';
 // Табы
 $_lang['mel_tab_objects'] = 'Объекты';
 
+//
 // Названия столбцов
 $_lang['mel_grid_parent'] = 'Родительский ресурс';
 $_lang['mel_grid_group'] = 'Группа';
@@ -24,6 +25,7 @@ $_lang['mel_grid_description'] = 'Описание';
 $_lang['mel_grid_createdon'] = 'Создано';
 $_lang['mel_grid_active'] = 'Вкл';
 
+//
 // Название полей
 $_lang['mel_field_parent'] = 'Родительский ресурс';
 $_lang['mel_field_group'] = 'Группа';
@@ -45,12 +47,16 @@ $_lang['mel_button_'] = '';
 // Подтверждения
 $_lang['mel_confirm_'] = '';
 
+//
 // Ошибки конкретизированные
 $_lang['mel_err_required_name'] = 'Необходимо указать название.';
+$_lang['mel_err_required_file'] = 'Нужно обязательно выбрать хотя-бы один файл.';
+$_lang['mel_err_required_subobject'] = 'Нужно обязательно выбрать хотя-бы один внутренний объект.';
 $_lang['mel_err_unique_name'] = 'Название должно быть уникальным.';
 $_lang['mel_err_unique_files'] = 'Файл должен быть уникальным.';
-$_lang['xap_err_unique_subobject'] = 'Внутренний объект должен быть уникальным.';
+$_lang['mel_err_unique_subobject'] = 'Внутренний объект должен быть уникальным.';
 
+//
 // Успехи
 $_lang['mel_success_'] = '';
 

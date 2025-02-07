@@ -164,7 +164,7 @@ class modExtraLayout
         if (!(is_object($controller) && ($controller instanceof modManagerController))) {
             return false;
         }
-        $version = $this->version;
+        $version = time(); // $this->version;
 
         // Lexicon
         $controller->addLexiconTopic('modextralayout:default');

@@ -7,8 +7,8 @@ modExtraLayout.gridlocal.Default = function(config) {
 
     config['name'] = config['name'] || ''
 
-    config['cls'] = (config['cls'] || 'main-wrapper') + ' mel-grid';
-    config['tbarCls'] = (config['tbarCls'] || '') + ' mel-grid-toptbar';
+    config['cls'] = (config['cls'] || 'main-wrapper') + ' mel-grid mel-gridlocal';
+    config['tbarCls'] = (config['tbarCls'] || '') + ' mel-grid-toptbar mel-gridlocal-toptbar';
     config['tbarStyle'] = (config['tbarStyle'] || '')
 
     // this.exp = new Ext.grid.RowExpander({
@@ -18,9 +18,8 @@ modExtraLayout.gridlocal.Default = function(config) {
     // });
 
     Ext.applyIf(config, {
-        title: '',
-        header: false,
-
+        // title: '',
+        // header: false,
         // url: modExtraLayout.config['connector_url'],
         // baseParams: {
         //     action: 'Security/Group/GetList',
@@ -32,7 +31,8 @@ modExtraLayout.gridlocal.Default = function(config) {
         listeners: this.getListeners(config),
 
         items: [{
-            xtype: 'hidden',
+            hidden: true,
+            xtype: 'textarea',
             id: config['id'] + '-field',
             name: config['name'],
             width: '100%',
@@ -42,11 +42,6 @@ modExtraLayout.gridlocal.Default = function(config) {
                 afterrender: {
                     fn: function (field) {
                         const value = field.value // не .getValue(), потому что массив прогоняется через текстовое поле и приходить в виде "[object Object]"
-
-                        // console.log('field', field);
-                        // console.log('value', value);
-                        // return;
-
                         const items = value ? (typeof(value) === 'object' ? value : JSON.parse(value)) : []
                         if (items.length) {
                             const grid = field.ownerCt
@@ -99,9 +94,14 @@ modExtraLayout.gridlocal.Default = function(config) {
     });
     modExtraLayout.gridlocal.Default.superclass.constructor.call(this,config);
 
+    //
+    // Создаём обёртку для данных, которая необходима для добавления в Grid Store
     this.itemRecord = new Ext.data.Record.create([
         // 'usergroup','name','member','role','rolename','primary_group',
     ]);
+
+    //
+    // Добавляем дополнительные события
     this.addEvents(
         'change',
         // 'beforeUpdateRole',
@@ -113,6 +113,7 @@ modExtraLayout.gridlocal.Default = function(config) {
     );
 
     //
+    // Создаём событие "change" на гриде
     this.store.on('add', function (store, record) {
         if (!store.preventChangeEvent) {
             this.fireEvent('change', this, store.data.items)
@@ -126,6 +127,7 @@ modExtraLayout.gridlocal.Default = function(config) {
     }, this);
 
     //
+    // По изменению данных в гриде перезаписываем данные в скрытом поле
     this.on('change', function (grid, items) {
         const $hidden = this.items.find(v => v.name === this.config.name)
         $hidden.setValue(JSON.stringify(items.map(item => {
@@ -137,6 +139,7 @@ modExtraLayout.gridlocal.Default = function(config) {
     }, this);
 
     //
+    // Корректируем гриду после рендера
     this.on('afterrender', function () {
         this.topToolbar.addClass(this.config.tbarCls)
         this.topToolbar.style = this.config.tbarStyle

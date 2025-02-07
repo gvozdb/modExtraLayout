@@ -51,6 +51,8 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
             // 'group',
             'parent',
             'name:mel_err_required_name',
+            'files:mel_err_required_file',
+            'subobjects:mel_err_required_subobject',
         ];
         $this->mel->tools->checkProcessorRequired($this, $required, 'mel_err_required');
 
@@ -75,6 +77,18 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
         unset($properties['createdon']);
         $this->unsetProperty('createdon');
         $properties['updatedon'] = time();
+
+        // Subobjects
+        $properties['subobjects'] = @($this->mel->tools->isJSON($properties['subobjects'])
+            ? $this->modx->fromJSON($properties['subobjects']) : $properties['subobjects']) ?: [];
+
+        // Files
+        $properties['files'] = @($this->mel->tools->isJSON($properties['files'])
+            ? $this->modx->fromJSON($properties['files']) : $properties['files']) ?: [];
+        foreach ($properties['files'] as &$file) {
+            $file = ['file' => $file['file'] ?: $file['urlpath']];
+        }
+        unset($file);
 
         $this->setProperties($properties);
 
