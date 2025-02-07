@@ -89,7 +89,7 @@ class melObjectCreateProcessor extends modObjectCreateProcessor
         $properties['files'] = @($this->mel->tools->isJSON($properties['files'])
             ? $this->modx->fromJSON($properties['files']) : $properties['files']) ?: [];
         foreach ($properties['files'] as &$file) {
-            $file = ['file' => $file['file'] ?: $file['urlpath']];
+            $file = ['file' => @$file['file'] ?: $file['urlpath']];
         }
         unset($file);
 
