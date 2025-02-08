@@ -60,5 +60,6 @@ $BUILD_RESOLVERS_AFTER = [
     // 'extension',
     'dev',
     'tables',
+    'sources',
     'chunks',
 ];

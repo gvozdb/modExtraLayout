@@ -138,6 +138,7 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
         });
         w.reset();
         w.setValues({
+            source: MODx.config['mel_file_source'] || MODx.config['default_media_source'],
             active: true,
         });
         w.show(e.target);

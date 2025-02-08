@@ -60,7 +60,7 @@ Ext.extend(modExtraLayout.gridlocal.Files, modExtraLayout.gridlocal.Default, {
                 emptyText: _('mel_field_file_select'),
                 anchor: '100%',
                 hideFiles: true,
-                source: MODx.config['default_media_source'],
+                source: config['source'] || MODx.config['mel_file_source'] || MODx.config['default_media_source'],
                 hideSourceCombo: true,
                 listeners: {
                     select: {

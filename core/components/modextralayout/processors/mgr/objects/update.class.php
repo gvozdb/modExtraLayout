@@ -6,8 +6,15 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
     public $classKey = 'melObject';
     public $languageTopics = ['modextralayout:default'];
     public $permission = 'save';
-    /** @var modExtraLayout $mel */
+    /**
+     * @var modExtraLayout $mel
+     */
     protected $mel;
+    /**
+     * @var modMediaSource $source
+     */
+    protected $source;
+
 
     /**
      * @return bool
@@ -20,6 +27,7 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
 
         return parent::initialize();
     }
+
 
     /**
      * @return bool|string
@@ -38,15 +46,27 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
      */
     public function beforeSet()
     {
+        // Get source
+        if (!$source = (int)$this->getProperty('source')) {
+            return $this->modx->lexicon('mel_err_ns');
+        }
+        if (!$this->source = $this->modx->getObject('sources.modMediaSource', ['id' => $source])) {
+            return $this->modx->lexicon('mel_err_ns');
+        }
+        $this->source->initialize();
+
+        // Check object id
         if (!$id = (int)$this->getProperty('id')) {
             return $this->modx->lexicon('mel_err_ns');
         }
+
+        // Prepare properties
         if (($tmp = $this->prepareProperties()) !== true) {
             return $tmp;
         }
         unset($tmp);
 
-        // Проверяем на заполненность
+        // Check on required
         $required = [
             // 'group',
             'parent',
@@ -56,7 +76,7 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
         ];
         $this->mel->tools->checkProcessorRequired($this, $required, 'mel_err_required');
 
-        // Проверяем на уникальность
+        // Check on unique
         $unique = [
             'name:mel_err_unique_name',
         ];
@@ -70,28 +90,39 @@ class melObjectUpdateProcessor extends modObjectUpdateProcessor
      */
     public function prepareProperties()
     {
+        //
+        // Get raw properties
         $properties = $this->getProperties();
         // return print_r($properties, 1);
 
-        // Создано, обновлено
+        //
+        // Time of create and update of object
         unset($properties['createdon']);
         $this->unsetProperty('createdon');
         $properties['updatedon'] = time();
 
+        //
         // Subobjects
         $properties['subobjects'] = @($this->mel->tools->isJSON($properties['subobjects'])
             ? $this->modx->fromJSON($properties['subobjects']) : $properties['subobjects']) ?: [];
 
+        //
         // Files
         $properties['files'] = @($this->mel->tools->isJSON($properties['files'])
             ? $this->modx->fromJSON($properties['files']) : $properties['files']) ?: [];
         foreach ($properties['files'] as &$file) {
             $file = ['file' => @$file['file'] ?: $file['urlpath']];
+            $file['filepath'] = $this->source->getBasePath($file['file']) . $file['file'];
+            if (!file_exists($file['filepath'])) {
+                $file = null;
+            }
         }
+        $properties['files'] = array_values(array_diff($properties['files'], [null]));
         unset($file);
 
+        //
+        // Set prepared properties
         $this->setProperties($properties);
-
         // return print_r($properties, 1);
 
         return true;

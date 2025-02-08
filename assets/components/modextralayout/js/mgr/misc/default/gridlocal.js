@@ -39,14 +39,22 @@ modExtraLayout.gridlocal.Default = function(config) {
             height: 102,
             anchor: '100%',
             listeners: {
-                afterrender: {
+                beforerender: {
                     fn: function (field) {
                         const value = field.value // не .getValue(), потому что массив прогоняется через текстовое поле и приходить в виде "[object Object]"
+                        if (value && typeof(value) === 'object') {
+                            field.setValue(JSON.stringify(value))
+                        }
+                    },
+                    scope: this
+                },
+                afterrender: {
+                    fn: function (field) {
+                        const value = field.getValue()
                         const items = value ? (typeof(value) === 'object' ? value : JSON.parse(value)) : []
                         if (items.length) {
                             const grid = field.ownerCt
                             const store = grid.getStore()
-
                             store.preventChangeEvent = true
                             items.map(item => {
                                 if (!item['actions']) {

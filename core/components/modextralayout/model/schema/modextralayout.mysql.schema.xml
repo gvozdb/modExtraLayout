@@ -12,6 +12,7 @@
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
         <field key="subobjects" dbtype="text" phptype="json" null="true"/>
         <field key="files" dbtype="text" phptype="json" null="true"/>
+        <field key="source" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="1"/>
         <field key="properties" dbtype="text" phptype="json" null="true"/>
 
         <index alias="parent" name="parent" primary="false" unique="false" type="BTREE">

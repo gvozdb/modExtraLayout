@@ -4,16 +4,20 @@
 $settings = [];
 $tmp = [
     'main' => [
-        // 'some_setting' => array(
+        'file_source' => [
+            'xtype' => 'modx-combo-source',
+            'value' => '',
+        ],
+        // 'some_setting' => [
         //     'xtype' => 'combo-boolean',
         //     'value' => true,
-        // ),
+        // ],
     ],
     'backend' => [
-        // 'backend_datetime_format' => array(
+        // 'backend_datetime_format' => [
         //     'xtype' => 'textfield',
         //     'value' => '%d.%m.%Y <span class="action-gray">%H:%M</span>',
-        // ),
+        // ],
     ],
     'frontend' => [
         'frontend_main_css' => [

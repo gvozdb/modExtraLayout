@@ -134,6 +134,7 @@ modExtraLayout.fields.Object = function (config) {
                 name: 'files',
                 fieldLabel: _('mel_field_files'),
                 anchor: '100%',
+                source: data ? data['source'] : undefined,
             }],
         }],
     }, {
@@ -153,6 +154,11 @@ modExtraLayout.fields.Object = function (config) {
         }],
     });
 
+    tabs['main'].push({
+        xtype: 'hidden',
+        id: config['id'] + '-source',
+        name: 'source',
+    });
 
     if (data) {
         tabs['main'].push({
