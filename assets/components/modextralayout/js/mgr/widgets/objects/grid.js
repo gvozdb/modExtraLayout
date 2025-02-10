@@ -30,6 +30,8 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             'createdon',
             'active',
             'actions',
+            'actions_active',
+            'actions_other',
         ];
     },
 
@@ -78,18 +80,27 @@ Ext.extend(modExtraLayout.grid.Objects, modExtraLayout.grid.Default, {
             resizable: false,
             hidden: false,
             renderer: modExtraLayout.renderer['DateTime'],
-        }, {
+        }, /*{
             header: _('mel_grid_active'),
-            dataIndex: 'active',
-            width: 60,
+            dataIndex: 'actions_active',
+            width: 52,
             sortable: true,
             fixed: true,
             resizable: false,
             renderer: modExtraLayout.renderer['Boolean'],
+        },*/ {
+            header: _('mel_grid_active'),
+            dataIndex: 'actions_active',
+            id: 'actions_active',
+            width: 52,
+            sortable: false,
+            fixed: true,
+            resizable: false,
+            renderer: modExtraLayout.renderer['Actions'],
         }, {
             header: _('mel_grid_actions'),
-            dataIndex: 'actions',
-            id: 'actions',
+            dataIndex: 'actions_other',
+            id: 'actions_other',
             width: 130,
             sortable: false,
             fixed: true,

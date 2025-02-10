@@ -77,21 +77,27 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
     {
         $data = $object->toArray();
 
-        // Кнопки
-        $data['actions'] = $this->getActions($data);
+        // Get menu and buttons
+        $data['actions_active'] = $this->getButtons($data, ['active']);
+        $data['actions_other'] = $this->getButtons($data, ['full'], ['active']);
+        $data['actions'] = $this->getButtons($data);
 
         return $data;
     }
-
+    
     /**
      * @param array $data
+     * @param array $include
+     * @param array $exclude
      *
      * @return array
      */
-    public function getActions(array $data)
+    public function getButtons(array $data, array $include = ['full'], $exclude = [])
     {
-        $actions = [];
-        $actions[] = [
+        $buttons = [];
+
+        $buttons[] = [
+            'list' => ['full', 'update'],
             'cls' => '',
             'icon' => 'icon icon-edit',
             'title' => $this->modx->lexicon('mel_button_update'),
@@ -99,10 +105,12 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
             'button' => true,
             'menu' => true,
         ];
-        if (!$data['active']) {
-            $actions[] = [
+
+        if (empty($data['active'])) {
+            $buttons[] = [
+                'list' => ['full', 'active'],
                 'cls' => '',
-                'icon' => 'icon icon-toggle-on action-green',
+                'icon' => 'icon icon-toggle-off action-red',
                 'title' => $this->modx->lexicon('mel_button_enable'),
                 'multiple' => $this->modx->lexicon('mel_button_enable_multiple'),
                 'action' => 'enableObject',
@@ -110,9 +118,10 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
                 'menu' => true,
             ];
         } else {
-            $actions[] = [
+            $buttons[] = [
+                'list' => ['full', 'active'],
                 'cls' => '',
-                'icon' => 'icon icon-toggle-off action-red',
+                'icon' => 'icon icon-toggle-on action-green',
                 'title' => $this->modx->lexicon('mel_button_disable'),
                 'multiple' => $this->modx->lexicon('mel_button_disable_multiple'),
                 'action' => 'disableObject',
@@ -120,7 +129,9 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
                 'menu' => true,
             ];
         }
-        $actions[] = [
+
+        $buttons[] = [
+            'list' => ['full', 'remove'],
             'cls' => '',
             'icon' => 'icon icon-trash-o action-red',
             'title' => $this->modx->lexicon('mel_button_remove'),
@@ -130,7 +141,14 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
             'menu' => true,
         ];
 
-        return $actions;
+        $buttons = array_filter(
+            $buttons,
+            function ($button) use ($include, $exclude) {
+                return !empty(array_intersect($include, $button['list'])) && empty(array_intersect($exclude, $button['list']));
+            }
+        );
+
+        return $buttons;
     }
 }
 
