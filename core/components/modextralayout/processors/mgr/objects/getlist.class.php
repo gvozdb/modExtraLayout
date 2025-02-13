@@ -78,8 +78,9 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
         $data = $object->toArray();
 
         // Get menu and buttons
+        $data['actions_download'] = $this->getButtons($data, ['download']);
         $data['actions_active'] = $this->getButtons($data, ['active']);
-        $data['actions_other'] = $this->getButtons($data, ['full'], ['active']);
+        $data['actions_other'] = $this->getButtons($data, ['full'], ['active', 'download']);
         $data['actions'] = $this->getButtons($data);
 
         return $data;
@@ -95,6 +96,20 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
     public function getButtons(array $data, array $include = ['full'], $exclude = [])
     {
         $buttons = [];
+
+        // $buttons[] = [
+        //     'list' => ['full', 'download'],
+        //     'cls' => '',
+        //     'icon' => 'icon icon-download action-darkblue',
+        //     'title' => $this->modx->lexicon('mel_button_download'),
+        //     'action' => 'downloadObject',
+        //     'button' => true,
+        //     'menu' => true,
+        // ];
+        // $buttons[] = [
+        //     'list' => ['full', 'download'],
+        //     'content' => '-',
+        // ];
 
         $buttons[] = [
             'list' => ['full', 'update'],
@@ -141,11 +156,19 @@ class melObjectGetListProcessor extends modObjectGetListProcessor
             'menu' => true,
         ];
 
-        $buttons = array_filter(
-            $buttons,
-            function ($button) use ($include, $exclude) {
-                return !empty(array_intersect($include, $button['list'])) && empty(array_intersect($exclude, $button['list']));
-            }
+        $buttons = array_map(
+            function ($button) {
+                if (!empty($button['content'])) {
+                    $button = $button['content'];
+                }
+                return $button;
+            },
+            array_filter(
+                $buttons,
+                function ($button) use ($include, $exclude) {
+                    return !empty(array_intersect($include, $button['list'])) && empty(array_intersect($exclude, $button['list']));
+                }
+            )
         );
 
         return $buttons;

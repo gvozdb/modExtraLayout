@@ -55,7 +55,8 @@
 /**
  * Grid / Columns
  */
-.x-grid3-col-actions {
+.x-grid3-col-actions,
+.x-grid3-col-actions_active {
     padding: 13px 0 !important;
 }
 ul.mel-grid-col__actions {
@@ -142,6 +143,11 @@ a.x-menu-item .x-menu-item-text .icon {
 .mel-grid .action-blue,
 .mel-menu-item-icon.action-blue {
     color: cadetblue !important;
+}
+.action-darkblue,
+.mel-grid .action-darkblue,
+.mel-menu-item-icon.action-darkblue {
+    color: #3f51b5 !important;
 }
 .action-yellow,
 .mel-grid .action-yellow,

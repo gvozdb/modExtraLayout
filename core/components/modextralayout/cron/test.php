@@ -112,4 +112,5 @@ class melCronRoutine extends melCron
 }
 
 $cron = new melCronRoutine();
+$cron->initialize(); // ['ctx' => @$_REQUEST['ctx']]
 $cron->run();

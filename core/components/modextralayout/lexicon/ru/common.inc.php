@@ -21,6 +21,7 @@ $_lang['mel_button_disable'] = 'Выключить';
 $_lang['mel_button_disable_multiple'] = 'Выключить выбранное';
 $_lang['mel_button_remove'] = 'Удалить';
 $_lang['mel_button_remove_multiple'] = 'Удалить выбранное';
+$_lang['mel_button_download'] = 'Скачать';
 
 // Подтверждения
 $_lang['mel_confirm_other'] = 'Вы уверены?';

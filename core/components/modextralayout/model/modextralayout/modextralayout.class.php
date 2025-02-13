@@ -3,7 +3,14 @@
 class modExtraLayout
 {
     public $version = '1.0.0';
+
+    /**
+     * @var array $config
+     */
     public $config = [];
+    /**
+     * @var array $initialized
+     */
     public $initialized = [];
     /**
      * @var modX $modx
@@ -62,6 +69,7 @@ class modExtraLayout
         $this->modx->addPackage('modextralayout', $this->config['modelPath']);
         $this->modx->lexicon->load('modextralayout:default');
     }
+
 
     /**
      * @param string $ctx

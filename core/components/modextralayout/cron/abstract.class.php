@@ -3,6 +3,10 @@
 abstract class melCron
 {
     /**
+     * @var array $initialized
+     */
+    public $initialized = [];
+    /**
      * @var modX $modx
      */
     public $modx;
@@ -26,15 +30,29 @@ abstract class melCron
     function __construct()
     {
         $this->time();
+    }
 
-        $params = $this->getProperties(['silent']);
-        $params['silent'] = !empty($params['silent']) && $params['silent'] !== 'false';
-        if ($params['silent'] === true) {
+
+    /**
+     * @param array $config
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function initialize(array $config = [])
+    {
+        $props = $this->getProperties(['silent']);
+        $props['silent'] = !empty($props['silent']) && $props['silent'] !== 'false';
+        if ($props['silent'] === true) {
             error_reporting(E_ERROR);
         }
 
-        $this->getMODX();
-        $this->getModExtraLayout();
+        // $config = array_merge($config, $props);
+
+        $this->getMODX($config);
+        $this->getModExtraLayout($config);
+
+        return ($this->initialized[$this->modx->context->get('key')] = true);
     }
 
 
@@ -48,9 +66,12 @@ abstract class melCron
 
 
     /**
-     * @return modX
+     * @param array $config
+     *
+     * @return null|modX
+     * @throws Exception
      */
-    protected function getMODX()
+    protected function getMODX(array $config = [])
     {
         if (!is_object($this->modx)) {
             define('MODX_API_MODE', true);
@@ -61,32 +82,37 @@ abstract class melCron
                 require_once $file;
             }
             if (!is_object($modx)) {
-                exit('Access denied.' . PHP_EOL);
+                $this->fatal('Access denied.');
             }
             $modx->getService('error', 'error.modError');
             $modx->getRequest();
             $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
             $modx->setLogTarget('FILE');
             $modx->error->message = null;
+            $modx->lexicon->load('default');
+            if (!empty($config['ctx']) && $config['ctx'] !== $modx->context->get('key')) {
+                $modx->switchContext($config['ctx']);
+            }
             $this->modx = &$modx;
         }
-
         return $this->modx;
     }
 
 
     /**
-     * @return modExtraLayout
+     * @param array $config
+     *
+     * @return null|modExtraLayout
+     * @throws Exception
      */
-    protected function getModExtraLayout()
+    protected function getModExtraLayout(array $config = [])
     {
         if (!is_object($this->mel)) {
-            if (!$this->mel = $this->modx->getService('modextralayout', 'modExtraLayout',
-                $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/')) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Not exists modExtraLayout class.');
+            if (!$this->mel = $this->modx->getService('modextralayout', 'modExtraLayout', $this->modx->getOption('mel_core_path', null, MODX_CORE_PATH . 'components/modextralayout/') . 'model/modextralayout/')) {
+                $this->fatal('Class modExtraLayout not found');
                 exit();
             }
-            $this->mel->initialize($this->modx->context->key);
+            $this->mel->initialize($this->modx->context->key, $config);
         }
         return $this->mel;
     }
